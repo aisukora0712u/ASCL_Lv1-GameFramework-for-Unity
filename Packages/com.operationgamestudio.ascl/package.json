@@ -1,0 +1,21 @@
+{
+  "name": "com.operationgamestudio.ascl",
+  "version": "0.1.0",
+  "displayName": "ASCL Game Framework",
+  "description": "Unity-first pure C# framework for single-player games.",
+  "unity": "6000.0",
+  "author": {
+    "name": "Operation Game Studio"
+  },
+  "keywords": ["framework", "entity", "buff", "save", "ui"],
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.2.1"
+  },
+  "samples": [
+    {
+      "displayName": "Vertical Slice",
+      "description": "Entity, combat, save, UI and popup integration sample.",
+      "path": "Samples~/VerticalSlice"
+    }
+  ]
+}

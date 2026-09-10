@@ -1,0 +1,8 @@
+{
+  "name": "ASCL.Core",
+  "rootNamespace": "ASCL",
+  "references": ["UniTask"],
+  "autoReferenced": true,
+  "noEngineReferences": true
+}
+

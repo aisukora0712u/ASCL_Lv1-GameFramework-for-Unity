@@ -1,0 +1,7 @@
+{
+  "name": "ASCL.Unity.Popup",
+  "rootNamespace": "ASCL.Unity.Popup",
+  "references": ["ASCL.Core"],
+  "autoReferenced": true
+}
+

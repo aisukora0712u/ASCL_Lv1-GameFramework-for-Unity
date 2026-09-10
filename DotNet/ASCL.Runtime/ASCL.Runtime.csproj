@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.1;net8.0</TargetFrameworks>
+    <AssemblyName>ASCL.Runtime</AssemblyName>
+    <RootNamespace>ASCL</RootNamespace>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MemoryPack" Version="1.10.0" />
+    <PackageReference Include="UniTask" Version="2.5.11" />
+    <Compile Include="..\..\Packages\com.operationgamestudio.ascl\Runtime\Core\**\*.cs" />
+    <Compile Include="..\..\Packages\com.operationgamestudio.ascl\Runtime\Gameplay\**\*.cs" />
+    <Compile Include="..\..\Packages\com.operationgamestudio.ascl\Runtime\Persistence\**\*.cs" />
+  </ItemGroup>
+</Project>

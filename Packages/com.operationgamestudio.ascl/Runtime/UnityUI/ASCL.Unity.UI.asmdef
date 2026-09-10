@@ -1,0 +1,7 @@
+{
+  "name": "ASCL.Unity.UI",
+  "rootNamespace": "ASCL.Unity.UI",
+  "references": ["ASCL.Core", "ASCL.Unity", "UniTask", "Unity.TextMeshPro", "Unity.UGUI"],
+  "autoReferenced": true
+}
+

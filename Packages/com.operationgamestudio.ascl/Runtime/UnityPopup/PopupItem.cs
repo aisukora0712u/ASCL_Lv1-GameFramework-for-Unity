@@ -1,0 +1,16 @@
+using UnityEngine;
+
+namespace ASCL.Unity.Popup {
+    internal sealed class PopupItem:MonoBehaviour {
+        private SpriteRenderer[] _glyphs=null!;private float _duration;private float _elapsed;private float _rise;private Vector3 _origin;private Transform? _follow;private int _activeGlyphs;
+        public bool Active{get;private set;}public ulong Sequence{get;private set;}
+        public void Initialize(int maxGlyphs,int sortingOrder){_glyphs=new SpriteRenderer[maxGlyphs];for(int i=0;i<maxGlyphs;i++){var child=new GameObject("Glyph_"+i);child.transform.SetParent(transform,false);var renderer=child.AddComponent<SpriteRenderer>();renderer.sortingOrder=sortingOrder+i;renderer.enabled=false;_glyphs[i]=renderer;}gameObject.SetActive(false);}
+        public void Play(in PopupRequest request,PopupSpriteDatabase db,float duration,float rise,float spacing,ulong sequence){Sequence=sequence;_duration=duration;_elapsed=0;_rise=rise;_origin=request.Position;_follow=request.Follow;transform.position=_origin;transform.localScale=Vector3.one*(request.Critical?1.25f:1f);Color color=db.ColorFor(request.Kind,request.StyleId);_activeGlyphs=0;switch(request.Kind){case PopupKind.Damage:BuildNumber(request.Value,db.Minus,db,color,spacing);break;case PopupKind.Heal:BuildNumber(request.Value,db.Plus,db,color,spacing);break;case PopupKind.Shield:BuildNumber(request.Value,null,db,color,spacing);break;case PopupKind.Icon:Add(db.IconFor(request.Kind,request.StyleId),color,spacing);break;case PopupKind.Text:Sprite[]? text=db.TextFor(request.StyleId);if(text!=null)for(int i=0;i<text.Length;i++)Add(text[i],color,spacing);break;}Center(spacing);for(int i=_activeGlyphs;i<_glyphs.Length;i++)_glyphs[i].enabled=false;Active=true;gameObject.SetActive(true);}
+        public void Tick(float deltaTime,Camera? camera){if(!Active)return;_elapsed+=deltaTime;float t=Mathf.Clamp01(_elapsed/_duration);Vector3 basePosition=_follow!=null?_follow.position:_origin;transform.position=basePosition+Vector3.up*(_rise*t);if(camera!=null)transform.rotation=camera.transform.rotation;float alpha=1f-Mathf.Clamp01((t-.65f)/.35f);for(int i=0;i<_activeGlyphs;i++){Color c=_glyphs[i].color;c.a=alpha;_glyphs[i].color=c;}if(_elapsed>=_duration)Stop();}
+        public void Stop(){Active=false;gameObject.SetActive(false);_follow=null;}
+        private void BuildNumber(int value,Sprite? sign,PopupSpriteDatabase db,Color color,float spacing){long n=value;if(n<0)n=-n;if(sign!=null)Add(sign,color,spacing);int start=_activeGlyphs;if(n==0)Add(db.Digit(0),color,spacing);else{while(n>0&&_activeGlyphs<_glyphs.Length){Add(db.Digit((int)(n%10)),color,spacing);n/=10;}int left=start,right=_activeGlyphs-1;while(left<right){Sprite a=_glyphs[left].sprite;_glyphs[left].sprite=_glyphs[right].sprite;_glyphs[right].sprite=a;left++;right--;}}}
+        private void Add(Sprite? sprite,Color color,float spacing){if(sprite==null||_activeGlyphs>=_glyphs.Length)return;SpriteRenderer g=_glyphs[_activeGlyphs];g.sprite=sprite;g.color=color;g.transform.localPosition=new Vector3(_activeGlyphs*spacing,0,0);g.enabled=true;_activeGlyphs++;}
+        private void Center(float spacing){float offset=(_activeGlyphs-1)*spacing*.5f;for(int i=0;i<_activeGlyphs;i++){Vector3 p=_glyphs[i].transform.localPosition;p.x-=offset;_glyphs[i].transform.localPosition=p;}}
+    }
+}
+

@@ -1,0 +1,6 @@
+{
+  "name": "ASCL.Unity",
+  "rootNamespace": "ASCL.Unity",
+  "references": ["ASCL.Core", "ASCL.Gameplay", "ASCL.Persistence", "UniTask", "Unity.Newtonsoft.Json"],
+  "autoReferenced": true
+}

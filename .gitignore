@@ -1,0 +1,11 @@
+**/bin/
+**/obj/
+DevProject/Library/
+DevProject/Logs/
+DevProject/Temp/
+DevProject/UserSettings/
+DevProject/*.csproj
+DevProject/*.sln
+DevProject/*.log
+DevProject/*test-results*.xml
+DevProject/unity-test-results.xml

@@ -1,0 +1,7 @@
+{
+  "name": "ASCL.Gameplay",
+  "rootNamespace": "ASCL.Gameplay",
+  "references": ["ASCL.Core", "UniTask"],
+  "autoReferenced": true,
+  "noEngineReferences": true
+}

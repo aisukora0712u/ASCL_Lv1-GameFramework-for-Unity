@@ -1,0 +1,9 @@
+{
+  "name": "ASCL.Persistence",
+  "rootNamespace": "ASCL.Persistence",
+  "references": ["ASCL.Core", "UniTask"],
+  "overrideReferences": true,
+  "precompiledReferences": ["MemoryPack.Core.dll", "System.Collections.Immutable.dll", "System.Runtime.CompilerServices.Unsafe.dll"],
+  "autoReferenced": true,
+  "noEngineReferences": true
+}

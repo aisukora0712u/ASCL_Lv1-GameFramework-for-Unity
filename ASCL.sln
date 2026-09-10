@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASCL.Runtime", "DotNet\ASCL.Runtime\ASCL.Runtime.csproj", "{502A36EC-82E1-4F63-A4BA-03B6E269D98C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASCL.Tests", "DotNet\ASCL.Tests\ASCL.Tests.csproj", "{672EAA75-77B3-45E3-9592-EC07AC0E3C07}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{502A36EC-82E1-4F63-A4BA-03B6E269D98C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{502A36EC-82E1-4F63-A4BA-03B6E269D98C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{502A36EC-82E1-4F63-A4BA-03B6E269D98C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{502A36EC-82E1-4F63-A4BA-03B6E269D98C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{672EAA75-77B3-45E3-9592-EC07AC0E3C07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{672EAA75-77B3-45E3-9592-EC07AC0E3C07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{672EAA75-77B3-45E3-9592-EC07AC0E3C07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{672EAA75-77B3-45E3-9592-EC07AC0E3C07}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
