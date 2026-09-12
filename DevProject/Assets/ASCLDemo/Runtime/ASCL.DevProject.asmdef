@@ -1,0 +1,6 @@
+{
+  "name": "ASCL.DevProject",
+  "rootNamespace": "ASCL.DevProject",
+  "references": ["ASCL.Core", "ASCL.Gameplay", "ASCL.Unity", "UniTask", "Unity.ugui"],
+  "autoReferenced": true
+}

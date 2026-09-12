@@ -8,5 +8,8 @@
 - MemoryPack 1.10.0 — MIT, copyright Cysharp, Inc.
 - System.Collections.Immutable 6.0.0 — MIT, copyright .NET Foundation and contributors.
 - System.Runtime.CompilerServices.Unsafe 6.0.0 — MIT, copyright .NET Foundation and contributors.
+- Unity Universal 3D template 17.0.14 — copyright Unity Technologies. Initial
+  rendering settings in `DevProject/Assets/Settings` and quality profiles are
+  adapted from the template supplied with Unity 6000.3.23f1.
 
 ASCL is an independent implementation. No reference repository is modified.

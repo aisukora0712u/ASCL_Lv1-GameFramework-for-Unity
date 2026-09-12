@@ -131,6 +131,21 @@ UI 以预制件为 View 单位：`UIRouter` 负责异步加载、层级、模态
 
 ## 9. 已知边界与推荐路线
 
+### 2026-09-12：Unity 6.3.23f1 / URP 3D 接入更新
+
+`DevProject` 已升级到正式编辑器版本 `6000.3.23f1`（`09d2ecc7fb28`），
+使用随编辑器提供的 URP `17.3.0`。新增可直接运行的 `ASCL_URP3D` 场景，
+通过 uGUI / 空格触发 Skill–Buff–Numeric，并在 3D 立方体上呈现数值变化。
+PC / Mobile 两套 Universal Renderer 配置、Global Settings、Linear 色彩空间、
+构建场景列表和包锁文件均已入库；ASCL 包仍保持渲染管线独立。
+
+此轮验证：.NET 15/15、Unity EditMode 6/6、PlayMode 2/2 通过，
+包括从空 Library 导入、框架帧驱动与 Entity 清理，以及两套配置在 D3D11 上的实际渲染。
+当前深目录会触发 Unity 的 Windows 长路径导入问题，`Tools/Open-Unity.ps1`
+和 `Tools/Validate-Unity.ps1` 自动使用指向同一仓库的短盘符路径。
+启动、验证命令与已有 nullable 编译警告说明见 `DevProject/README.md`。
+此轮未进行 Player / IL2CPP 或移动设备构建验证。
+
 当前最值得继续实现的顺序：
 
 1. 用一个真实战斗场景扩展 Action 条件、目标选择、伤害/治疗上下文和战斗日志，并补可重复的确定性回放测试。

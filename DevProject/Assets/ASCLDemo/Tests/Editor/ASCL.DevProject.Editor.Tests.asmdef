@@ -1,0 +1,8 @@
+{
+  "name": "ASCL.DevProject.Editor.Tests",
+  "rootNamespace": "ASCL.DevProject.Tests",
+  "references": ["ASCL.DevProject", "ASCL.DevProject.Editor", "ASCL.Unity", "Unity.RenderPipelines.Core.Runtime", "Unity.RenderPipelines.Universal.Runtime"],
+  "optionalUnityReferences": ["TestAssemblies"],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": false
+}

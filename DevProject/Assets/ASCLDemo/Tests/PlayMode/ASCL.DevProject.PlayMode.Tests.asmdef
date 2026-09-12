@@ -1,0 +1,7 @@
+{
+  "name": "ASCL.DevProject.PlayMode.Tests",
+  "rootNamespace": "ASCL.DevProject.Tests",
+  "references": ["ASCL.DevProject", "ASCL.Core", "ASCL.Gameplay", "ASCL.Unity", "UniTask", "Unity.ugui", "Unity.RenderPipelines.Core.Runtime", "Unity.RenderPipelines.Universal.Runtime"],
+  "optionalUnityReferences": ["TestAssemblies"],
+  "autoReferenced": false
+}

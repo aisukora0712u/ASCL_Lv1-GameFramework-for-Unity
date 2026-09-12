@@ -1,0 +1,7 @@
+{
+  "name": "ASCL.DevProject.Editor",
+  "rootNamespace": "ASCL.DevProject.Editor",
+  "references": ["ASCL.DevProject", "ASCL.Unity", "Unity.ugui", "Unity.RenderPipelines.Core.Runtime", "Unity.RenderPipelines.Universal.Runtime"],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": false
+}

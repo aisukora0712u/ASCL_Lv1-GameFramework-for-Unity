@@ -9,3 +9,7 @@ DevProject/*.sln
 DevProject/*.log
 DevProject/*test-results*.xml
 DevProject/unity-test-results.xml
+DevProject/obj/
+DevProject/.vs/
+DevProject/*.slnx
+DevProject/TestResults/
