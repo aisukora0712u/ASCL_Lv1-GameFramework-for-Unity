@@ -12,6 +12,8 @@
     "start": "node server/index.ts",
     "cli": "node server/cli.ts",
     "test": "node --test --test-concurrency=1 tests/*.test.ts",
+    "roadmap:validate": "node server/roadmap-cli.ts validate",
+    "roadmap:summary": "node server/roadmap-cli.ts summary",
     "validate": "pnpm test && pnpm build"
   },
   "dependencies": {

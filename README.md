@@ -21,3 +21,8 @@ A separate local Chinese knowledge and research workbench lives in
 [Tools/KnowledgeSite](Tools/KnowledgeSite/README.md). Its program and generic
 templates are versioned here; personal knowledge, attachments and history stay
 in an independent local library outside this repository.
+
+The long-term roadmap is in [PLAN.md](PLAN.md); stage and implementation goal
+navigation is in [GOALS.md](GOALS.md). The local workbench's **实施目标** page
+reads these repository Markdown files for progress, dependencies, coverage and
+verification evidence. Framework implementation remains separately scheduled.

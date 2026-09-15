@@ -10,6 +10,7 @@ import type {
 } from "../shared/model.ts";
 import * as api from "./api.ts";
 import { Markdown, Pdf } from "./Markdown.tsx";
+import { Implementation, ImplementationSummary } from "./Implementation.tsx";
 import { registerWorkspaceTools } from "./webmcp.ts";
 import "./style.css";
 import { Dialogs, useDialogs } from "./Dialogs.tsx";
@@ -291,16 +292,19 @@ function App() {
   const heading =
     route === "home"
       ? "工作台"
-      : (entry?.meta.title ??
-        labels[route] ??
-        (
-          {
-            sources: "来源与附件",
-            settings: "库与运行管理",
-            recycle: "回收区",
-          } as any
-        )[route] ??
-        "记录");
+      : route === "implementation" || route.startsWith("implementation/")
+        ? "实施目标"
+        : (entry?.meta.title ??
+          labels[route] ??
+          (
+            {
+              sources: "来源与附件",
+              settings: "库与运行管理",
+              implementation: "实施目标",
+              recycle: "回收区",
+            } as any
+          )[route] ??
+          "记录");
   const rows = (entries: Entry[]) => (
     <div className="record-list">
       {entries.length ? (
@@ -386,6 +390,12 @@ function App() {
               <small>{active.filter((e) => e.meta.type === k).length}</small>
             </button>
           ))}
+          <button
+            className={route.startsWith("implementation") ? "selected" : ""}
+            onClick={() => go("implementation")}
+          >
+            ◎<span>实施目标</span>
+          </button>
         </nav>
         <div className="nav-caption">资料与维护</div>
         <nav>
@@ -725,6 +735,9 @@ function App() {
                 </section>
               </div>
             </>
+          ) : route === "implementation" ||
+            route.startsWith("implementation/") ? (
+            <Implementation route={route} />
           ) : route === "home" ? (
             <>
               <div className="page-heading">
@@ -770,6 +783,7 @@ function App() {
                 ))}
               </div>
               <div className="home-grid">
+                <ImplementationSummary />
                 <section className="panel">
                   <div className="section-top">
                     <h2>近期修改</h2>

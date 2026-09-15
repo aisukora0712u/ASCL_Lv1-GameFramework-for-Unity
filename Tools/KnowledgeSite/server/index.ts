@@ -11,10 +11,12 @@ import type { RequestContext } from "../shared/model.ts";
 import { captureAndCommit, checkSources } from "./evidence.ts";
 import { validateAttachment } from "./attachments.ts";
 import { durable, hash, json, read, replace, securePath } from "./files.ts";
+import { readProjectRoadmap, projectRoot } from "./roadmap.ts";
 const origin = "http://127.0.0.1:4317";
 export async function createApp(
   manager: Manager,
   onStop: () => void = () => {},
+  roadmapRoot = projectRoot,
 ) {
   const app = express();
   const token = randomBytes(32).toString("hex");
@@ -58,6 +60,10 @@ export async function createApp(
         baseline: z.string().nullable(),
       })
       .parse(req.body.context);
+  // Project documents are independent of the private knowledge library and never written here.
+  app.get("/api/project-roadmap", async (_req, res) => {
+    res.json(await readProjectRoadmap(roadmapRoot));
+  });
   app.get("/api/session", async (_req, res) => {
     await manager.ensureCurrent();
     res.json({
