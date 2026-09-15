@@ -16,3 +16,8 @@ Boost button applies a framework skill/buff and increases the cube's height.
 
 See [the host project guide](DevProject/README.md) for rendering profiles,
 dependencies, and automated validation.
+
+A separate local Chinese knowledge and research workbench lives in
+[Tools/KnowledgeSite](Tools/KnowledgeSite/README.md). Its program and generic
+templates are versioned here; personal knowledge, attachments and history stay
+in an independent local library outside this repository.

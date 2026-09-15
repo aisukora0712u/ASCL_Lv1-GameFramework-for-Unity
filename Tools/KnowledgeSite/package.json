@@ -1,0 +1,40 @@
+{
+  "name": "ascl-knowledge-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "start": "node server/index.ts",
+    "cli": "node server/cli.ts",
+    "test": "node --test --test-concurrency=1 tests/*.test.ts",
+    "validate": "pnpm test && pnpm build"
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "fflate": "^0.8.2",
+    "image-size": "^2.0.2",
+    "mermaid": "^11.12.0",
+    "pdfjs-dist": "^5.4.149",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
+    "yaml": "^2.8.1",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.3.0",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.2",
+    "prettier": "^3.9.6",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.4"
+  }
+}
