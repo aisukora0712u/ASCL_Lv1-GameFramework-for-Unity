@@ -13,3 +13,10 @@ Shared tests compare 10,000 exact legacy NextDouble values for each of five seed
 Failures retained in the consuming project's artifacts/ascl: a test originally checked Task cancellation instead of UniTask cancellation status; test assembly needed its explicit UniTask reference; a lifecycle change altered disable-before-dispose order and was fixed without changing expected behavior. The longer Windows checkout path caused URP shader importer host-type errors; Tools/Unity-Environment.ps1 maps the same tree, then IntegrationImportRepair.ReimportShaders reimports the two affected Unity package resources. Actual render test subsequently passed. New UI test compilation issues were fixed with a concrete typed model and explicit UnityEngine.Time.
 
 Use Tools/Validate-Unity.ps1 -UnityEditor <Unity.exe> for short-path execution. Source records are hashed in [hashes.json](ASCL-0.2.0/hashes.json). No GPU allocation, whole-frame zero-allocation, IL2CPP or mobile support claim is made. Consumer game parity, save/load, all-scene UI and manual acceptance remain in Algorithm_Storage's separate integration task. Custom transaction effects must honor the staged-state contract; external IO cannot be rolled back.
+
+## Consumer lifetime follow-up (2026-09-19T07:22:26.175Z)
+
+Repeated game-worker queries exposed retention of completed task results until session shutdown. LifetimeScope now prunes completed/cancelled tasks on tracking and inspection, while retaining faults for StopAsync to report after joining every worker. Owner-thread semantics are unchanged.
+
+- .NET: 34/34 passed ([TRX](ASCL-0.2.0/lifetime/dotnet.trx)); Unity EditMode: 25/25 ([XML](ASCL-0.2.0/lifetime/editmode.xml)); Unity PlayMode: 4/4 ([XML](ASCL-0.2.0/lifetime/playmode.xml)).
+- Consumer 1600×900 PlayMode: 12/12 passed, including four save/load/restart cycles, discarded worlds/items/Buffs, stable UI/popup object counts, corrupt-file preservation. The consumer retains its detailed evidence and final delivery gate.

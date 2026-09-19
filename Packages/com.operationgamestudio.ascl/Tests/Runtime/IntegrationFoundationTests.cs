@@ -33,6 +33,18 @@ namespace ASCL.Tests {
             Assert.Throws<AggregateException>(()=>parent.Dispose());Assert.That(child.IsDisposed);Assert.That(world.Count,Is.Zero);parent.Dispose();
         }
         [Test]public void AttachedFactoryCannotDestroyExistingOwnership(){using var world=new EntityWorld();var parent=world.Create<Entity>();var child=parent.AddChild<Entity>();Assert.Throws<InvalidOperationException>(()=>world.Create(parent,()=>child));Assert.That(world.TryResolve(child.Handle,out _));Assert.That(world.Count,Is.EqualTo(2));}
+        [Test]public async Task OwnerDoesNotRetainCompletedWorkerResultsAndWaitsForCancellation(){
+            var owner=new LifetimeScope();for(int i=0;i<1000;i++)owner.Track(UniTask.CompletedTask);Assert.That(owner.TrackedTaskCount,Is.Zero);
+            bool finished=false;async UniTask Worker(){try{await Task.Delay(100000,owner.Token);}finally{finished=true;}}
+            owner.Track(Worker());Assert.That(owner.TrackedTaskCount,Is.EqualTo(1));await owner.StopAsync();Assert.That(finished);Assert.That(owner.TrackedTaskCount,Is.Zero);await owner.StopAsync();
+        }
+        [Test]public async Task OwnerReportsFaultButStillJoinsOtherWorkers(){
+            var owner=new LifetimeScope();var signal=new TaskCompletionSource<bool>();bool finished=false;
+            async UniTask Fault(){await Task.Yield();throw new InvalidOperationException("worker");}
+            async UniTask Worker(){await signal.Task;finished=true;}
+            owner.Track(Fault());owner.Track(Worker());var stopping=owner.StopAsync().AsTask();Assert.That(stopping.IsCompleted,Is.False);signal.SetResult(true);
+            try{await stopping;Assert.Fail("Fault must be observed");}catch(InvalidOperationException){}Assert.That(finished);Assert.That(owner.TrackedTaskCount,Is.Zero);
+        }
         public sealed class InitializationProbe:Entity{}
         private sealed class FailingInitialization:EntitySystem<InitializationProbe>{public override void Initialize(InitializationProbe target){target.AddChild<Entity>();throw new InvalidOperationException("initialization");}}
         private sealed class ThrowingDisposable:IDisposable{public void Dispose()=>throw new InvalidOperationException("cleanup");}

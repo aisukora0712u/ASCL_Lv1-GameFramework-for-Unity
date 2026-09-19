@@ -1,0 +1,17 @@
+{
+  "at": "2026-09-19T07:22:26.175Z",
+  "files": [
+    {
+      "path": "dotnet.trx",
+      "sha256": "4bd71f6ce2dd5c98d51edb6b065c217d4d169717ad414dd34b23a36d2775e660"
+    },
+    {
+      "path": "editmode.xml",
+      "sha256": "d695dcf0ec7d5d5e9bd25346125a72e341fc9c2ca88db9ef2f3c7c1d4c4daba2"
+    },
+    {
+      "path": "playmode.xml",
+      "sha256": "9a8d88dfad8010ab743a7614b372fb8ad962d948bf74df74911df7d086d1f8ec"
+    }
+  ]
+}

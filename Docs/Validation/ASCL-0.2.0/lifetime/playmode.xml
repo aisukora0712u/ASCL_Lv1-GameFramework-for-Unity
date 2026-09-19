@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="4" result="Passed" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-19 07:20:22Z" end-time="2026-09-19 07:20:22Z" duration="0.7851825">
+  <test-suite type="TestSuite" id="1013" name="ASCL URP 3D" fullname="ASCL URP 3D" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-09-19 07:20:22Z" end-time="2026-09-19 07:20:22Z" duration="0.785183" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1007" name="ASCL.DevProject.PlayMode.Tests.dll" fullname="U:/DevProject/Library/ScriptAssemblies/ASCL.DevProject.PlayMode.Tests.dll" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-09-19 07:20:22Z" end-time="2026-09-19 07:20:22Z" duration="0.778768" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="80944" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1008" name="ASCL" fullname="ASCL" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-09-19 07:20:22Z" end-time="2026-09-19 07:20:22Z" duration="0.778281" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1009" name="DevProject" fullname="ASCL.DevProject" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-09-19 07:20:22Z" end-time="2026-09-19 07:20:22Z" duration="0.777997" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1010" name="Tests" fullname="ASCL.DevProject.Tests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-09-19 07:20:22Z" end-time="2026-09-19 07:20:22Z" duration="0.777683" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="UIOwnershipTests" fullname="ASCL.DevProject.Tests.UIOwnershipTests" classname="ASCL.DevProject.Tests.UIOwnershipTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-09-19 07:20:22Z" end-time="2026-09-19 07:20:22Z" duration="0.044047" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1003" name="LateLoaderResultIsReleasedAfterRouterDisposal" fullname="ASCL.DevProject.Tests.UIOwnershipTests.LateLoaderResultIsReleasedAfterRouterDisposal" methodname="LateLoaderResultIsReleasedAfterRouterDisposal" classname="ASCL.DevProject.Tests.UIOwnershipTests" runstate="Runnable" seed="1788896077" result="Passed" start-time="2026-09-19 07:20:22Z" end-time="2026-09-19 07:20:22Z" duration="0.027950" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1002" name="RebindingAndReopeningReleaseSubscriptionsAndRestoreInteraction" fullname="ASCL.DevProject.Tests.UIOwnershipTests.RebindingAndReopeningReleaseSubscriptionsAndRestoreInteraction" methodname="RebindingAndReopeningReleaseSubscriptionsAndRestoreInteraction" classname="ASCL.DevProject.Tests.UIOwnershipTests" runstate="Runnable" seed="853927832" result="Passed" start-time="2026-09-19 07:20:22Z" end-time="2026-09-19 07:20:22Z" duration="0.007969" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1004" name="Urp3DPlayModeTests" fullname="ASCL.DevProject.Tests.Urp3DPlayModeTests" classname="ASCL.DevProject.Tests.Urp3DPlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-09-19 07:20:22Z" end-time="2026-09-19 07:20:22Z" duration="0.732534" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1006" name="BothQualityProfilesRenderVisibleGeometryWithoutErrorShaders" fullname="ASCL.DevProject.Tests.Urp3DPlayModeTests.BothQualityProfilesRenderVisibleGeometryWithoutErrorShaders" methodname="BothQualityProfilesRenderVisibleGeometryWithoutErrorShaders" classname="ASCL.DevProject.Tests.Urp3DPlayModeTests" runstate="Runnable" seed="1559591125" result="Passed" start-time="2026-09-19 07:20:22Z" end-time="2026-09-19 07:20:22Z" duration="0.594991" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1005" name="SceneTicksWorldAndAppliesSkillBuffToPresentation" fullname="ASCL.DevProject.Tests.Urp3DPlayModeTests.SceneTicksWorldAndAppliesSkillBuffToPresentation" methodname="SceneTicksWorldAndAppliesSkillBuffToPresentation" classname="ASCL.DevProject.Tests.Urp3DPlayModeTests" runstate="Runnable" seed="139385268" result="Passed" start-time="2026-09-19 07:20:22Z" end-time="2026-09-19 07:20:22Z" duration="0.135932" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/Oliver/AppData/LocalLow/Operation Game Studio/ASCL URP 3D\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -13,7 +13,7 @@ dependencies: ["ASCL-S0-001","ASCL-S0-002"]
 status: in_review
 isGate: false
 createdAt: 2026-09-19T05:51:54.807Z
-updatedAt: 2026-09-19T05:59:11.552Z
+updatedAt: 2026-09-19T07:22:26.175Z
 startedAt: 2026-09-19T05:51:54.807Z
 completedAt: null
 reason: null
@@ -22,6 +22,9 @@ evidence:
     reference: Docs/Validation/ASCL-0.2.0.md
     result: .NET 32 项、Unity EditMode 与 PlayMode 通过；消费项目验收独立记录
 log:
+  - at: 2026-09-19T07:22:26.175Z
+    type: verification
+    message: 消费项目连续读档发现已完成后台任务结果保留，现已修复并补等待及异常回归；.NET34/34、Unity EditMode25/25和PlayMode4/4通过。
   - at: 2026-09-19T05:59:11.552Z
     type: verification
     message: 双目标构建、32 项 .NET 测试、Unity 共享边界与 UI/渲染测试通过；不扩大本目标范围。
