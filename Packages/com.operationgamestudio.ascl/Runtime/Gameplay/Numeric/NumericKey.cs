@@ -14,7 +14,7 @@ namespace ASCL.Gameplay.Numeric {
     }
 
     public readonly struct NumericDefinition {
-        public NumericDefinition(NumericKey key, float defaultValue, float? minimum = null, float? maximum = null) {
+        public NumericDefinition(NumericKey key, double defaultValue, double? minimum = null, double? maximum = null) {
             if (!IsFinite(defaultValue)) throw new ArgumentOutOfRangeException(nameof(defaultValue));
             if (minimum.HasValue && !IsFinite(minimum.Value)) throw new ArgumentOutOfRangeException(nameof(minimum));
             if (maximum.HasValue && !IsFinite(maximum.Value)) throw new ArgumentOutOfRangeException(nameof(maximum));
@@ -22,11 +22,11 @@ namespace ASCL.Gameplay.Numeric {
             Key=key; DefaultValue=defaultValue; Minimum=minimum; Maximum=maximum;
         }
         public NumericKey Key { get; }
-        public float DefaultValue { get; }
-        public float? Minimum { get; }
-        public float? Maximum { get; }
-        public float Clamp(float value) { if (Minimum.HasValue && value < Minimum.Value) value=Minimum.Value; if (Maximum.HasValue && value > Maximum.Value) value=Maximum.Value; return value; }
-        internal static bool IsFinite(float value) => !float.IsNaN(value) && !float.IsInfinity(value);
+        public double DefaultValue { get; }
+        public double? Minimum { get; }
+        public double? Maximum { get; }
+        public double Clamp(double value) { if (Minimum.HasValue && value < Minimum.Value) value=Minimum.Value; if (Maximum.HasValue && value > Maximum.Value) value=Maximum.Value; return value; }
+        internal static bool IsFinite(double value) => !double.IsNaN(value) && !double.IsInfinity(value);
     }
 }
 

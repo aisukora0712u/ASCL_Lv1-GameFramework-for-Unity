@@ -9,5 +9,6 @@
     <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
     <ProjectReference Include="..\ASCL.Runtime\ASCL.Runtime.csproj" />
     <Analyzer Include="..\..\Tools\ASCL.SourceGen\bin\Release\netstandard2.0\ASCL.SourceGen.dll" />
+    <Compile Include="../../Packages/com.operationgamestudio.ascl/Tests/Runtime/IntegrationFoundationTests.cs" Link="IntegrationFoundationTests.cs" />
   </ItemGroup>
 </Project>

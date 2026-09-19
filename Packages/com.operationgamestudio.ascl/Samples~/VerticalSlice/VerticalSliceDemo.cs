@@ -13,7 +13,7 @@ using UnityEngine;
 namespace ASCL.Samples {
     [MemoryPackable(GenerateType.VersionTolerant)]
     public partial class DemoSave {
-        [MemoryPackOrder(0)]public float Power{get;set;}
+        [MemoryPackOrder(0)]public double Power{get;set;}
         [MemoryPackOrder(1)]public int BuffStacks{get;set;}
     }
 

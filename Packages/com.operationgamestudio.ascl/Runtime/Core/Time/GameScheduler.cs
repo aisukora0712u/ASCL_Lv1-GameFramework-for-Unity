@@ -4,20 +4,54 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 
 namespace ASCL.Time {
-    public readonly struct TimerHandle:IEquatable<TimerHandle>{internal TimerHandle(int id,int generation){Id=id;Generation=generation;}internal int Id{get;}internal int Generation{get;}public bool IsValid=>Id!=0&&Generation!=0;public bool Equals(TimerHandle other)=>Id==other.Id&&Generation==other.Generation;public override bool Equals(object? obj)=>obj is TimerHandle other&&Equals(other);public override int GetHashCode()=>HashCode.Combine(Id,Generation);}
-
-    public sealed class GameScheduler {
-        private readonly IGameClock _clock;private readonly List<Item> _heap=new();private readonly HashSet<TimerHandle> _cancelled=new();private int _nextId=1;private int _generation=1;private long _sequence;
-        public GameScheduler(IGameClock clock,int capacity=32){_clock=clock??throw new ArgumentNullException(nameof(clock));if(capacity<0)throw new ArgumentOutOfRangeException(nameof(capacity));_heap.Capacity=capacity;}
-        public int Count=>_heap.Count;
-        public TimerHandle Schedule(float delay,Action callback){if(delay<0||float.IsNaN(delay)||float.IsInfinity(delay))throw new ArgumentOutOfRangeException(nameof(delay));if(callback==null)throw new ArgumentNullException(nameof(callback));var handle=new TimerHandle(_nextId++,_generation);Push(new Item(handle,_clock.Time+delay,_sequence++,callback));return handle;}
-        public bool Cancel(TimerHandle handle){if(!handle.IsValid||handle.Generation!=_generation)return false;return _cancelled.Add(handle);}
-        public void Tick(){while(_heap.Count>0&&_heap[0].Due<=_clock.Time){Item item=Pop();if(_cancelled.Remove(item.Handle))continue;item.Callback();}}
-        public UniTask DelayAsync(float delay,CancellationToken cancellationToken=default){if(cancellationToken.IsCancellationRequested)return UniTask.FromCanceled(cancellationToken);var source=new UniTaskCompletionSource();TimerHandle handle=default;CancellationTokenRegistration registration=default;handle=Schedule(delay,()=>{registration.Dispose();source.TrySetResult();});if(cancellationToken.CanBeCanceled)registration=cancellationToken.Register(()=>{if(Cancel(handle))source.TrySetCanceled(cancellationToken);});return source.Task;}
-        public void Clear(){_heap.Clear();_cancelled.Clear();_generation++;if(_generation<=0)_generation=1;}
-        private void Push(Item item){_heap.Add(item);int index=_heap.Count-1;while(index>0){int parent=(index-1)/2;if(Compare(_heap[parent],item)<=0)break;_heap[index]=_heap[parent];index=parent;}_heap[index]=item;}
-        private Item Pop(){Item root=_heap[0];int lastIndex=_heap.Count-1;Item last=_heap[lastIndex];_heap.RemoveAt(lastIndex);if(lastIndex==0)return root;int index=0;while(true){int left=index*2+1;if(left>=lastIndex)break;int right=left+1;int child=right<lastIndex&&Compare(_heap[right],_heap[left])<0?right:left;if(Compare(last,_heap[child])<=0)break;_heap[index]=_heap[child];index=child;}_heap[index]=last;return root;}
-        private static int Compare(Item a,Item b){int due=a.Due.CompareTo(b.Due);return due!=0?due:a.Sequence.CompareTo(b.Sequence);}
-        private readonly struct Item{public Item(TimerHandle handle,double due,long sequence,Action callback){Handle=handle;Due=due;Sequence=sequence;Callback=callback;}public TimerHandle Handle{get;}public double Due{get;}public long Sequence{get;}public Action Callback{get;}}
+    public readonly struct TimerHandle:IEquatable<TimerHandle> {
+        internal TimerHandle(long owner,long id){Owner=owner;Id=id;}
+        internal long Owner{get;} internal long Id{get;}
+        public bool IsValid=>Owner>0&&Id>0;
+        public bool Equals(TimerHandle other)=>Owner==other.Owner&&Id==other.Id;
+        public override bool Equals(object? obj)=>obj is TimerHandle other&&Equals(other);
+        public override int GetHashCode()=>HashCode.Combine(Owner,Id);
+    }
+    /// <summary>Callbacks run on Tick's caller; cancellation can arrive from any thread.</summary>
+    public sealed class GameScheduler:IDisposable {
+        private static long s_owner;
+        private readonly long _owner=Interlocked.Increment(ref s_owner);
+        private readonly IGameClock _clock;
+        private readonly object _gate=new();
+        private readonly List<Item> _items;
+        private long _nextId;
+        private bool _disposed;
+        public GameScheduler(IGameClock clock,int capacity=32){_clock=clock??throw new ArgumentNullException(nameof(clock));if(capacity<0)throw new ArgumentOutOfRangeException(nameof(capacity));_items=new List<Item>(capacity);}
+        public int Count{get{lock(_gate)return _items.Count;}}
+        public TimerHandle Schedule(float delay,Action callback){if(callback==null)throw new ArgumentNullException(nameof(callback));return Add(delay,callback,null).Handle;}
+        private Item Add(float delay,Action callback,UniTaskCompletionSource? completion){
+            if(delay<0||float.IsNaN(delay)||float.IsInfinity(delay))throw new ArgumentOutOfRangeException(nameof(delay));
+            lock(_gate){if(_disposed)throw new ObjectDisposedException(nameof(GameScheduler));var item=new Item(new TimerHandle(_owner,checked(++_nextId)),_clock.Time+delay,callback,completion);_items.Add(item);return item;}
+        }
+        public bool Cancel(TimerHandle handle)=>Cancel(handle,default);
+        private bool Cancel(TimerHandle handle,CancellationToken token){
+            Item? item=null;lock(_gate){if(handle.Owner!=_owner)return false;int index=_items.FindIndex(x=>x.Handle.Equals(handle));if(index<0)return false;item=_items[index];_items.RemoveAt(index);}
+            item.Cancel(token);return true;
+        }
+        public void Tick(){
+            while(true){Item? due=null;lock(_gate){if(_disposed)return;int chosen=-1;for(int i=0;i<_items.Count;i++)if(_items[i].Due<=_clock.Time&&(chosen<0||_items[i].Due<_items[chosen].Due||(_items[i].Due==_items[chosen].Due&&_items[i].Handle.Id<_items[chosen].Handle.Id)))chosen=i;if(chosen<0)return;due=_items[chosen];_items.RemoveAt(chosen);}
+                due.Complete();
+            }
+        }
+        public UniTask DelayAsync(float delay,CancellationToken cancellationToken=default){
+            if(cancellationToken.IsCancellationRequested)return UniTask.FromCanceled(cancellationToken);
+            var source=new UniTaskCompletionSource();var item=Add(delay,()=>{},source);
+            if(cancellationToken.CanBeCanceled){var registration=cancellationToken.Register(()=>Cancel(item.Handle,cancellationToken));bool retained;lock(_gate){retained=_items.Contains(item);if(retained)item.Registration=registration;}if(!retained)registration.Dispose();}
+            return source.Task;
+        }
+        public void Clear(){Item[] cancelled;lock(_gate){cancelled=_items.ToArray();_items.Clear();}foreach(var item in cancelled)item.Cancel(default);}
+        public void Dispose(){lock(_gate){if(_disposed)return;_disposed=true;}Clear();}
+        private sealed class Item {
+            public readonly TimerHandle Handle; public readonly double Due; private readonly Action _callback;private readonly UniTaskCompletionSource? _completion;
+            public CancellationTokenRegistration Registration;
+            public Item(TimerHandle handle,double due,Action callback,UniTaskCompletionSource? completion){Handle=handle;Due=due;_callback=callback;_completion=completion;}
+            public void Cancel(CancellationToken token){Registration.Dispose();_completion?.TrySetCanceled(token);}
+            public void Complete(){Registration.Dispose();if(_completion!=null)_completion.TrySetResult();else _callback();}
+        }
     }
 }

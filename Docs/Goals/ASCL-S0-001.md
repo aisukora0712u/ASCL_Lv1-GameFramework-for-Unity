@@ -12,15 +12,24 @@ priority: P0
 category: committed
 changeType: 修整
 dependencies: []
-status: planned
+status: done
 isGate: false
 createdAt: 2026-09-15T19:00:34.818Z
-updatedAt: 2026-09-15T19:00:34.818Z
-startedAt: null
-completedAt: null
+updatedAt: 2026-09-19T05:59:11.552Z
+startedAt: 2026-09-19T05:29:48.702Z
+completedAt: 2026-09-19T05:59:11.552Z
 reason: null
-evidence: []
+evidence:
+  - label: 0.2.0 自动验证记录
+    reference: Docs/Validation/ASCL-0.2.0.md
+    result: .NET 32 项、Unity EditMode 与 PlayMode 通过；消费项目验收独立记录
 log:
+  - at: 2026-09-19T05:59:11.552Z
+    type: verification
+    message: 双目标构建、32 项 .NET 测试、Unity 共享边界与 UI/渲染测试通过；不扩大本目标范围。
+  - at: 2026-09-19T05:29:48.703Z
+    type: progress
+    message: Algorithm_Storage 批准的 ASCL 完整接入开始；仅实施本目标及明确关联的接入能力。
   - at: 2026-09-15T19:00:34.818Z
     type: planning
     message: 由已确认长期路线图整理；仅建立目标，尚未安排框架实施。
@@ -51,10 +60,10 @@ log:
 
 ## 验收条件
 
-- [ ] 两个世界的相同槽位/代次不能互相解析
-- [ ] 销毁重建与对象复用不使旧句柄重新有效
-- [ ] 现有调用迁移有回归测试。
-- [ ] 交付与验证证据已写入元数据 evidence，实际验证记录写入 log。
+- [x] 两个世界的相同槽位/代次不能互相解析
+- [x] 销毁重建与对象复用不使旧句柄重新有效
+- [x] 现有调用迁移有回归测试。
+- [x] 交付与验证证据已写入元数据 evidence，实际验证记录写入 log。
 
 ## 验证场景
 
@@ -64,4 +73,4 @@ log:
 
 ## 实施记录
 
-当前仅登记目标，未开始实际实施。实际工作记录以本文件 frontmatter 的 log/evidence 为准；不要在总计划或网页另填一份状态。
+本次已实施并完成自动验证。实际工作记录以本文件 frontmatter 的 log/evidence 为准；不要在总计划或网页另填一份状态。

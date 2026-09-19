@@ -23,7 +23,7 @@ namespace ASCL.DevProject {
         private SkillDefinition _boost;
 
         public bool IsReady => _target != null;
-        public float Power => IsReady ? _target.Numeric.GetValue(_powerKey) : 0;
+        public float Power => IsReady ? (float)_target.Numeric.GetValue(_powerKey) : 0;
         public int BuffStacks => IsReady && _target.Buffs.Active.Count > 0
             ? _target.Buffs.Active[0].Stacks : 0;
 

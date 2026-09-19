@@ -1,13 +1,19 @@
 {
   "name": "com.operationgamestudio.ascl",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "displayName": "ASCL Game Framework",
   "description": "Unity-first pure C# framework for single-player games.",
   "unity": "6000.0",
   "author": {
     "name": "Operation Game Studio"
   },
-  "keywords": ["framework", "entity", "buff", "save", "ui"],
+  "keywords": [
+    "framework",
+    "entity",
+    "buff",
+    "save",
+    "ui"
+  ],
   "dependencies": {
     "com.unity.nuget.newtonsoft-json": "3.2.1"
   },

@@ -11,6 +11,7 @@ namespace ASCL.Gameplay.Buffs {
     public enum BuffRemovalReason:byte{Manual,Expired,Replaced,Dispelled,OwnerDisposed}
 
     public interface IBuffEffectDefinition { IBuffEffectRuntime CreateRuntime(); }
+    public interface IForkableBuffEffectRuntime { IBuffEffectRuntime Fork(); }
     public interface IBuffEffectRuntime {
         UniTask OnApplyAsync(BuffInstance instance,ActionExecution execution,CancellationToken cancellationToken);
         UniTask OnStackChangedAsync(BuffInstance instance,int oldStacks,ActionExecution? execution,CancellationToken cancellationToken);
@@ -33,13 +34,13 @@ namespace ASCL.Gameplay.Buffs {
 
     public sealed class BuffInstance {
         internal BuffInstance(BuffHandle handle,BuffDefinition definition,Combatant source,Combatant owner){Handle=handle;Definition=definition;Source=source;Owner=owner;Stacks=1;Remaining=definition.Permanent?float.PositiveInfinity:definition.Duration;Runtimes=new IBuffEffectRuntime[definition.Effects.Count];for(int i=0;i<Runtimes.Length;i++)Runtimes[i]=definition.Effects[i].CreateRuntime();ChildLinks=new ChildBuffLink[definition.Children.Count];}
-        public BuffHandle Handle{get;} public BuffDefinition Definition{get;} public Combatant Source{get;} public Combatant Owner{get;} public int Stacks{get;internal set;} public float Remaining{get;internal set;} internal IBuffEffectRuntime[] Runtimes{get;} internal ChildBuffLink[] ChildLinks{get;}
+        public BuffHandle Handle{get;} public BuffDefinition Definition{get;} public Combatant Source{get;internal set;} public Combatant Owner{get;internal set;} public int Stacks{get;internal set;} public float Remaining{get;internal set;} internal IBuffEffectRuntime[] Runtimes{get;} internal ChildBuffLink[] ChildLinks{get;}
     }
 
     internal readonly struct ChildBuffLink{public ChildBuffLink(BuffHandle handle,BuffApplyStatus status){Handle=handle;Status=status;}public BuffHandle Handle{get;}public BuffApplyStatus Status{get;}}
 
     public sealed class BuffController {
-        private static int s_owner;private readonly int _owner=System.Threading.Interlocked.Increment(ref s_owner);private readonly List<BuffInstance> _items=new();private readonly List<BuffHandle> _scratch=new();private int _nextId=1;private int _generation=1;
+        private static int s_owner;private int _owner=System.Threading.Interlocked.Increment(ref s_owner);private List<BuffInstance> _items=new();private readonly List<BuffHandle> _scratch=new();private int _nextId=1;private int _generation=1;
         internal BuffController(Combatant owner)=>Owner=owner;
         public Combatant Owner{get;} public IReadOnlyList<BuffInstance> Active=>_items;
         public async UniTask<BuffApplyResult> ApplyAsync(BuffDefinition definition,Combatant source,ActionExecution execution,CancellationToken cancellationToken=default){
@@ -61,12 +62,25 @@ namespace ASCL.Gameplay.Buffs {
         private async UniTask<BuffApplyResult> AddAsync(BuffDefinition d,Combatant source,ActionExecution execution,BuffApplyStatus status,CancellationToken ct){var h=new BuffHandle(_owner,_nextId++,_generation);var b=new BuffInstance(h,d,source,Owner);_items.Add(b);for(int i=0;i<b.Runtimes.Length;i++)await b.Runtimes[i].OnApplyAsync(b,execution,ct);for(int i=0;i<d.Children.Count;i++){BuffApplyResult child=await ApplyAsync(d.Children[i],source,execution,ct);b.ChildLinks[i]=new ChildBuffLink(child.Handle,child.Status);}return new BuffApplyResult(status,h);}
         private async UniTask RemoveChildLinkAsync(ChildBuffLink link,BuffRemovalReason reason,ActionExecution? execution,CancellationToken ct){if(!link.Handle.IsValid)return;if(link.Status==BuffApplyStatus.Stacked){for(int i=0;i<_items.Count;i++)if(_items[i].Handle.Equals(link.Handle)){BuffInstance child=_items[i];int old=child.Stacks;if(child.Stacks>1){child.Stacks--;for(int j=0;j<child.Runtimes.Length;j++)await child.Runtimes[j].OnStackChangedAsync(child,old,execution,ct);}else await RemoveAsync(child.Handle,reason,execution,ct);return;}}else if(link.Status is BuffApplyStatus.Applied or BuffApplyStatus.Replaced)await RemoveAsync(link.Handle,reason,execution,ct);}
         private async UniTask RemoveByIdAsync(string id,BuffRemovalReason reason,ActionExecution execution,CancellationToken ct){_scratch.Clear();for(int i=0;i<_items.Count;i++)if(_items[i].Definition.Id==id)_scratch.Add(_items[i].Handle);for(int i=0;i<_scratch.Count;i++)await RemoveAsync(_scratch[i],reason,execution,ct);}
+        internal Dictionary<object,object> ForkInto(BuffController target,Func<Combatant,Combatant> map) {
+            target._owner=_owner;target._nextId=_nextId;target._generation=_generation;var sources=new Dictionary<object,object>();
+            foreach(var original in _items){var copy=new BuffInstance(original.Handle,original.Definition,map(original.Source),target.Owner){Stacks=original.Stacks,Remaining=original.Remaining};
+                for(int i=0;i<original.Runtimes.Length;i++){if(original.Runtimes[i] is not IForkableBuffEffectRuntime runtime)throw new InvalidOperationException("Transactional buffs require IForkableBuffEffectRuntime.");copy.Runtimes[i]=runtime.Fork();}
+                Array.Copy(original.ChildLinks,copy.ChildLinks,copy.ChildLinks.Length);target._items.Add(copy);sources[original]=copy;}
+            return sources;
+        }
+        internal void PrepareAdopt(BuffController target,Func<Combatant,Combatant> map) {
+            foreach(var item in _items){foreach(var runtime in item.Runtimes)if(runtime is not IForkableBuffEffectRuntime)throw new InvalidOperationException("Transactional buffs require IForkableBuffEffectRuntime.");item.Owner=target.Owner;item.Source=map(item.Source);}
+        }
+        internal void Adopt(BuffController draft){_items=draft._items;_nextId=draft._nextId;_generation=draft._generation;}
+        public async UniTask ClearAsync(CancellationToken cancellationToken=default){var active=_items.ToArray();for(int i=active.Length-1;i>=0;i--)await RemoveAsync(active[i].Handle,BuffRemovalReason.OwnerDisposed,null,cancellationToken);}
+        public void RestoreTiming(BuffHandle handle,int stacks,float remaining){if(stacks<1||float.IsNaN(remaining)||remaining<0)throw new ArgumentOutOfRangeException(nameof(stacks));foreach(var item in _items)if(item.Handle.Equals(handle)){if(stacks!=item.Stacks)throw new InvalidOperationException("Restore stacks through the definition's application semantics first.");item.Remaining=remaining;return;}throw new InvalidOperationException("Buff handle is not active.");}
         private BuffInstance? Find(string id){for(int i=0;i<_items.Count;i++)if(_items[i].Definition.Id==id)return _items[i];return null;}private bool Owns(BuffHandle h)=>h.IsValid&&h.Owner==_owner&&h.Generation==_generation;
     }
 
     public sealed class NumericBuffEffectDefinition:IBuffEffectDefinition {
-        public NumericBuffEffectDefinition(NumericKey key,NumericModifierKind kind,float valuePerStack,int priority=0){Key=key;Kind=kind;ValuePerStack=valuePerStack;Priority=priority;}
-        public NumericKey Key{get;}public NumericModifierKind Kind{get;}public float ValuePerStack{get;}public int Priority{get;}public IBuffEffectRuntime CreateRuntime()=>new Runtime(this);
-        private sealed class Runtime:IBuffEffectRuntime{private readonly NumericBuffEffectDefinition _d;private NumericModifierHandle _handle;public Runtime(NumericBuffEffectDefinition d)=>_d=d;public UniTask OnApplyAsync(BuffInstance i,ActionExecution e,CancellationToken c){_handle=i.Owner.Numeric.AddModifier(_d.Key,_d.Kind,_d.ValuePerStack*i.Stacks,i,_d.Priority);return UniTask.CompletedTask;}public UniTask OnStackChangedAsync(BuffInstance i,int old,ActionExecution? e,CancellationToken c){i.Owner.Numeric.SetModifierValue(_handle,_d.ValuePerStack*i.Stacks);return UniTask.CompletedTask;}public UniTask OnActionAsync(BuffInstance i,ActionPhase p,GameActionContext c,ActionExecution e,CancellationToken t)=>UniTask.CompletedTask;public UniTask OnRemoveAsync(BuffInstance i,BuffRemovalReason r,ActionExecution? e,CancellationToken c){i.Owner.Numeric.RemoveModifier(_handle);return UniTask.CompletedTask;}}
+        public NumericBuffEffectDefinition(NumericKey key,NumericModifierKind kind,double valuePerStack,int priority=0){Key=key;Kind=kind;ValuePerStack=valuePerStack;Priority=priority;}
+        public NumericKey Key{get;}public NumericModifierKind Kind{get;}public double ValuePerStack{get;}public int Priority{get;}public IBuffEffectRuntime CreateRuntime()=>new Runtime(this);
+        private sealed class Runtime:IBuffEffectRuntime,IForkableBuffEffectRuntime{private readonly NumericBuffEffectDefinition _d;private NumericModifierHandle _handle;public Runtime(NumericBuffEffectDefinition d)=>_d=d;public IBuffEffectRuntime Fork()=>new Runtime(_d){_handle=_handle};public UniTask OnApplyAsync(BuffInstance i,ActionExecution e,CancellationToken c){_handle=i.Owner.Numeric.AddModifier(_d.Key,_d.Kind,_d.ValuePerStack*i.Stacks,i,_d.Priority);return UniTask.CompletedTask;}public UniTask OnStackChangedAsync(BuffInstance i,int old,ActionExecution? e,CancellationToken c){i.Owner.Numeric.SetModifierValue(_handle,_d.ValuePerStack*i.Stacks);return UniTask.CompletedTask;}public UniTask OnActionAsync(BuffInstance i,ActionPhase p,GameActionContext c,ActionExecution e,CancellationToken t)=>UniTask.CompletedTask;public UniTask OnRemoveAsync(BuffInstance i,BuffRemovalReason r,ActionExecution? e,CancellationToken c){i.Owner.Numeric.RemoveModifier(_handle);return UniTask.CompletedTask;}}
     }
 }

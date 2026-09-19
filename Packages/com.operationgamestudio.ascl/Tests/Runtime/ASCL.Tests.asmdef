@@ -1,10 +1,21 @@
 {
   "name": "ASCL.Tests",
   "rootNamespace": "ASCL.Tests",
-  "references": ["ASCL.Core", "ASCL.Gameplay", "ASCL.Persistence"],
+  "references": [
+    "ASCL.Core",
+    "ASCL.Gameplay",
+    "ASCL.Persistence",
+    "UniTask"
+  ],
   "overrideReferences": true,
-  "precompiledReferences": ["MemoryPack.Core.dll"],
-  "optionalUnityReferences": ["TestAssemblies"],
-  "includePlatforms": ["Editor"],
+  "precompiledReferences": [
+    "MemoryPack.Core.dll"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
   "autoReferenced": false
 }

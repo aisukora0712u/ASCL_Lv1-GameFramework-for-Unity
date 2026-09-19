@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace ASCL.Entities {
     public sealed class EntityWorld : IDisposable {
+        private static long s_worldId;
+        public long Id { get; } = System.Threading.Interlocked.Increment(ref s_worldId);
+        public bool IsDisposed => _disposed;
         private readonly List<Entity?> _entities = new();
         private readonly Dictionary<long, Entity> _byId = new();
         private long _nextId = 1;
@@ -26,8 +29,9 @@ namespace ASCL.Entities {
         private T CreateOwned<T>(Entity? parent, Func<T> factory, bool addAsChild) where T : Entity {
             if (_disposed) throw new ObjectDisposedException(nameof(EntityWorld));
             if (factory == null) throw new ArgumentNullException(nameof(factory));
-            if (parent != null && !ReferenceEquals(parent.World, this)) throw new InvalidOperationException("Parent belongs to another world.");
-            T entity = factory();
+            if (parent != null && (parent.State is EntityState.Disposing or EntityState.Disposed || !ReferenceEquals(parent.World, this))) throw new InvalidOperationException("Parent belongs to another world.");
+            T entity = factory() ?? throw new InvalidOperationException("Factory returned null.");
+            if(entity.State!=EntityState.Created||entity.Handle.IsValid)throw new InvalidOperationException("Factory must return a new unattached entity.");
             long id = _nextId++;
             if (_nextId <= 0) _nextId = 1;
             int generation = _nextGeneration++;
@@ -35,18 +39,16 @@ namespace ASCL.Entities {
             _entities.Add(entity);
             _byId.Add(id, entity);
             if (addAsChild) parent?.AddOwnedChild(entity);
-            try { entity.Attach(this, new EntityHandle(id, generation), parent); }
-            catch {
-                if (addAsChild) parent?.RemoveChild(entity);
-                _entities.Remove(entity);
-                _byId.Remove(id);
+            try { entity.Attach(this, new EntityHandle(Id, id, generation), parent); }
+            catch(Exception initializationError) {
+                try{entity.Dispose();}catch(Exception cleanupError){throw new AggregateException(initializationError,cleanupError);}
                 throw;
             }
             return entity;
         }
 
         public bool TryResolve(EntityHandle handle, out Entity? entity) {
-            if (handle.IsValid && _byId.TryGetValue(handle.Id, out entity) && entity.Handle == handle) return true;
+            if (!_disposed && handle.WorldId == Id && handle.IsValid && _byId.TryGetValue(handle.Id, out entity) && entity.Handle == handle) return true;
             entity = null;
             return false;
         }
@@ -54,6 +56,7 @@ namespace ASCL.Entities {
         public void Tick(float deltaTime) {
             if (_disposed) throw new ObjectDisposedException(nameof(EntityWorld));
             if (deltaTime < 0 || float.IsNaN(deltaTime) || float.IsInfinity(deltaTime)) throw new ArgumentOutOfRangeException(nameof(deltaTime));
+            if(_iterating)throw new InvalidOperationException("World Tick cannot reenter.");
             int count = _entities.Count;
             _iterating = true;
             try {
@@ -78,9 +81,10 @@ namespace ASCL.Entities {
         public void Dispose() {
             if (_disposed) return;
             _disposed = true;
-            for (int i = _entities.Count - 1; i >= 0; i--) _entities[i]?.Dispose();
-            _entities.Clear();
-            _byId.Clear();
+            var entities=_entities.ToArray();var errors=new List<Exception>();
+            for(int i=entities.Length-1;i>=0;i--)try{entities[i]?.Dispose();}catch(Exception error){errors.Add(error);}
+            _entities.Clear();_byId.Clear();
+            if(errors.Count>0)throw new AggregateException(errors);
         }
     }
 }
