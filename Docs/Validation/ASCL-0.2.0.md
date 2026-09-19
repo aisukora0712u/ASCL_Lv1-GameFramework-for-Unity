@@ -20,3 +20,9 @@ Repeated game-worker queries exposed retention of completed task results until s
 
 - .NET: 34/34 passed ([TRX](ASCL-0.2.0/lifetime/dotnet.trx)); Unity EditMode: 25/25 ([XML](ASCL-0.2.0/lifetime/editmode.xml)); Unity PlayMode: 4/4 ([XML](ASCL-0.2.0/lifetime/playmode.xml)).
 - Consumer 1600×900 PlayMode: 12/12 passed, including four save/load/restart cycles, discarded worlds/items/Buffs, stable UI/popup object counts, corrupt-file preservation. The consumer retains its detailed evidence and final delivery gate.
+
+## Evidence byte preservation (2026-09-19T07:54:18.402Z)
+
+Git autocrlf normalized the archived XML/TRX blobs despite the original files matching their recorded hashes. The raw test outputs are retained unchanged and Docs/Validation now disables text conversion. All six committed evidence blobs are checked against the original SHA-256 manifests after staging. This corrects archival transport; test outcomes and recorded user decisions are unchanged.
+
+Final consumer automation: .NET92/92, Unity EditMode108/108, 1920×1080 and 1600×900 PlayMode13/13 each; 60 full-battle snapshots equal the pre-migration baseline; workbench291/291. Consumer manual acceptance remains separate. Embedded package remains pinned to 79406d54ab35dd1ac5cfc3f98c4b58c3a6ade7ca because this follow-up changes documentation transport only.
