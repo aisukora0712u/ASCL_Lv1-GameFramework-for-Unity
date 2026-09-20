@@ -22,6 +22,10 @@ A separate local Chinese knowledge and research workbench lives in
 templates are versioned here; personal knowledge, attachments and history stay
 in an independent local library outside this repository.
 
+On Windows, double-click [启动网页.cmd](启动网页.cmd) in the repository root to
+start the prepared workbench and open `http://127.0.0.1:4317` in your browser.
+For first-time setup, follow the [workbench guide](Tools/KnowledgeSite/README.md).
+
 The long-term roadmap is in [PLAN.md](PLAN.md); stage and implementation goal
 navigation is in [GOALS.md](GOALS.md). The local workbench's **实施目标** page
 reads these repository Markdown files for progress, dependencies, coverage and

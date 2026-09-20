@@ -1,4 +1,4 @@
-param([switch]$NoBrowser)
+﻿param([switch]$NoBrowser)
 $ErrorActionPreference = 'Stop'
 $privateConfig = Join-Path $PSScriptRoot '.local/runtime.json'
 if (Test-Path -LiteralPath $privateConfig) { $nodeExe = (Get-Content -LiteralPath $privateConfig -Raw | ConvertFrom-Json).node }
