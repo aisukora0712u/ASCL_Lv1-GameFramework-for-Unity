@@ -50,6 +50,41 @@ try {
   fake = undefined;
   await fs.mkdir(state);
   await fs.writeFile(
+    path.join(state, "active.json"),
+    JSON.stringify({ format: 1, root: library }),
+  );
+  const delayedIdentity = {
+    installationId,
+    protocol: 1,
+    instanceId: "delayed-identity-fixture",
+    token: "delayed-token-fixture",
+    root: library,
+  };
+  let identityWrite: Promise<void> | undefined;
+  fake = http.createServer((_req, res) => {
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify(delayedIdentity));
+    identityWrite ??= new Promise<void>((resolve) => setTimeout(resolve, 500)).then(
+      () =>
+        fs.writeFile(
+          path.join(state, "instance.json"),
+          JSON.stringify(delayedIdentity),
+        ),
+    );
+  });
+  await new Promise<void>((resolve) => fake!.listen(4317, "127.0.0.1", resolve));
+  try {
+    assert.match((await control("start")).stdout, /复用/);
+    checks.push("端口先就绪、身份文件延迟写入：启动等待后完整核验身份");
+  } finally {
+    await identityWrite;
+    await new Promise<void>((resolve) => {
+      fake!.close(() => resolve());
+      fake!.closeAllConnections();
+    });
+    fake = undefined;
+  }
+  await fs.writeFile(
     path.join(state, "instance.json"),
     JSON.stringify({
       pid: process.pid,
@@ -73,10 +108,35 @@ try {
     control("start", { ASCL_KNOWLEDGE_LIBRARY: path.join(root, "different") }),
     /不匹配/,
   );
-  await assert.rejects(
-    control("stop", { ASCL_KNOWLEDGE_STATE: path.join(root, "unknown state") }),
-    /身份文件缺失/,
+  const unknownState = path.join(root, "unknown state");
+  for (const command of ["start", "stop"]) {
+    await assert.rejects(
+      control(command, { ASCL_KNOWLEDGE_STATE: unknownState }),
+      (error: any) => {
+        assert.match(error.stderr, /身份文件缺失.*ENOENT/);
+        assert.ok(error.stderr.includes(path.join(unknownState, "instance.json")));
+        return true;
+      },
+    );
+  }
+  await assert.rejects(fs.access(unknownState), { code: "ENOENT" });
+  assert.equal(
+    (await (await fetch(base + "/api/session")).json()).instanceId,
+    first.instanceId,
   );
+  const identityPath = path.join(state, "instance.json");
+  const savedIdentity = await fs.readFile(identityPath);
+  try {
+    await fs.writeFile(identityPath, "{invalid-private-content");
+    await assert.rejects(control("start"), (error: any) => {
+      assert.match(error.stderr, /INVALID_JSON/);
+      assert.ok(error.stderr.includes(identityPath));
+      assert.doesNotMatch(error.stderr, /invalid-private-content/);
+      return true;
+    });
+  } finally {
+    await fs.writeFile(identityPath, savedIdentity);
+  }
   checks.push("重复启动复用同一实例；错误库和未知身份拒绝复用或停止");
   const page = await fetch(base);
   const csp = page.headers.get("content-security-policy")!;

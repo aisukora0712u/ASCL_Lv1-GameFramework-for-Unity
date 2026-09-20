@@ -18,27 +18,43 @@ async function probe() {
     throw new Error("4317 端口已占用或服务身份无法确认；不会停止其他进程");
   }
 }
-async function verified(remote: any) {
+async function readIdentityFile(name: string, waitForStartup: boolean) {
+  const file = path.join(manager.stateDir, name);
+  const deadline = Date.now() + (waitForStartup ? 3000 : 0);
+  while (true) {
+    try {
+      return JSON.parse(await fs.readFile(file, "utf8"));
+    } catch (error: any) {
+      // The server can accept requests just before its atomic identity write finishes.
+      // Only wait for missing files; never manufacture an identity from HTTP data.
+      if (error.code === "ENOENT" && Date.now() < deadline) {
+        await new Promise((resolve) => setTimeout(resolve, 100));
+        continue;
+      }
+      const reason =
+        error.code === "ENOENT"
+          ? "实例身份文件缺失"
+          : "实例身份文件无法读取或格式错误";
+      const code = error instanceof SyntaxError ? "INVALID_JSON" : error.code;
+      throw new Error(
+        `${reason}（${code ?? "UNKNOWN"}）：${file}\n` +
+          "请确认启动和停止使用相同的 Windows 用户、LOCALAPPDATA 与 ASCL_KNOWLEDGE_STATE；不复用或停止未知服务。",
+      );
+    }
+  }
+}
+async function verified(remote: any, waitForStartup = false) {
+  if (remote.installationId !== installationId || remote.protocol !== 1)
+    throw new Error("端口实例的安装或协议身份不匹配");
   if (
     process.env.ASCL_KNOWLEDGE_LIBRARY &&
     path.resolve(process.env.ASCL_KNOWLEDGE_LIBRARY).toLowerCase() !==
       path.resolve(remote.root).toLowerCase()
   )
     throw new Error("请求库与运行实例不匹配，不能复用");
-  let instance;
-  try {
-    instance = JSON.parse(
-      await fs.readFile(path.join(manager.stateDir, "instance.json"), "utf8"),
-    );
-  } catch {
-    throw new Error("实例身份文件缺失，不复用或停止未知服务");
-  }
-  const active = JSON.parse(
-    await fs.readFile(path.join(manager.stateDir, "active.json"), "utf8"),
-  );
+  const instance = await readIdentityFile("instance.json", waitForStartup);
+  const active = await readIdentityFile("active.json", false);
   if (
-    remote.installationId !== installationId ||
-    remote.protocol !== 1 ||
     remote.instanceId !== instance.instanceId ||
     remote.token !== instance.token ||
     path.resolve(remote.root).toLowerCase() !==
@@ -75,7 +91,7 @@ try {
     }
   } else {
     if (remote) {
-      await verified(remote);
+      await verified(remote, true);
       console.log("复用已验证的 ASCL 实例：" + url);
     } else {
       await fs.access(path.join(installation, "dist/index.html")).catch(() => {
@@ -100,7 +116,7 @@ try {
         if (remote) break;
       }
       if (!remote) throw new Error("启动超时，请检查本机状态目录的 server.log");
-      await verified(remote);
+      await verified(remote, true);
       console.log("本地网站已启动：" + url);
     }
   }
