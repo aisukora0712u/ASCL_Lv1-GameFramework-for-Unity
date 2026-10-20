@@ -1,6 +1,6 @@
 {
   "name": "com.operationgamestudio.ascl",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "displayName": "ASCL Game Framework",
   "description": "Unity-first pure C# framework for single-player games.",
   "unity": "6000.0",

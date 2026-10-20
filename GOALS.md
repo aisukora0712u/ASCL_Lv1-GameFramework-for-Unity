@@ -4,6 +4,8 @@
 
 ## 阶段入口
 
+本次新增 [ASCL-S0-005 OEvent 静态事件系统正式接入](Docs/Goals/ASCL-S0-005.md)，旧版保留于 `codex/legacy-pre-oevent-20261021`；实际状态、时间与证据仅维护在目标文件。
+
 - [S0 基础修整与关键可行性验证](Docs/Plans/S0.md)
 - [S1 模块基础与内容基础](Docs/Plans/S1.md)
 - [S2 俯视角射击：单机与本地多人](Docs/Plans/S2.md)

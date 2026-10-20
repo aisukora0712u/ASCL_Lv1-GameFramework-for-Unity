@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "checkedAt": "2026-10-20T19:35:39.320Z",
+  "browser": "155.0.4283.62",
+  "engine": "Edge / Playwright",
+  "urlType": "local file",
+  "reviewItems": 4,
+  "criteria": 14,
+  "images": [
+    {
+      "src": "urp3d-PC.png",
+      "width": 640,
+      "height": 360
+    },
+    {
+      "src": "urp3d-Mobile.png",
+      "width": 640,
+      "height": 360
+    }
+  ],
+  "localLinksChecked": 16,
+  "desktopViewport": "1280x960",
+  "narrowViewport": "390x844",
+  "horizontalOverflow": false,
+  "export": "Downloaded text matched selected item, notes, and untouched items; synthetic input cleared by reload. No human approval is recorded.",
+  "pageErrors": [],
+  "failedRequests": [],
+  "networkRequests": [],
+  "screenshot": "review-page.png"
+}

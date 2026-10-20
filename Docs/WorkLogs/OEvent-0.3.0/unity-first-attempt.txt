@@ -1,0 +1,8 @@
+U:\Packages\com.operationgamestudio.ascl\Tests\Runtime\OEventTests.cs(12,6): error CS0246: The type or namespace name 'NonParallelizableAttribute' could not be found (are you missing a using directive or an assembly reference?)
+U:\Packages\com.operationgamestudio.ascl\Tests\Runtime\OEventTests.cs(12,6): error CS0246: The type or namespace name 'NonParallelizable' could not be found (are you missing a using directive or an assembly reference?)
+U:\Packages\com.operationgamestudio.ascl\Tests\Runtime\OEventTests.cs(12,6): error CS0246: The type or namespace name 'NonParallelizableAttribute' could not be found (are you missing a using directive or an assembly reference?)
+U:\Packages\com.operationgamestudio.ascl\Tests\Runtime\OEventTests.cs(12,6): error CS0246: The type or namespace name 'NonParallelizable' could not be found (are you missing a using directive or an assembly reference?)
+U:\Packages\com.operationgamestudio.ascl\Tests\Runtime\OEventTests.cs(12,6): error CS0246: The type or namespace name 'NonParallelizableAttribute' could not be found (are you missing a using directive or an assembly reference?)
+U:\Packages\com.operationgamestudio.ascl\Tests\Runtime\OEventTests.cs(12,6): error CS0246: The type or namespace name 'NonParallelizable' could not be found (are you missing a using directive or an assembly reference?)
+Scripts have compiler errors.
+Exiting without the bug reporter. Application will terminate with return code 1

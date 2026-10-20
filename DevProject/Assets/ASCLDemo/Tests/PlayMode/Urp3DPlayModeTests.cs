@@ -4,6 +4,7 @@ using ASCL.Entities;
 using ASCL.Unity;
 using Cysharp.Threading.Tasks;
 using NUnit.Framework;
+using OEvent.Module;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -43,6 +44,8 @@ namespace ASCL.DevProject.Tests {
             Assert.That(demo.IsReady, Is.True);
             Assert.That(driver.World.Count, Is.EqualTo(2));
             Assert.That(demo.Power, Is.EqualTo(10));
+            Assert.That(OEventManager.Instance.IsInitialized, Is.True);
+            Assert.That(demo.EventRefreshCount, Is.EqualTo(1), "Initial presentation must pass through OEvent.");
 
             driver.Systems.Register(new ProbeSystem());
             var probe = driver.World.Create<TickProbe>();
@@ -55,11 +58,16 @@ namespace ASCL.DevProject.Tests {
             GameObject.Find("Boost").GetComponent<Button>().onClick.Invoke();
             yield return null;
             Assert.That(demo.Power, Is.EqualTo(12));
+            Assert.That(demo.EventRefreshCount, Is.EqualTo(2));
             for (int i = 0; i < 3; i++) {
                 yield return demo.BoostAsync().ToCoroutine(result => Assert.That(result.Succeeded, Is.True));
+                Assert.That(demo.Power, Is.EqualTo(i == 0 ? 14 : 16));
+                Assert.That(demo.BuffStacks, Is.EqualTo(i == 0 ? 2 : 3));
+                Assert.That(demo.EventRefreshCount, Is.EqualTo(i + 3));
             }
             Assert.That(demo.Power, Is.EqualTo(16));
             Assert.That(demo.BuffStacks, Is.EqualTo(3));
+            Assert.That(demo.EventRefreshCount, Is.EqualTo(5), "Each completed skill must refresh through exactly one handler.");
             var cube = GameObject.Find("Power Cube").transform;
             Assert.That(cube.localScale.y, Is.EqualTo(1.6f).Within(0.001f));
             Assert.That(cube.localPosition.y, Is.EqualTo(0.8f).Within(0.001f));
@@ -68,6 +76,23 @@ namespace ASCL.DevProject.Tests {
             Object.Destroy(demo.gameObject);
             yield return null;
             Assert.That(driver.World.Count, Is.Zero, "Unloading presentation must release its entities.");
+        }
+
+        [UnityTest]
+        public IEnumerator SceneReloadKeepsGlobalRegistrationAndIgnoresDestroyedTarget() {
+            var oldDemo = Object.FindFirstObjectByType<Urp3DDemo>();
+            int count = OEventManager.Instance.RegisteredHandlerCount;
+            yield return SceneManager.LoadSceneAsync("ASCL_URP3D", LoadSceneMode.Single);
+            yield return null;
+            Assert.That(oldDemo == null, Is.True);
+            var next = Object.FindFirstObjectByType<Urp3DDemo>();
+            Assert.That(next.EventRefreshCount, Is.EqualTo(1));
+            Assert.That(OEventManager.Instance.RegisteredHandlerCount, Is.EqualTo(count));
+            OEventManager.Instance.BroadcastEvent(new DemoPowerChanged(oldDemo));
+            Assert.That(next.EventRefreshCount, Is.EqualTo(1), "An old scene's target must never refresh the new scene.");
+            yield return next.BoostAsync().ToCoroutine();
+            Assert.That(next.Power, Is.EqualTo(12));
+            Assert.That(next.EventRefreshCount, Is.EqualTo(2));
         }
 
         [UnityTest]

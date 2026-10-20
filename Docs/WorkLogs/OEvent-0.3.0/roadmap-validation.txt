@@ -1,0 +1,24 @@
+{
+  "valid": true,
+  "revision": "91097da67066799b612452d8dd5311b70645b0932921a4760efe6f96eef4c47a",
+  "phases": 7,
+  "areas": 16,
+  "capabilities": 137,
+  "goals": 100,
+  "summary": {
+    "total": 52,
+    "done": 3,
+    "percent": 6,
+    "counts": {
+      "planned": 47,
+      "in_progress": 0,
+      "in_review": 2,
+      "done": 3,
+      "blocked": 0,
+      "deferred": 0,
+      "cancelled": 0
+    },
+    "excluded": 48
+  },
+  "diagnostics": []
+}

@@ -1,12 +1,16 @@
 # ASCL Game Framework
 
 ASCL is a Unity-first, engine-isolated C# framework for single-player games. The
-first vertical slice contains hierarchical entities, scoped events, numeric
+first vertical slice contains hierarchical entities, OEvent static event handlers, numeric
 modifiers, Skill-Buff-Action resolution, MemoryPack saves, uGUI presentation
 adapters, and allocation-free-after-warmup popup rendering.
 
 The installable Unity package lives at `Packages/com.operationgamestudio.ascl`.
 See `Documentation~/INSTALLATION.md` and `IMPLEMENTATION_REVIEW_ZH.md`.
+
+Version 0.3.0 replaces EventScope with the global OEvent system; see
+[the migration guide](Packages/com.operationgamestudio.ascl/MIGRATION-0.3.0.md).
+The pre-OEvent version is preserved on `codex/legacy-pre-oevent-20261021`.
 
 The runnable host project is `DevProject`, pinned to **Unity 6000.3.23f1
 (Unity 6.3 LTS)** and **Universal Render Pipeline 17.3.0**. On Windows, launch it

@@ -1,0 +1,77 @@
+{
+  "capturedAt": "2026-10-21T04:36:36.7040674+09:00",
+  "algorithm": "SHA-256",
+  "files": [
+    {
+      "file": "browser-check.json",
+      "bytes": 756,
+      "sha256": "917fa43f1366a27f135668128d1f2d455c83508053901b6048b84055dcc192ac"
+    },
+    {
+      "file": "dotnet-build.txt",
+      "bytes": 480,
+      "sha256": "a23cfae548a9223804991ba15afc55bf96b392c52095998ec7c6c2e966ea3184"
+    },
+    {
+      "file": "dotnet.trx",
+      "bytes": 80313,
+      "sha256": "4d342ef38afa8b558ea6ffff6d9c6b5ac0704cde5ca24b94a19903d2e713c136"
+    },
+    {
+      "file": "implementation.patch",
+      "bytes": 68565,
+      "sha256": "b5e9db13299b758361d5bfdc8f0e0b41065aff3f344430c9c10b3684f48ae7f4"
+    },
+    {
+      "file": "review-page.png",
+      "bytes": 123729,
+      "sha256": "b7d2b4949ffe5a0aeda391b89d964c59b9a85b2f5d151409c595729e4b8d3faa"
+    },
+    {
+      "file": "review.html",
+      "bytes": 88912,
+      "sha256": "8fdede4dec474b6f00d734cfcba4abffe00d2955aae96f5ae0c854ab63656fd2"
+    },
+    {
+      "file": "roadmap-validation.txt",
+      "bytes": 474,
+      "sha256": "52077e1642733a5b72cc4a442cef85fa7d873c1e1ea92dc62f22e3c3e845f6fe"
+    },
+    {
+      "file": "source-manifest.json",
+      "bytes": 1358,
+      "sha256": "786bb0358502760ed585546d864c494ca0d72a015457563ac91191327f2880af"
+    },
+    {
+      "file": "unity-editmode.xml",
+      "bytes": 42791,
+      "sha256": "28e2a202a2557c55d39483b2f96bceb784467c5c863f619db8ba39f0cd6c2195"
+    },
+    {
+      "file": "unity-first-attempt.txt",
+      "bytes": 1459,
+      "sha256": "fd145f395c4f2d0b21e6b5ddc4fec19889e357421de873f755876a6f1ee31994"
+    },
+    {
+      "file": "unity-playmode.xml",
+      "bytes": 7360,
+      "sha256": "89fe66736bafcf0a73cd2c4cce5b93404f89666f6822abd3fdeecd4b9bdf4a0b"
+    },
+    {
+      "file": "unity-second-attempt.xml",
+      "bytes": 53657,
+      "sha256": "a5dc73c876be89728cdab5e60cdd1adff8a8b203f43bb0d67e4e3ac87807af2c"
+    },
+    {
+      "file": "urp3d-Mobile.png",
+      "bytes": 28182,
+      "sha256": "8f2b2164fbd02db88e37830d168a4a900ff09df03f3e425e409a8e6e645c82be"
+    },
+    {
+      "file": "urp3d-PC.png",
+      "bytes": 50367,
+      "sha256": "8ba9b7625c3fba47011f2609cd31a2b2a8c865541e67a7c874c3ad1a3b16a177"
+    }
+  ],
+  "note": "Evidence files are preserved byte-for-byte by .gitattributes; this manifest excludes itself. Browser synthetic feedback is not human approval."
+}

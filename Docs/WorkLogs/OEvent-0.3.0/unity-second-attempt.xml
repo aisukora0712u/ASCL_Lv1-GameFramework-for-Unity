@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="51" result="Failed(Child)" total="51" passed="48" failed="3" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-20 19:26:57Z" end-time="2026-10-20 19:27:04Z" duration="6.63633">
+  <test-suite type="TestSuite" id="1000" name="ASCL URP 3D" fullname="ASCL URP 3D" runstate="Runnable" testcasecount="51" result="Failed" site="Child" start-time="2026-10-20 19:26:57Z" end-time="2026-10-20 19:27:04Z" duration="6.636330" total="51" passed="48" failed="3" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1006" name="ASCL.DevProject.Editor.Tests.dll" fullname="U:/DevProject/Library/ScriptAssemblies/ASCL.DevProject.Editor.Tests.dll" runstate="Runnable" testcasecount="3" result="Failed" site="Child" start-time="2026-10-20 19:26:57Z" end-time="2026-10-20 19:26:59Z" duration="1.653621" total="3" passed="2" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="17740" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1007" name="ASCL" fullname="ASCL" runstate="Runnable" testcasecount="3" result="Failed" site="Child" start-time="2026-10-20 19:26:57Z" end-time="2026-10-20 19:26:59Z" duration="1.653298" total="3" passed="2" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1008" name="DevProject" fullname="ASCL.DevProject" runstate="Runnable" testcasecount="3" result="Failed" site="Child" start-time="2026-10-20 19:26:57Z" end-time="2026-10-20 19:26:59Z" duration="1.653163" total="3" passed="2" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1009" name="Tests" fullname="ASCL.DevProject.Tests" runstate="Runnable" testcasecount="3" result="Failed" site="Child" start-time="2026-10-20 19:26:57Z" end-time="2026-10-20 19:26:59Z" duration="1.652999" total="3" passed="2" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1001" name="OEventPlaySessionTests" fullname="ASCL.DevProject.Tests.OEventPlaySessionTests" classname="ASCL.DevProject.Tests.OEventPlaySessionTests" runstate="Runnable" testcasecount="1" result="Failed" site="Child" start-time="2026-10-20 19:26:57Z" end-time="2026-10-20 19:26:59Z" duration="1.634728" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1002" name="RepeatedPlayWithoutDomainReloadRebuildsOneGlobalRegistration" fullname="ASCL.DevProject.Tests.OEventPlaySessionTests.RepeatedPlayWithoutDomainReloadRebuildsOneGlobalRegistration" methodname="RepeatedPlayWithoutDomainReloadRebuildsOneGlobalRegistration" classname="ASCL.DevProject.Tests.OEventPlaySessionTests" runstate="Runnable" seed="1517818057" result="Failed" start-time="2026-10-20 19:26:57Z" end-time="2026-10-20 19:26:59Z" duration="1.625700" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[Unhandled log message: '[Exception] ReflectionTypeLoadException: Exception of type 'System.Reflection.ReflectionTypeLoadException' was thrown.
+Could not load file or assembly 'Microsoft.CodeAnalysis, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' or one of its dependencies.
+Could not load type of field 'ASCL.SourceGen.EntitySystemGenerator+<>c:<>9__1_0' (1) due to: Could not load file or assembly 'Microsoft.CodeAnalysis, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' or one of its dependencies.'. Use UnityEngine.TestTools.LogAssert.Expect]]></message>
+                  <stack-trace><![CDATA[System.Reflection.Assembly.GetTypes () (at <d49d4cb128564ee1b54a84338c98d353>:0)
+OEvent.Module.OEventReflectionHelper.ReadTypes (System.Reflection.Assembly assembly) (at U:/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventReflectionHelper.cs:23)
+Rethrow as InvalidOperationException: OEvent could not completely inspect assembly 'ASCL.SourceGen, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null': Could not load file or assembly 'Microsoft.CodeAnalysis, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' or one of its dependencies.; Could not load type of field 'ASCL.SourceGen.EntitySystemGenerator+<>c:<>9__1_0' (1) due to: Could not load file or assembly 'Microsoft.CodeAnalysis, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' or one of its dependencies.
+OEvent.Module.OEventReflectionHelper.ReadTypes (System.Reflection.Assembly assembly) (at U:/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventReflectionHelper.cs:26)
+System.Linq.Enumerable+SelectManySingleSelectorIterator`2[TSource,TResult].MoveNext () (at <e1f614c5eede4689988594bcb9796955>:0)
+System.Linq.Enumerable+WhereEnumerableIterator`1[TSource].ToList () (at <e1f614c5eede4689988594bcb9796955>:0)
+System.Linq.Enumerable.ToList[TSource] (System.Collections.Generic.IEnumerable`1[T] source) (at <e1f614c5eede4689988594bcb9796955>:0)
+OEvent.Module.OEventReflectionHelper.GetAllTypesWithAttribute[TAttribute] () (at U:/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventReflectionHelper.cs:11)
+ASCL.Unity.OEventRuntimeBootstrap.Initialize () (at U:/Packages/com.operationgamestudio.ascl/Runtime/Unity/OEventRuntimeBootstrap.cs:15)
+
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[ReflectionTypeLoadException: Exception of type 'System.Reflection.ReflectionTypeLoadException' was thrown.
+Could not load file or assembly 'Microsoft.CodeAnalysis, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' or one of its dependencies.
+Could not load type of field 'ASCL.SourceGen.EntitySystemGenerator+<>c:<>9__1_0' (1) due to: Could not load file or assembly 'Microsoft.CodeAnalysis, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' or one of its dependencies.
+System.Reflection.Assembly.GetTypes () (at <d49d4cb128564ee1b54a84338c98d353>:0)
+OEvent.Module.OEventReflectionHelper.ReadTypes (System.Reflection.Assembly assembly) (at U:/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventReflectionHelper.cs:23)
+Rethrow as InvalidOperationException: OEvent could not completely inspect assembly 'ASCL.SourceGen, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null': Could not load file or assembly 'Microsoft.CodeAnalysis, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' or one of its dependencies.; Could not load type of field 'ASCL.SourceGen.EntitySystemGenerator+<>c:<>9__1_0' (1) due to: Could not load file or assembly 'Microsoft.CodeAnalysis, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' or one of its dependencies.
+OEvent.Module.OEventReflectionHelper.ReadTypes (System.Reflection.Assembly assembly) (at U:/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventReflectionHelper.cs:26)
+System.Linq.Enumerable+SelectManySingleSelectorIterator`2[TSource,TResult].MoveNext () (at <e1f614c5eede4689988594bcb9796955>:0)
+System.Linq.Enumerable+WhereEnumerableIterator`1[TSource].ToList () (at <e1f614c5eede4689988594bcb9796955>:0)
+System.Linq.Enumerable.ToList[TSource] (System.Collections.Generic.IEnumerable`1[T] source) (at <e1f614c5eede4689988594bcb9796955>:0)
+OEvent.Module.OEventReflectionHelper.GetAllTypesWithAttribute[TAttribute] () (at U:/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventReflectionHelper.cs:11)
+ASCL.Unity.OEventRuntimeBootstrap.Initialize () (at U:/Packages/com.operationgamestudio.ascl/Runtime/Unity/OEventRuntimeBootstrap.cs:15)
+
+InvalidOperationException: Initialize OEvent before broadcasting.
+OEvent.Module.OEventManager.Snapshot (System.Type argument, System.Type result, OEvent.Module.EventKind kind) (at U:/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventManager.cs:157)
+OEvent.Module.OEventManager.BroadcastEvent[TEventType] (TEventType eventData) (at U:/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventManager.cs:100)
+ASCL.DevProject.Urp3DDemo.PublishPowerChanged () (at Assets/ASCLDemo/Runtime/Urp3DDemo.cs:67)
+ASCL.DevProject.Urp3DDemo.Start () (at Assets/ASCLDemo/Runtime/Urp3DDemo.cs:50)
+
+]]></output>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1003" name="Urp3DConfigurationTests" fullname="ASCL.DevProject.Tests.Urp3DConfigurationTests" classname="ASCL.DevProject.Tests.Urp3DConfigurationTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:26:59Z" duration="0.017428" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1005" name="BuildSceneHasFrameworkDriverAndValidUrpMaterials" fullname="ASCL.DevProject.Tests.Urp3DConfigurationTests.BuildSceneHasFrameworkDriverAndValidUrpMaterials" methodname="BuildSceneHasFrameworkDriverAndValidUrpMaterials" classname="ASCL.DevProject.Tests.Urp3DConfigurationTests" runstate="Runnable" seed="1692084226" result="Passed" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:26:59Z" duration="0.013131" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1004" name="ProjectUsesPinnedEditorAndLinearUrpForEveryQualityLevel" fullname="ASCL.DevProject.Tests.Urp3DConfigurationTests.ProjectUsesPinnedEditorAndLinearUrpForEveryQualityLevel" methodname="ProjectUsesPinnedEditorAndLinearUrpForEveryQualityLevel" classname="ASCL.DevProject.Tests.Urp3DConfigurationTests" runstate="Runnable" seed="1455743207" result="Passed" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:26:59Z" duration="0.003389" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+    <test-suite type="Assembly" id="1065" name="ASCL.Tests.dll" fullname="U:/DevProject/Library/ScriptAssemblies/ASCL.Tests.dll" runstate="Runnable" testcasecount="48" result="Failed" site="Child" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:27:04Z" duration="4.977439" total="48" passed="46" failed="2" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="17740" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1066" name="ASCL" fullname="ASCL" runstate="Runnable" testcasecount="48" result="Failed" site="Child" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:27:04Z" duration="4.977240" total="48" passed="46" failed="2" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1067" name="Tests" fullname="ASCL.Tests" runstate="Runnable" testcasecount="48" result="Failed" site="Child" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:27:04Z" duration="4.977082" total="48" passed="46" failed="2" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestFixture" id="1010" name="IntegrationFoundationTests" fullname="ASCL.Tests.IntegrationFoundationTests" classname="ASCL.Tests.IntegrationFoundationTests" runstate="Runnable" testcasecount="19" result="Passed" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:27:04Z" duration="4.915718" total="19" passed="19" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-case id="1028" name="AttachedFactoryCannotDestroyExistingOwnership" fullname="ASCL.Tests.IntegrationFoundationTests.AttachedFactoryCannotDestroyExistingOwnership" methodname="AttachedFactoryCannotDestroyExistingOwnership" classname="ASCL.Tests.IntegrationFoundationTests" runstate="Runnable" seed="2015785967" result="Passed" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:26:59Z" duration="0.001403" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1025" name="BuffStateAndModifiersRollbackTogether" fullname="ASCL.Tests.IntegrationFoundationTests.BuffStateAndModifiersRollbackTogether" methodname="BuffStateAndModifiersRollbackTogether" classname="ASCL.Tests.IntegrationFoundationTests" runstate="Runnable" seed="1966464174" result="Passed" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:26:59Z" duration="0.016883" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1027" name="FailedInitializationAndCleanupReleaseTheWholeOwnershipTree" fullname="ASCL.Tests.IntegrationFoundationTests.FailedInitializationAndCleanupReleaseTheWholeOwnershipTree" methodname="FailedInitializationAndCleanupReleaseTheWholeOwnershipTree" classname="ASCL.Tests.IntegrationFoundationTests" runstate="Runnable" seed="612471326" result="Passed" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:26:59Z" duration="0.001609" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1011" name="HandlesAreWorldScopedAndNeverResolveAfterRecreation" fullname="ASCL.Tests.IntegrationFoundationTests.HandlesAreWorldScopedAndNeverResolveAfterRecreation" methodname="HandlesAreWorldScopedAndNeverResolveAfterRecreation" classname="ASCL.Tests.IntegrationFoundationTests" runstate="Runnable" seed="1186824700" result="Passed" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:26:59Z" duration="0.000540" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1024" name="NotificationsObserveEveryCommittedTargetAndCannotUndoSuccess" fullname="ASCL.Tests.IntegrationFoundationTests.NotificationsObserveEveryCommittedTargetAndCannotUndoSuccess" methodname="NotificationsObserveEveryCommittedTargetAndCannotUndoSuccess" classname="ASCL.Tests.IntegrationFoundationTests" runstate="Runnable" seed="1328425479" result="Passed" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:26:59Z" duration="0.001413" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1021" name="NumericPreservesIntegersAboveFloatPrecision" fullname="ASCL.Tests.IntegrationFoundationTests.NumericPreservesIntegersAboveFloatPrecision" methodname="NumericPreservesIntegersAboveFloatPrecision" classname="ASCL.Tests.IntegrationFoundationTests" runstate="Runnable" seed="564661901" result="Passed" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:26:59Z" duration="0.000183" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1029" name="OwnerDoesNotRetainCompletedWorkerResultsAndWaitsForCancellation" fullname="ASCL.Tests.IntegrationFoundationTests.OwnerDoesNotRetainCompletedWorkerResultsAndWaitsForCancellation" methodname="OwnerDoesNotRetainCompletedWorkerResultsAndWaitsForCancellation" classname="ASCL.Tests.IntegrationFoundationTests" runstate="Runnable" seed="1144089640" result="Passed" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:26:59Z" duration="0.012234" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1030" name="OwnerReportsFaultButStillJoinsOtherWorkers" fullname="ASCL.Tests.IntegrationFoundationTests.OwnerReportsFaultButStillJoinsOtherWorkers" methodname="OwnerReportsFaultButStillJoinsOtherWorkers" classname="ASCL.Tests.IntegrationFoundationTests" runstate="Runnable" seed="2109494611" result="Passed" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:26:59Z" duration="0.050904" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1017" name="RandomPreservesLegacySequenceAndRestoresWithoutReplaying" fullname="ASCL.Tests.IntegrationFoundationTests.RandomPreservesLegacySequenceAndRestoresWithoutReplaying" classname="ASCL.Tests.IntegrationFoundationTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:26:59Z" duration="0.063912" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1012" name="RandomPreservesLegacySequenceAndRestoresWithoutReplaying(0)" fullname="ASCL.Tests.IntegrationFoundationTests.RandomPreservesLegacySequenceAndRestoresWithoutReplaying(0)" methodname="RandomPreservesLegacySequenceAndRestoresWithoutReplaying" classname="ASCL.Tests.IntegrationFoundationTests" runstate="Runnable" seed="1736060505" result="Passed" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:26:59Z" duration="0.014543" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1013" name="RandomPreservesLegacySequenceAndRestoresWithoutReplaying(73129)" fullname="ASCL.Tests.IntegrationFoundationTests.RandomPreservesLegacySequenceAndRestoresWithoutReplaying(73129)" methodname="RandomPreservesLegacySequenceAndRestoresWithoutReplaying" classname="ASCL.Tests.IntegrationFoundationTests" runstate="Runnable" seed="153230785" result="Passed" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:26:59Z" duration="0.012152" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1014" name="RandomPreservesLegacySequenceAndRestoresWithoutReplaying(-1)" fullname="ASCL.Tests.IntegrationFoundationTests.RandomPreservesLegacySequenceAndRestoresWithoutReplaying(-1)" methodname="RandomPreservesLegacySequenceAndRestoresWithoutReplaying" classname="ASCL.Tests.IntegrationFoundationTests" runstate="Runnable" seed="317458630" result="Passed" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:26:59Z" duration="0.012071" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1015" name="RandomPreservesLegacySequenceAndRestoresWithoutReplaying(int.MinValue)" fullname="ASCL.Tests.IntegrationFoundationTests.RandomPreservesLegacySequenceAndRestoresWithoutReplaying(int.MinValue)" methodname="RandomPreservesLegacySequenceAndRestoresWithoutReplaying" classname="ASCL.Tests.IntegrationFoundationTests" runstate="Runnable" seed="1608126739" result="Passed" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:26:59Z" duration="0.011920" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1016" name="RandomPreservesLegacySequenceAndRestoresWithoutReplaying(int.MaxValue)" fullname="ASCL.Tests.IntegrationFoundationTests.RandomPreservesLegacySequenceAndRestoresWithoutReplaying(int.MaxValue)" methodname="RandomPreservesLegacySequenceAndRestoresWithoutReplaying" classname="ASCL.Tests.IntegrationFoundationTests" runstate="Runnable" seed="1912815289" result="Passed" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:26:59Z" duration="0.012210" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1019" name="SchedulerCancellationRaceHasExactlyOneTerminalResult" fullname="ASCL.Tests.IntegrationFoundationTests.SchedulerCancellationRaceHasExactlyOneTerminalResult" methodname="SchedulerCancellationRaceHasExactlyOneTerminalResult" classname="ASCL.Tests.IntegrationFoundationTests" runstate="Runnable" seed="1629339560" result="Passed" start-time="2026-10-20 19:26:59Z" end-time="2026-10-20 19:27:04Z" duration="4.757770" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1018" name="SchedulerClearAndDisposeTerminateAllWaiters" fullname="ASCL.Tests.IntegrationFoundationTests.SchedulerClearAndDisposeTerminateAllWaiters" methodname="SchedulerClearAndDisposeTerminateAllWaiters" classname="ASCL.Tests.IntegrationFoundationTests" runstate="Runnable" seed="157227954" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.001330" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1020" name="SchedulerRejectsForeignTimerHandles" fullname="ASCL.Tests.IntegrationFoundationTests.SchedulerRejectsForeignTimerHandles" methodname="SchedulerRejectsForeignTimerHandles" classname="ASCL.Tests.IntegrationFoundationTests" runstate="Runnable" seed="1910640438" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.000348" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1023" name="TransactionBudgetsRollbackAlreadyEvaluatedEffects" fullname="ASCL.Tests.IntegrationFoundationTests.TransactionBudgetsRollbackAlreadyEvaluatedEffects" methodname="TransactionBudgetsRollbackAlreadyEvaluatedEffects" classname="ASCL.Tests.IntegrationFoundationTests" runstate="Runnable" seed="413298460" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.000945" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1022" name="TransactionFailureAndCancellationDoNotPublishOrMutate" fullname="ASCL.Tests.IntegrationFoundationTests.TransactionFailureAndCancellationDoNotPublishOrMutate" methodname="TransactionFailureAndCancellationDoNotPublishOrMutate" classname="ASCL.Tests.IntegrationFoundationTests" runstate="Runnable" seed="1463949872" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.002121" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1026" name="TurnPreviewIsPureAndCanRestoreSkippedFactionSequence" fullname="ASCL.Tests.IntegrationFoundationTests.TurnPreviewIsPureAndCanRestoreSkippedFactionSequence" methodname="TurnPreviewIsPureAndCanRestoreSkippedFactionSequence" classname="ASCL.Tests.IntegrationFoundationTests" runstate="Runnable" seed="139647005" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.000970" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+          </test-suite>
+          <test-suite type="TestFixture" id="1031" name="OEventTests" fullname="ASCL.Tests.OEventTests" classname="ASCL.Tests.OEventTests" runstate="Runnable" testcasecount="25" result="Failed" site="Child" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.037188" total="25" passed="23" failed="2" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-case id="1035" name="AddedHandlersWaitForNextBroadcastAndRemovalIsImmediate" fullname="ASCL.Tests.OEventTests.AddedHandlersWaitForNextBroadcastAndRemovalIsImmediate" methodname="AddedHandlersWaitForNextBroadcastAndRemovalIsImmediate" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="1816105212" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.003852" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1038" name="AsyncHandlersAreAwaitedAndSeeRemovalWhileSuspended" fullname="ASCL.Tests.OEventTests.AsyncHandlersAreAwaitedAndSeeRemovalWhileSuspended" methodname="AsyncHandlersAreAwaitedAndSeeRemovalWhileSuspended" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="842063558" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.002190" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1040" name="AsyncNoReturnFailureStopsLaterHandlers" fullname="ASCL.Tests.OEventTests.AsyncNoReturnFailureStopsLaterHandlers" methodname="AsyncNoReturnFailureStopsLaterHandlers" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="778526414" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.002955" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1043" name="AsyncNullResultStopsFallback" fullname="ASCL.Tests.OEventTests.AsyncNullResultStopsFallback" methodname="AsyncNullResultStopsFallback" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="1806746591" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.002411" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1042" name="AsyncResultFallsBackAndReturnsFirstValue" fullname="ASCL.Tests.OEventTests.AsyncResultFallsBackAndReturnsFirstValue" methodname="AsyncResultFallsBackAndReturnsFirstValue" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="237596193" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.001624" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1032" name="AutomaticDiscoveryIncludesInheritedAttributeAndStableTypeOrder" fullname="ASCL.Tests.OEventTests.AutomaticDiscoveryIncludesInheritedAttributeAndStableTypeOrder" methodname="AutomaticDiscoveryIncludesInheritedAttributeAndStableTypeOrder" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="1050909977" result="Failed" label="Error" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.001775" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <failure>
+                <message><![CDATA[System.InvalidOperationException : OEvent could not completely inspect assembly 'ASCL.SourceGen, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null': Could not load file or assembly 'Microsoft.CodeAnalysis, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' or one of its dependencies.; Could not load type of field 'ASCL.SourceGen.EntitySystemGenerator+<>c:<>9__1_0' (1) due to: Could not load file or assembly 'Microsoft.CodeAnalysis, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' or one of its dependencies.
+  ----> System.Reflection.ReflectionTypeLoadException : Exception of type 'System.Reflection.ReflectionTypeLoadException' was thrown.
+Could not load file or assembly 'Microsoft.CodeAnalysis, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' or one of its dependencies.
+Could not load type of field 'ASCL.SourceGen.EntitySystemGenerator+<>c:<>9__1_0' (1) due to: Could not load file or assembly 'Microsoft.CodeAnalysis, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' or one of its dependencies.]]></message>
+                <stack-trace><![CDATA[  at OEvent.Module.OEventReflectionHelper.ReadTypes (System.Reflection.Assembly assembly) [0x00066] in U:\Packages\com.operationgamestudio.ascl\Runtime\Core\Events\OEventReflectionHelper.cs:26 
+  at System.Linq.Enumerable+SelectManySingleSelectorIterator`2[TSource,TResult].MoveNext () [0x00051] in <e1f614c5eede4689988594bcb9796955>:0 
+  at System.Linq.Enumerable+WhereEnumerableIterator`1[TSource].ToList () [0x00030] in <e1f614c5eede4689988594bcb9796955>:0 
+  at System.Linq.Enumerable.ToList[TSource] (System.Collections.Generic.IEnumerable`1[T] source) [0x0001f] in <e1f614c5eede4689988594bcb9796955>:0 
+  at OEvent.Module.OEventReflectionHelper.GetAllTypesWithAttribute[TAttribute] () [0x00000] in U:\Packages\com.operationgamestudio.ascl\Runtime\Core\Events\OEventReflectionHelper.cs:11 
+  at OEvent.Module.OEventManager.Init () [0x0000d] in U:\Packages\com.operationgamestudio.ascl\Runtime\Core\Events\OEventManager.cs:25 
+  at ASCL.Tests.OEventTests.AutomaticDiscoveryIncludesInheritedAttributeAndStableTypeOrder () [0x0000c] in U:\Packages\com.operationgamestudio.ascl\Tests\Runtime\OEventTests.cs:84 
+  at (wrapper managed-to-native) System.Reflection.RuntimeMethodInfo.InternalInvoke(System.Reflection.RuntimeMethodInfo,object,object[],System.Exception&)
+  at System.Reflection.RuntimeMethodInfo.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x0006a] in <d49d4cb128564ee1b54a84338c98d353>:0 
+--ReflectionTypeLoadException
+  at (wrapper managed-to-native) System.Reflection.Assembly.GetTypes(System.Reflection.Assembly,bool)
+  at System.Reflection.Assembly.GetTypes () [0x00000] in <d49d4cb128564ee1b54a84338c98d353>:0 
+  at OEvent.Module.OEventReflectionHelper.ReadTypes (System.Reflection.Assembly assembly) [0x00002] in U:\Packages\com.operationgamestudio.ascl\Runtime\Core\Events\OEventReflectionHelper.cs:23 ]]></stack-trace>
+              </failure>
+            </test-case>
+            <test-case id="1045" name="CancellationNeverFallsBackToAnotherResultHandler" fullname="ASCL.Tests.OEventTests.CancellationNeverFallsBackToAnotherResultHandler" methodname="CancellationNeverFallsBackToAnotherResultHandler" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="869265932" result="Failed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.002428" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+              <failure>
+                <message><![CDATA[  Expected: <System.OperationCanceledException>
+  But was:  <System.Threading.Tasks.TaskCanceledException: A task was canceled.
+  at NUnit.Framework.Internal.ExceptionHelper.Rethrow (System.Exception exception) [0x0000b] in <f577cd9686154d6ab10efd7e65e64366>:0 
+  at NUnit.Framework.Internal.AsyncInvocationRegion+AsyncTaskInvocationRegion.WaitForPendingOperationsToComplete (System.Object invocationResult) [0x00030] in <f577cd9686154d6ab10efd7e65e64366>:0 
+  at NUnit.Framework.Assert.ThrowsAsync (NUnit.Framework.Constraints.IResolveConstraint expression, NUnit.Framework.AsyncTestDelegate code, System.String message, System.Object[] args) [0x00010] in <f577cd9686154d6ab10efd7e65e64366>:0 >
+]]></message>
+                <stack-trace><![CDATA[at ASCL.Tests.OEventTests.CancellationNeverFallsBackToAnotherResultHandler () [0x0009e] in U:\Packages\com.operationgamestudio.ascl\Tests\Runtime\OEventTests.cs:214
+]]></stack-trace>
+              </failure>
+            </test-case>
+            <test-case id="1056" name="CleanupIsIdempotentAndOldObjectsCannotRemoveNewRegistration" fullname="ASCL.Tests.OEventTests.CleanupIsIdempotentAndOldObjectsCannotRemoveNewRegistration" methodname="CleanupIsIdempotentAndOldObjectsCannotRemoveNewRegistration" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="1197502985" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.000767" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1037" name="DuplicateRegistrationAndWrongInstanceRemovalAreHarmless" fullname="ASCL.Tests.OEventTests.DuplicateRegistrationAndWrongInstanceRemovalAreHarmless" methodname="DuplicateRegistrationAndWrongInstanceRemovalAreHarmless" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="23212030" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.000916" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1046" name="EmptyChannelsHaveOriginalNoOpAndDefaultResultBehavior" fullname="ASCL.Tests.OEventTests.EmptyChannelsHaveOriginalNoOpAndDefaultResultBehavior" methodname="EmptyChannelsHaveOriginalNoOpAndDefaultResultBehavior" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="186959736" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.000734" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1033" name="ExplicitInitializationSortsTypesAndDeduplicatesInput" fullname="ASCL.Tests.OEventTests.ExplicitInitializationSortsTypesAndDeduplicatesInput" methodname="ExplicitInitializationSortsTypesAndDeduplicatesInput" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="68469742" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.000443" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1055" name="FailedInitializationClearsPartialRegistrationAndCanRecover" fullname="ASCL.Tests.OEventTests.FailedInitializationClearsPartialRegistrationAndCanRecover" classname="ASCL.Tests.OEventTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.002982" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1050" name="FailedInitializationClearsPartialRegistrationAndCanRecover(ASCL.Tests.OEventTests+FailingRegister`1[ASCL.Tests.OEventTests+A])" fullname="ASCL.Tests.OEventTests.FailedInitializationClearsPartialRegistrationAndCanRecover(ASCL.Tests.OEventTests+FailingRegister`1[ASCL.Tests.OEventTests+A])" methodname="FailedInitializationClearsPartialRegistrationAndCanRecover" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="634955593" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.001048" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1051" name="FailedInitializationClearsPartialRegistrationAndCanRecover(ASCL.Tests.OEventTests+FailingConstructor`1[ASCL.Tests.OEventTests+A])" fullname="ASCL.Tests.OEventTests.FailedInitializationClearsPartialRegistrationAndCanRecover(ASCL.Tests.OEventTests+FailingConstructor`1[ASCL.Tests.OEventTests+A])" methodname="FailedInitializationClearsPartialRegistrationAndCanRecover" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="566695231" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.000380" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1052" name="FailedInitializationClearsPartialRegistrationAndCanRecover(ASCL.Tests.OEventTests+NoDefaultConstructor`1[ASCL.Tests.OEventTests+A])" fullname="ASCL.Tests.OEventTests.FailedInitializationClearsPartialRegistrationAndCanRecover(ASCL.Tests.OEventTests+NoDefaultConstructor`1[ASCL.Tests.OEventTests+A])" methodname="FailedInitializationClearsPartialRegistrationAndCanRecover" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="1624083656" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.000283" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1053" name="FailedInitializationClearsPartialRegistrationAndCanRecover(ASCL.Tests.OEventTests+Sync`1[T])" fullname="ASCL.Tests.OEventTests.FailedInitializationClearsPartialRegistrationAndCanRecover(ASCL.Tests.OEventTests+Sync`1[T])" methodname="FailedInitializationClearsPartialRegistrationAndCanRecover" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="1571362793" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.000241" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1054" name="FailedInitializationClearsPartialRegistrationAndCanRecover(System.String)" fullname="ASCL.Tests.OEventTests.FailedInitializationClearsPartialRegistrationAndCanRecover(System.String)" methodname="FailedInitializationClearsPartialRegistrationAndCanRecover" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="47063249" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.000227" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1036" name="NestedBroadcastGetsItsOwnStableCandidates" fullname="ASCL.Tests.OEventTests.NestedBroadcastGetsItsOwnStableCandidates" methodname="NestedBroadcastGetsItsOwnStableCandidates" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="1915248276" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.000403" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1039" name="NoReturnFailureStopsLaterHandlers" fullname="ASCL.Tests.OEventTests.NoReturnFailureStopsLaterHandlers" methodname="NoReturnFailureStopsLaterHandlers" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="2011069542" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.000395" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1034" name="PriorityStableTiesAndSelfRemoval" fullname="ASCL.Tests.OEventTests.PriorityStableTiesAndSelfRemoval" methodname="PriorityStableTiesAndSelfRemoval" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="625567591" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.000380" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-case id="1044" name="ResultChannelsIncludeResultTypeAndMode" fullname="ASCL.Tests.OEventTests.ResultChannelsIncludeResultTypeAndMode" methodname="ResultChannelsIncludeResultTypeAndMode" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="637138268" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.001798" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1049" name="ResultFallbackUsesOriginalCandidatesAndImmediateRemoval" fullname="ASCL.Tests.OEventTests.ResultFallbackUsesOriginalCandidatesAndImmediateRemoval" classname="ASCL.Tests.OEventTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.002107" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1047" name="ResultFallbackUsesOriginalCandidatesAndImmediateRemoval(False)" fullname="ASCL.Tests.OEventTests.ResultFallbackUsesOriginalCandidatesAndImmediateRemoval(False)" methodname="ResultFallbackUsesOriginalCandidatesAndImmediateRemoval" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="1358966712" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.001110" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1048" name="ResultFallbackUsesOriginalCandidatesAndImmediateRemoval(True)" fullname="ASCL.Tests.OEventTests.ResultFallbackUsesOriginalCandidatesAndImmediateRemoval(True)" methodname="ResultFallbackUsesOriginalCandidatesAndImmediateRemoval" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="1177061119" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.000596" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-case id="1041" name="ResultFallsBackOnFailureButNullIsSuccessful" fullname="ASCL.Tests.OEventTests.ResultFallsBackOnFailureButNullIsSuccessful" methodname="ResultFallsBackOnFailureButNullIsSuccessful" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="1558338672" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.000446" asserts="0">
+              <properties>
+                <property name="retryIteration" value="0" />
+                <property name="repeatIteration" value="0" />
+              </properties>
+            </test-case>
+            <test-suite type="ParameterizedMethod" id="1059" name="SuspendedOldGenerationIsCancelledAfterCurrentHandlerFinishes" fullname="ASCL.Tests.OEventTests.SuspendedOldGenerationIsCancelledAfterCurrentHandlerFinishes" classname="ASCL.Tests.OEventTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.005500" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1057" name="SuspendedOldGenerationIsCancelledAfterCurrentHandlerFinishes(False)" fullname="ASCL.Tests.OEventTests.SuspendedOldGenerationIsCancelledAfterCurrentHandlerFinishes(False)" methodname="SuspendedOldGenerationIsCancelledAfterCurrentHandlerFinishes" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="448938539" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.001319" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1058" name="SuspendedOldGenerationIsCancelledAfterCurrentHandlerFinishes(True)" fullname="ASCL.Tests.OEventTests.SuspendedOldGenerationIsCancelledAfterCurrentHandlerFinishes(True)" methodname="SuspendedOldGenerationIsCancelledAfterCurrentHandlerFinishes" classname="ASCL.Tests.OEventTests" runstate="Runnable" seed="2077585681" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.003729" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+          </test-suite>
+          <test-suite type="TestSuite" id="1068" name="Unity" fullname="ASCL.Tests.Unity" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.023528" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1060" name="CoreUnityTests" fullname="ASCL.Tests.Unity.CoreUnityTests" classname="ASCL.Tests.Unity.CoreUnityTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.023285" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1064" name="MemoryPackRuntimeAndGeneratorRoundTrip" fullname="ASCL.Tests.Unity.CoreUnityTests.MemoryPackRuntimeAndGeneratorRoundTrip" methodname="MemoryPackRuntimeAndGeneratorRoundTrip" classname="ASCL.Tests.Unity.CoreUnityTests" runstate="Runnable" seed="1735533886" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.019955" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1062" name="NumericBatchPublishesOneChange" fullname="ASCL.Tests.Unity.CoreUnityTests.NumericBatchPublishesOneChange" methodname="NumericBatchPublishesOneChange" classname="ASCL.Tests.Unity.CoreUnityTests" runstate="Runnable" seed="874496420" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.001216" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1061" name="ParentDisposalInvalidatesDescendantHandle" fullname="ASCL.Tests.Unity.CoreUnityTests.ParentDisposalInvalidatesDescendantHandle" methodname="ParentDisposalInvalidatesDescendantHandle" classname="ASCL.Tests.Unity.CoreUnityTests" runstate="Runnable" seed="1693024876" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.000440" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1063" name="ReusableCharBufferAllocatesZeroBytesAfterWarmup" fullname="ASCL.Tests.Unity.CoreUnityTests.ReusableCharBufferAllocatesZeroBytesAfterWarmup" methodname="ReusableCharBufferAllocatesZeroBytesAfterWarmup" classname="ASCL.Tests.Unity.CoreUnityTests" runstate="Runnable" seed="1764520836" result="Passed" start-time="2026-10-20 19:27:04Z" end-time="2026-10-20 19:27:04Z" duration="0.000594" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/Oliver/AppData/LocalLow/Operation Game Studio/ASCL URP 3D\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

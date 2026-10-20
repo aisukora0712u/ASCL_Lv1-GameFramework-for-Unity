@@ -1,0 +1,31 @@
+{
+  "capturedAt": "2026-10-21T04:22:54.9205142+09:00",
+  "sourceProject": "D:\\Workspace_K\\Unity_Pjts\\StaticEventSystem",
+  "sourceDirectory": "D:\\Workspace_K\\Unity_Pjts\\StaticEventSystem\\Assets\\main\\Codes\\Framework\\Modules\\EventSystem\\StaticEventSystem\\OEventSystem",
+  "sourceCommit": "066c1e442ee2e5a93f399ecf74f1b54d9c29447c",
+  "baselineCommit": "3dcaaa374518fe3543472c1e900d6260623fbbe8",
+  "archiveBranch": "codex/legacy-pre-oevent-20261021",
+  "sourceFiles": [
+    {
+      "file": "OEventManager.cs",
+      "sha256": "21f5202446e0ea0f6d68a07faf3e2e32cbc8002bed5381fb2416c90ffd381103"
+    },
+    {
+      "file": "OEventMethodObject.cs",
+      "sha256": "b41d4ce1a960f2060da9c878ad084e560d880c3b0da91b68e7b41d983a6770e0"
+    },
+    {
+      "file": "OEventNoReturnManager.cs",
+      "sha256": "39db1f4640d7b148058e6c3214d3f81d98844e7453b37b033c7c7879828e11a5"
+    },
+    {
+      "file": "OEventWithReturnManager.cs",
+      "sha256": "b1699b8368daebf196d192e35e68078c216758f5d8c88667cf6be955984fefaf"
+    },
+    {
+      "file": "OEventReflectionHelper.cs",
+      "sha256": "9bdf90539337f21cece8c32160a48440cfb93de3563f9701b7bf2afbc5315da2"
+    }
+  ],
+  "note": "Source project is read-only. Core files are unchanged from its HEAD. ASCL adapts the original public contracts and hardens dispatcher internals."
+}

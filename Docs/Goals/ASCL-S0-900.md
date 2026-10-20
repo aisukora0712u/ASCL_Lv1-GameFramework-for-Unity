@@ -14,15 +14,19 @@ dependencies:
   - ASCL-S0-002
   - ASCL-S0-003
   - ASCL-S0-004
+  - ASCL-S0-005
 status: planned
 isGate: true
 createdAt: 2026-09-15T19:00:34.818Z
-updatedAt: 2026-09-15T19:00:34.818Z
+updatedAt: 2026-10-21T04:18:39+09:00
 startedAt: null
 completedAt: null
 reason: null
 evidence: []
 log:
+  - at: 2026-10-21T04:18:39+09:00
+    type: scope
+    message: 用户批准新增 OEvent 接入目标 ASCL-S0-005，纳入阶段退出依赖；保留既有范围且不启动退出验收。
   - at: 2026-09-15T19:00:34.818Z
     type: planning
     message: 由已确认长期路线图整理；仅建立目标，尚未安排框架实施。
@@ -57,6 +61,7 @@ log:
 - [ ] Unity 桌面与 .NET 相同输入的状态可比较、恢复和重演
 - [ ] 后端路径满足正式回滚、主机/独服及依赖要求
 - [ ] 失败调整路径而非删除目标
+- [ ] OEvent 全局注册、重复运行清理和实际 Demo 分发有 .NET/Unity 验证证据
 - [ ] 交付与验证证据已写入元数据 evidence，实际验证记录写入 log。
 
 ## 验证场景

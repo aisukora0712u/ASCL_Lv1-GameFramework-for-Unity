@@ -1,0 +1,1265 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ASCL 0.3.0 · OEvent 接入审查</title>
+<style>
+:root{color-scheme:light;--bg:#f3f5f6;--panel:#fff;--text:#182833;--muted:#536473;--line:#d9e2e7;--accent:#006f80;--ok:#11633b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,"Microsoft YaHei",sans-serif}main{max-width:1120px;margin:auto;padding:38px 24px 64px}header{border-top:6px solid var(--accent);padding:28px;background:var(--panel);border-radius:6px}h1{margin:8px 0 12px;font-size:32px;line-height:1.25}h2{font-size:22px;margin:0 0 12px}h3{font-size:18px;margin:18px 0 8px}p{margin:10px 0}.eyebrow{font-weight:700;color:var(--accent);letter-spacing:.06em;font-size:13px}.muted,figcaption{color:var(--muted);font-size:14px}a{color:#006375;text-underline-offset:3px}a:hover{text-decoration-thickness:2px}code{font-size:.9em;overflow-wrap:anywhere}section{margin-top:22px;background:var(--panel);padding:26px;border:1px solid var(--line);border-radius:6px}.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}.fact{background:#edf7f3;padding:14px;border-radius:5px}.fact strong{display:block;font-size:26px;color:var(--ok)}.fact span{font-size:13px}.steps{margin:12px 0;padding-left:24px}.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;border-bottom:1px solid var(--line);padding:12px;vertical-align:top}th{background:#f0f5f7}.criteria{display:grid;gap:8px;margin:18px 0}.criterion{display:grid;grid-template-columns:minmax(0,1fr) 110px;gap:16px;align-items:center;padding:10px 12px;background:#f5f8f9}.criterion select{width:100%}select,textarea,button{font:inherit}select,textarea{border:1px solid #a6bac5;border-radius:4px;background:white;padding:8px;color:var(--text)}textarea{width:100%;min-height:85px;resize:vertical}button{border:0;border-radius:4px;background:var(--accent);color:#fff;padding:11px 20px;cursor:pointer}button:hover{background:#005c6c}button:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #edb84d;outline-offset:2px}.feedback{border-top:1px solid var(--line);padding-top:15px}.feedback label{display:block;margin:8px 0}.status{color:var(--ok);font-weight:600}.images{display:grid;grid-template-columns:1fr 1fr;gap:18px}figure{margin:0}img{width:100%;height:auto;background:#0e1520;display:block;border-radius:4px}figcaption{padding-top:6px}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#14232e;color:#e3edf2;padding:18px;border-radius:5px;font-size:12px;line-height:1.55;max-height:630px;overflow:auto}details{margin:16px 0}summary{cursor:pointer;font-weight:650}.note{padding:14px 16px;border-left:3px solid #bc7d21;background:#fff7e9}.number{display:inline-block;color:var(--accent);margin-right:8px}footer{font-size:13px;color:var(--muted);margin-top:26px}.links{display:flex;flex-wrap:wrap;gap:8px 18px}.export{display:flex;align-items:center;gap:16px;flex-wrap:wrap}#export-preview{min-height:200px;margin-top:16px}ul{padding-left:22px}@media(max-width:760px){main{padding:18px 12px 40px}header,section{padding:20px}.facts{grid-template-columns:1fr 1fr}.images{grid-template-columns:1fr}h1{font-size:27px}.criterion{grid-template-columns:minmax(0,1fr) 90px;gap:8px}}
+</style>
+</head>
+<body><main>
+<header>
+<div class="eyebrow">ASCL · 0.3.0 · 2026-10-21</div>
+<h1>旧版已归档，OEvent 已正式接入</h1>
+<p>EventScope 已被全局 OEvent 替换。沿用 <code>[OEvent]</code>、四类 MethodObject 与 <code>OEventManager.Instance</code>；Boost Demo 经事件处理器刷新。</p>
+<div class="facts"><div class="fact"><strong>56 / 56</strong><span>.NET 8 回归通过</span></div><div class="fact"><strong>51 / 51</strong><span>Unity EditMode 通过</span></div><div class="fact"><strong>5 / 5</strong><span>Unity PlayMode 通过</span></div><div class="fact"><strong>0.3.0</strong><span>事件 API 破坏性升级</span></div></div>
+<p class="muted">技术验证通过 · 人工反馈尚未提交。该页可直接从本地文件打开，内容及反馈导出均无需服务器。</p>
+</header>
+
+<section aria-labelledby="how"><h2 id="how">如何审查</h2>
+<ol class="steps"><li>按编号对照迁移要求、实际差异和测试证据。</li><li>每个要点选择“是 / 否”，再选择本项“通过 / 修改意见”。未选择会保留为“未判断”。</li><li>点击末尾“导出结论文本”，将文本回复到原任务。页面不会自动发送、修改仓库或代替你的确认。</li></ol>
+<p>结论用途：通过表示你认可对应交付；修改意见用于后续返修。测试通过不自动填入人工通过。此页是交付检查入口，不是提交推送的额外授权关口。</p>
+<div class="links"><a href="../../Validation/ASCL-0.3.0.md">完整验证报告</a><a href="../../../Packages/com.operationgamestudio.ascl/MIGRATION-0.3.0.md">0.3.0 迁移说明</a><a href="../../Goals/ASCL-S0-005.md">目标与实施记录</a><a href="source-manifest.json">来源哈希</a><a href="implementation.patch">下载代码差异</a></div>
+</section>
+
+<section class="review-item" data-item="01" data-title="旧版本保留与来源"><h2><span class="number">01</span>旧版本保留与来源</h2>
+<p>旧分支 <code>codex/legacy-pre-oevent-20261021</code> 已推送，远端哈希为 <code>3dcaaa374518fe3543472c1e900d6260623fbbe8</code>。新版沿用 <code>codex/unity-6000.3.23f1-urp3d</code>，未合并 main。</p>
+<p>来源提交为 <code>066c1e442ee2e5a93f399ecf74f1b54d9c29447c</code>；五个原始核心文件的 SHA-256 已记录并复核未变。原工程保留原状。</p>
+<p><a href="https://github.com/aisukora0712u/ASCL_Lv1-GameFramework-for-Unity/commit/3dcaaa374518fe3543472c1e900d6260623fbbe8">旧版 GitHub 提交（联网可查看）</a> · 本地事实来源：<a href="source-manifest.json">source-manifest.json</a></p>
+<div class="criteria"><label class="criterion"><span>旧版本可按指定分支和提交恢复？</span><select aria-label="01-1"><option>未判断</option><option>是</option><option>否</option></select></label><label class="criterion"><span>来源提交与五个文件哈希可追溯？</span><select aria-label="01-2"><option>未判断</option><option>是</option><option>否</option></select></label><label class="criterion"><span>新接入保留当前任务分支，不改写旧版归档？</span><select aria-label="01-3"><option>未判断</option><option>是</option><option>否</option></select></label></div>
+<div class="feedback"><label>本项结论 <select class="decision" aria-label="01 结论"><option>未提交</option><option>通过</option><option>修改意见</option></select></label><label>意见 <textarea class="comment" aria-label="01 意见" placeholder="如需修改，请说明问题及期望。"></textarea></label></div>
+</section>
+
+<section class="review-item" data-item="02" data-title="OEvent 替换与固定分发语义"><h2><span class="number">02</span>OEvent 替换与固定分发语义</h2>
+<div class="table-wrap"><table><thead><tr><th>接入前</th><th>0.3.0 结果</th><th>核对重点</th></tr></thead><tbody><tr><td>EventScope / 委托订阅 token</td><td>全局 OEvent + 四类处理器</td><td>无并行旧事件系统；Entity.Track 保留</td></tr><tr><td>按作用域发布 / 唯一查询</td><td>四种 Broadcast 入口</td><td>低数值优先、同优先级稳定顺序</td></tr><tr><td>原版 OEvent 返回值索引问题</td><td>事件类型 + 结果类型 + 模式分开</td><td>首个正常结果包括 null；普通异常记录并继续，取消传播</td></tr><tr><td>旧单例与 Unity 日志依赖</td><td>纯 C# 核心 + ILogSink</td><td>.NET 与 Unity 复用代码</td></tr></tbody></table></div>
+<p>广播期间新增不会进入当前广播；退订立即生效。嵌套广播可以看到新注册项。相同具体类型只注册一个对象，错误实例不能代替原实例退订。无返回异步处理器逐个等待，异常传播。</p>
+<details><summary>查看实际代码差异（框架、Unity 适配、Demo、测试和包版本）</summary><p class="muted">以下内容由相对旧基线的 Git 差异生成，包含新增代码；测试 XML 和文档改动未放入此代码视图。</p><pre id="code-diff">diff --git a/DevProject/Assets/ASCLDemo/Runtime/Urp3DDemo.cs b/DevProject/Assets/ASCLDemo/Runtime/Urp3DDemo.cs
+index 8479618..f845ac1 100644
+--- a/DevProject/Assets/ASCLDemo/Runtime/Urp3DDemo.cs
++++ b/DevProject/Assets/ASCLDemo/Runtime/Urp3DDemo.cs
+@@ -6,6 +6,8 @@ using ASCL.Gameplay.Numeric;
+ using ASCL.Gameplay.Skills;
+ using ASCL.Unity;
+ using Cysharp.Threading.Tasks;
++using OEvent;
++using OEvent.Module;
+ using UnityEngine;
+ using UIText = UnityEngine.UI.Text;
+ 
+@@ -23,6 +25,7 @@ namespace ASCL.DevProject {
+         private SkillDefinition _boost;
+ 
+         public bool IsReady =&gt; _target != null;
++        public int EventRefreshCount { get; private set; }
+         public float Power =&gt; IsReady ? (float)_target.Numeric.GetValue(_powerKey) : 0;
+         public int BuffStacks =&gt; IsReady &amp;&amp; _target.Buffs.Active.Count &gt; 0
+             ? _target.Buffs.Active[0].Stacks : 0;
+@@ -44,7 +47,7 @@ namespace ASCL.DevProject {
+             _boost = new SkillDefinition(&quot;urp-demo.boost&quot;, 1,
+                 new IActionEffect[] { new ApplyBuffEffect(buff) });
+             _skills = new SkillRunner(new ActionPipeline());
+-            RefreshView();
++            PublishPowerChanged();
+         }
+ 
+         private void Update() {
+@@ -57,10 +60,17 @@ namespace ASCL.DevProject {
+             if (!IsReady) throw new InvalidOperationException(&quot;The demo has not started yet.&quot;);
+             ActionResult result = await _skills.CastAsync(_boost, _source, _target,
+                 this.GetCancellationTokenOnDestroy());
+-            RefreshView();
++            PublishPowerChanged();
+             return result;
+         }
+ 
++        private void PublishPowerChanged() =&gt; OEventManager.Instance.BroadcastEvent(new DemoPowerChanged(this));
++
++        internal void RefreshFromEvent() {
++            EventRefreshCount++;
++            RefreshView();
++        }
++
+         private void RefreshView() {
+             float height = Power / 10;
+             powerCube.localScale = new Vector3(1, height, 1);
+@@ -73,4 +83,17 @@ namespace ASCL.DevProject {
+             _targetEntity?.Dispose();
+         }
+     }
++
++    public readonly struct DemoPowerChanged {
++        public readonly Urp3DDemo Target;
++        public DemoPowerChanged(Urp3DDemo target) =&gt; Target = target;
++    }
++
++    [OEvent]
++    public sealed class DemoPowerChangedHandler : OEventNoReturnMethodObject&lt;DemoPowerChanged&gt; {
++        // No stored scene references: the destination belongs to this broadcast only.
++        public override void Run(DemoPowerChanged message) {
++            if (message.Target != null &amp;&amp; message.Target.IsReady) message.Target.RefreshFromEvent();
++        }
++    }
+ }
+diff --git a/DevProject/Assets/ASCLDemo/Tests/Editor/ASCL.DevProject.Editor.Tests.asmdef b/DevProject/Assets/ASCLDemo/Tests/Editor/ASCL.DevProject.Editor.Tests.asmdef
+index a121ed5..255d2db 100644
+--- a/DevProject/Assets/ASCLDemo/Tests/Editor/ASCL.DevProject.Editor.Tests.asmdef
++++ b/DevProject/Assets/ASCLDemo/Tests/Editor/ASCL.DevProject.Editor.Tests.asmdef
+@@ -1,7 +1,7 @@
+ {
+   &quot;name&quot;: &quot;ASCL.DevProject.Editor.Tests&quot;,
+   &quot;rootNamespace&quot;: &quot;ASCL.DevProject.Tests&quot;,
+-  &quot;references&quot;: [&quot;ASCL.DevProject&quot;, &quot;ASCL.DevProject.Editor&quot;, &quot;ASCL.Unity&quot;, &quot;Unity.RenderPipelines.Core.Runtime&quot;, &quot;Unity.RenderPipelines.Universal.Runtime&quot;],
++  &quot;references&quot;: [&quot;ASCL.DevProject&quot;, &quot;ASCL.DevProject.Editor&quot;, &quot;ASCL.Core&quot;, &quot;ASCL.Unity&quot;, &quot;Unity.RenderPipelines.Core.Runtime&quot;, &quot;Unity.RenderPipelines.Universal.Runtime&quot;],
+   &quot;optionalUnityReferences&quot;: [&quot;TestAssemblies&quot;],
+   &quot;includePlatforms&quot;: [&quot;Editor&quot;],
+   &quot;autoReferenced&quot;: false
+diff --git a/DevProject/Assets/ASCLDemo/Tests/PlayMode/Urp3DPlayModeTests.cs b/DevProject/Assets/ASCLDemo/Tests/PlayMode/Urp3DPlayModeTests.cs
+index df35137..6eddc3e 100644
+--- a/DevProject/Assets/ASCLDemo/Tests/PlayMode/Urp3DPlayModeTests.cs
++++ b/DevProject/Assets/ASCLDemo/Tests/PlayMode/Urp3DPlayModeTests.cs
+@@ -4,6 +4,7 @@ using ASCL.Entities;
+ using ASCL.Unity;
+ using Cysharp.Threading.Tasks;
+ using NUnit.Framework;
++using OEvent.Module;
+ using UnityEngine;
+ using UnityEngine.Rendering;
+ using UnityEngine.Rendering.Universal;
+@@ -43,6 +44,8 @@ namespace ASCL.DevProject.Tests {
+             Assert.That(demo.IsReady, Is.True);
+             Assert.That(driver.World.Count, Is.EqualTo(2));
+             Assert.That(demo.Power, Is.EqualTo(10));
++            Assert.That(OEventManager.Instance.IsInitialized, Is.True);
++            Assert.That(demo.EventRefreshCount, Is.EqualTo(1), &quot;Initial presentation must pass through OEvent.&quot;);
+ 
+             driver.Systems.Register(new ProbeSystem());
+             var probe = driver.World.Create&lt;TickProbe&gt;();
+@@ -55,11 +58,16 @@ namespace ASCL.DevProject.Tests {
+             GameObject.Find(&quot;Boost&quot;).GetComponent&lt;Button&gt;().onClick.Invoke();
+             yield return null;
+             Assert.That(demo.Power, Is.EqualTo(12));
++            Assert.That(demo.EventRefreshCount, Is.EqualTo(2));
+             for (int i = 0; i &lt; 3; i++) {
+                 yield return demo.BoostAsync().ToCoroutine(result =&gt; Assert.That(result.Succeeded, Is.True));
++                Assert.That(demo.Power, Is.EqualTo(i == 0 ? 14 : 16));
++                Assert.That(demo.BuffStacks, Is.EqualTo(i == 0 ? 2 : 3));
++                Assert.That(demo.EventRefreshCount, Is.EqualTo(i + 3));
+             }
+             Assert.That(demo.Power, Is.EqualTo(16));
+             Assert.That(demo.BuffStacks, Is.EqualTo(3));
++            Assert.That(demo.EventRefreshCount, Is.EqualTo(5), &quot;Each completed skill must refresh through exactly one handler.&quot;);
+             var cube = GameObject.Find(&quot;Power Cube&quot;).transform;
+             Assert.That(cube.localScale.y, Is.EqualTo(1.6f).Within(0.001f));
+             Assert.That(cube.localPosition.y, Is.EqualTo(0.8f).Within(0.001f));
+@@ -70,6 +78,23 @@ namespace ASCL.DevProject.Tests {
+             Assert.That(driver.World.Count, Is.Zero, &quot;Unloading presentation must release its entities.&quot;);
+         }
+ 
++        [UnityTest]
++        public IEnumerator SceneReloadKeepsGlobalRegistrationAndIgnoresDestroyedTarget() {
++            var oldDemo = Object.FindFirstObjectByType&lt;Urp3DDemo&gt;();
++            int count = OEventManager.Instance.RegisteredHandlerCount;
++            yield return SceneManager.LoadSceneAsync(&quot;ASCL_URP3D&quot;, LoadSceneMode.Single);
++            yield return null;
++            Assert.That(oldDemo == null, Is.True);
++            var next = Object.FindFirstObjectByType&lt;Urp3DDemo&gt;();
++            Assert.That(next.EventRefreshCount, Is.EqualTo(1));
++            Assert.That(OEventManager.Instance.RegisteredHandlerCount, Is.EqualTo(count));
++            OEventManager.Instance.BroadcastEvent(new DemoPowerChanged(oldDemo));
++            Assert.That(next.EventRefreshCount, Is.EqualTo(1), &quot;An old scene&#x27;s target must never refresh the new scene.&quot;);
++            yield return next.BoostAsync().ToCoroutine();
++            Assert.That(next.Power, Is.EqualTo(12));
++            Assert.That(next.EventRefreshCount, Is.EqualTo(2));
++        }
++
+         [UnityTest]
+         public IEnumerator BothQualityProfilesRenderVisibleGeometryWithoutErrorShaders() {
+             Assert.That(SystemInfo.graphicsDeviceType, Is.Not.EqualTo(GraphicsDeviceType.Null),
+diff --git a/DotNet/ASCL.Tests/ASCL.Tests.csproj b/DotNet/ASCL.Tests/ASCL.Tests.csproj
+index 864d584..4f811d1 100644
+--- a/DotNet/ASCL.Tests/ASCL.Tests.csproj
++++ b/DotNet/ASCL.Tests/ASCL.Tests.csproj
+@@ -10,5 +10,6 @@
+     &lt;ProjectReference Include=&quot;..\ASCL.Runtime\ASCL.Runtime.csproj&quot; /&gt;
+     &lt;Analyzer Include=&quot;..\..\Tools\ASCL.SourceGen\bin\Release\netstandard2.0\ASCL.SourceGen.dll&quot; /&gt;
+     &lt;Compile Include=&quot;../../Packages/com.operationgamestudio.ascl/Tests/Runtime/IntegrationFoundationTests.cs&quot; Link=&quot;IntegrationFoundationTests.cs&quot; /&gt;
++    &lt;Compile Include=&quot;../../Packages/com.operationgamestudio.ascl/Tests/Runtime/OEventTests.cs&quot; Link=&quot;OEventTests.cs&quot; /&gt;
+   &lt;/ItemGroup&gt;
+ &lt;/Project&gt;
+diff --git a/DotNet/ASCL.Tests/CoreFrameworkTests.cs b/DotNet/ASCL.Tests/CoreFrameworkTests.cs
+index 44c30bc..eaba342 100644
+--- a/DotNet/ASCL.Tests/CoreFrameworkTests.cs
++++ b/DotNet/ASCL.Tests/CoreFrameworkTests.cs
+@@ -3,7 +3,6 @@ using System.Collections.Generic;
+ using System.Threading;
+ using System.Threading.Tasks;
+ using ASCL.Entities;
+-using ASCL.Events;
+ using ASCL.Gameplay.Actions;
+ using ASCL.Gameplay.Buffs;
+ using ASCL.Gameplay.Numeric;
+@@ -25,11 +24,7 @@ namespace ASCL.Tests {
+ 
+         [Test] public void EntityHierarchyOwnsChildrenComponentsAndInvalidatesHandles(){var log=new List&lt;string&gt;();var systems=new EntitySystemRegistry();systems.Register(new RecorderSystem&lt;Root&gt;(log,&quot;root&quot;));systems.Register(new RecorderSystem&lt;Child&gt;(log,&quot;child&quot;));systems.Register(new RecorderSystem&lt;Component&gt;(log,&quot;component&quot;));using var world=new EntityWorld(systems);Root root=world.Create&lt;Root&gt;();Child child=root.AddChild&lt;Child&gt;();Component component=root.AddComponent&lt;Component&gt;();Assert.That(root.Children,Has.Count.EqualTo(1));EntityHandle handle=child.Handle;Assert.That(world.Count,Is.EqualTo(3));root.Dispose();Assert.That(world.Count,Is.Zero);Assert.That(world.TryResolve(handle,out _),Is.False);Assert.That(log,Is.EqualTo(new[]{&quot;root.init&quot;,&quot;root.enable&quot;,&quot;child.init&quot;,&quot;child.enable&quot;,&quot;component.init&quot;,&quot;component.enable&quot;,&quot;root.disable&quot;,&quot;child.disable&quot;,&quot;component.disable&quot;,&quot;child.dispose&quot;,&quot;component.dispose&quot;,&quot;root.dispose&quot;}));}
+ 
+-        private readonly struct Ping{public Ping(int value)=&gt;Value=value;public int Value{get;}}
+-        [Test] public void EventScopeUsesStablePriorityAndSafeSelfRemoval(){using var scope=new EventScope();var log=new List&lt;int&gt;();EventSubscription self=default;self=scope.Subscribe&lt;Ping&gt;((in Ping p)=&gt;{log.Add(2);self.Dispose();},20);scope.Subscribe&lt;Ping&gt;((in Ping p)=&gt;log.Add(1),10);scope.Subscribe&lt;Ping&gt;((in Ping p)=&gt;log.Add(3),20);scope.Publish(new Ping(1));scope.Publish(new Ping(2));Assert.That(log,Is.EqualTo(new[]{1,2,3,1,3}));}
+-        [Test]public void EventSubscriptionDuringPublishStartsNextPublishInPriorityOrder(){using var scope=new EventScope();var log=new List&lt;int&gt;();bool added=false;scope.Subscribe&lt;Ping&gt;((in Ping p)=&gt;{log.Add(2);if(!added){added=true;scope.Subscribe&lt;Ping&gt;((in Ping _)=&gt;log.Add(1),0);}},20);scope.Publish(new Ping(0));scope.Publish(new Ping(0));Assert.That(log,Is.EqualTo(new[]{2,1,2}));}
+ 
+-        [Test] public async Task AsyncEventsAreAwaitedInPriorityOrder(){using var scope=new EventScope();var log=new List&lt;int&gt;();scope.SubscribeAsync&lt;Ping&gt;(async(p,ct)=&gt;{await UniTask.Yield();log.Add(2);},20);scope.SubscribeAsync&lt;Ping&gt;((p,ct)=&gt;{log.Add(1);return UniTask.CompletedTask;},10);await scope.PublishAsync(new Ping(0));Assert.That(log,Is.EqualTo(new[]{1,2}));}
+ 
+         [Test] public void NumericFormulaAndBatchEmitOneFinalNotification(){var key=new NumericKey(1);var table=new NumericTable(new[]{new NumericDefinition(key,100,0,1000)});int changes=0;table.Changed+=_=&gt;changes++;using(table.BeginBatch()){table.AddModifier(key,NumericModifierKind.Flat,10);table.AddModifier(key,NumericModifierKind.AdditivePercent,.5f);table.AddModifier(key,NumericModifierKind.FinalFlat,5);table.AddModifier(key,NumericModifierKind.FinalPercent,.1f);}Assert.That(table.GetValue(key),Is.EqualTo(187).Within(.001));Assert.That(changes,Is.EqualTo(1));}
+ 
+@@ -41,7 +36,8 @@ namespace ASCL.Tests {
+         [Test] public void ReusableCharBufferDoesNotGrowAndFormatsWithoutStringCreation(){var buffer=new ReusableCharBuffer(16);Assert.That(buffer.TryAppend(12345),Is.True);Assert.That(buffer.AsSpan().SequenceEqual(&quot;12345&quot;.AsSpan()),Is.True);buffer.Clear();Assert.That(buffer.TryAppend(&quot;abcdefghijklmnopq&quot;.AsSpan()),Is.False);Assert.That(buffer.Length,Is.Zero);}
+         [Test] public void SourceGeneratorBuildsExplicitAotRegistry(){GeneratedProbeSystem.Initialized=0;var registry=new EntitySystemRegistry();global::ASCL.Generated.ASCL_TestsEntitySystems.Register(registry);using var world=new EntityWorld(registry);world.Create&lt;GeneratedProbeEntity&gt;();Assert.That(GeneratedProbeSystem.Initialized,Is.EqualTo(1));}
+         [Test]public void RemovingEntityDuringTickDoesNotSkipFollowingEntity(){var registry=new EntitySystemRegistry();registry.Register(new DisposeOnTickSystem());registry.Register(new CountOnTickSystem());using var world=new EntityWorld(registry);world.Create&lt;DisposeOnTickEntity&gt;();CountOnTickEntity counter=world.Create&lt;CountOnTickEntity&gt;();world.Tick(.016f);Assert.That(counter.Ticks,Is.EqualTo(1));Assert.That(world.Count,Is.EqualTo(1));}
+-        [Test]public void EntityLifetimeDisposesTrackedEventSubscription(){using var scope=new EventScope();using var world=new EntityWorld();Entity entity=world.Create&lt;Entity&gt;();int calls=0;entity.Track(scope.Subscribe&lt;Ping&gt;((in Ping _)=&gt;calls++));scope.Publish(new Ping(0));entity.Dispose();scope.Publish(new Ping(0));Assert.That(calls,Is.EqualTo(1));}
++        private sealed class TrackedResource : IDisposable { public int Disposals; public void Dispose() =&gt; Disposals++; }
++        [Test] public void EntityLifetimeDisposesTrackedResourceOnce() { using var world = new EntityWorld(); Entity entity = world.Create&lt;Entity&gt;(); var resource = new TrackedResource(); entity.Track(resource); entity.Dispose(); entity.Dispose(); Assert.That(resource.Disposals, Is.EqualTo(1)); }
+         [Test]public void SchedulerIsStableAndCancellationSafe(){var clock=new ManualGameClock();var scheduler=new GameScheduler(clock);var order=new List&lt;int&gt;();scheduler.Schedule(1,()=&gt;order.Add(1));TimerHandle cancelled=scheduler.Schedule(.5f,()=&gt;order.Add(9));scheduler.Schedule(1,()=&gt;order.Add(2));Assert.That(scheduler.Cancel(cancelled),Is.True);clock.Advance(1);scheduler.Tick();Assert.That(order,Is.EqualTo(new[]{1,2}));}
+     }
+ }
+diff --git a/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/EventScope.cs b/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/EventScope.cs
+deleted file mode 100644
+index 5c8d143..0000000
+--- a/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/EventScope.cs
++++ /dev/null
+@@ -1,182 +0,0 @@
+-using System;
+-using System.Collections.Generic;
+-using System.Threading;
+-using Cysharp.Threading.Tasks;
+-
+-namespace ASCL.Events {
+-    public enum EventExceptionPolicy : byte { StopImmediately, ContinueAndAggregate }
+-
+-    public delegate void EventHandler&lt;T&gt;(in T message) where T : struct;
+-    public delegate UniTask AsyncEventHandler&lt;T&gt;(T message, CancellationToken cancellationToken) where T : struct;
+-    public delegate TResponse QueryHandler&lt;in TRequest, out TResponse&gt;(TRequest request);
+-
+-    public readonly struct EventSubscription : IDisposable, IEquatable&lt;EventSubscription&gt; {
+-        private readonly EventScope? _scope;
+-        private readonly Type? _messageType;
+-        private readonly int _id;
+-        internal EventSubscription(EventScope scope, Type messageType, int id) { _scope = scope; _messageType = messageType; _id = id; }
+-        public bool IsValid =&gt; _scope != null &amp;&amp; _id != 0;
+-        public void Dispose() =&gt; _scope?.Unsubscribe(_messageType!, _id);
+-        public bool Equals(EventSubscription other) =&gt; ReferenceEquals(_scope, other._scope) &amp;&amp; _messageType == other._messageType &amp;&amp; _id == other._id;
+-        public override bool Equals(object? obj) =&gt; obj is EventSubscription other &amp;&amp; Equals(other);
+-        public override int GetHashCode() =&gt; HashCode.Combine(_scope, _messageType, _id);
+-    }
+-
+-    public sealed class EventScope : IDisposable {
+-        private interface IChannel { bool Remove(int id); void Clear(); }
+-        private readonly Dictionary&lt;Type, IChannel&gt; _sync = new();
+-        private readonly Dictionary&lt;Type, IChannel&gt; _async = new();
+-        private readonly Dictionary&lt;(Type, Type), object&gt; _queries = new();
+-        private int _nextId = 1;
+-        private bool _disposed;
+-
+-        public EventScope(EventExceptionPolicy exceptionPolicy = EventExceptionPolicy.ContinueAndAggregate) =&gt; ExceptionPolicy = exceptionPolicy;
+-        public EventExceptionPolicy ExceptionPolicy { get; set; }
+-
+-        public EventSubscription Subscribe&lt;T&gt;(EventHandler&lt;T&gt; handler, int priority = 0) where T : struct {
+-            ThrowIfDisposed();
+-            if (handler == null) throw new ArgumentNullException(nameof(handler));
+-            Type type = typeof(T);
+-            if (!_sync.TryGetValue(type, out IChannel? raw)) {
+-                raw = new SyncChannel&lt;T&gt;();
+-                _sync.Add(type, raw);
+-            }
+-            int id = NextId();
+-            ((SyncChannel&lt;T&gt;)raw).Add(id, priority, handler);
+-            return new EventSubscription(this, type, id);
+-        }
+-
+-        public EventSubscription SubscribeAsync&lt;T&gt;(AsyncEventHandler&lt;T&gt; handler, int priority = 0) where T : struct {
+-            ThrowIfDisposed();
+-            if (handler == null) throw new ArgumentNullException(nameof(handler));
+-            Type type = typeof(T);
+-            if (!_async.TryGetValue(type, out IChannel? raw)) {
+-                raw = new AsyncChannel&lt;T&gt;();
+-                _async.Add(type, raw);
+-            }
+-            int id = NextId();
+-            ((AsyncChannel&lt;T&gt;)raw).Add(id, priority, handler);
+-            return new EventSubscription(this, type, -id);
+-        }
+-
+-        public void Publish&lt;T&gt;(in T message) where T : struct {
+-            ThrowIfDisposed();
+-            if (_sync.TryGetValue(typeof(T), out IChannel? raw)) ((SyncChannel&lt;T&gt;)raw).Publish(in message, ExceptionPolicy);
+-        }
+-
+-        public async UniTask PublishAsync&lt;T&gt;(T message, CancellationToken cancellationToken = default) where T : struct {
+-            ThrowIfDisposed();
+-            if (_async.TryGetValue(typeof(T), out IChannel? raw)) {
+-                await ((AsyncChannel&lt;T&gt;)raw).Publish(message, ExceptionPolicy, cancellationToken);
+-            }
+-        }
+-
+-        public void RegisterQuery&lt;TRequest, TResponse&gt;(QueryHandler&lt;TRequest, TResponse&gt; handler) {
+-            ThrowIfDisposed();
+-            if (handler == null) throw new ArgumentNullException(nameof(handler));
+-            var key = (typeof(TRequest), typeof(TResponse));
+-            if (_queries.ContainsKey(key)) throw new InvalidOperationException($&quot;Query {key} already has a handler.&quot;);
+-            _queries.Add(key, handler);
+-        }
+-
+-        public TResponse Query&lt;TRequest, TResponse&gt;(TRequest request) {
+-            ThrowIfDisposed();
+-            var key = (typeof(TRequest), typeof(TResponse));
+-            if (!_queries.TryGetValue(key, out object? handler)) throw new InvalidOperationException($&quot;Query {key} has no handler.&quot;);
+-            return ((QueryHandler&lt;TRequest, TResponse&gt;)handler)(request);
+-        }
+-
+-        internal void Unsubscribe(Type type, int id) {
+-            if (_disposed || id == 0) return;
+-            Dictionary&lt;Type, IChannel&gt; map = id &gt; 0 ? _sync : _async;
+-            int realId = id &gt; 0 ? id : -id;
+-            if (map.TryGetValue(type, out IChannel? channel)) channel.Remove(realId);
+-        }
+-
+-        public void Dispose() {
+-            if (_disposed) return;
+-            _disposed = true;
+-            foreach (IChannel channel in _sync.Values) channel.Clear();
+-            foreach (IChannel channel in _async.Values) channel.Clear();
+-            _sync.Clear();
+-            _async.Clear();
+-            _queries.Clear();
+-        }
+-
+-        private int NextId() { int id = _nextId++; if (_nextId &lt;= 0) _nextId = 1; return id; }
+-        private void ThrowIfDisposed() { if (_disposed) throw new ObjectDisposedException(nameof(EventScope)); }
+-
+-        private sealed class SyncChannel&lt;T&gt; : IChannel where T : struct {
+-            private readonly List&lt;Entry&gt; _entries = new();
+-            private int _publishing;
+-            private bool _dirty;
+-            private bool _needsSort;
+-            internal void Add(int id, int priority, EventHandler&lt;T&gt; handler) {
+-                if (_publishing &gt; 0) { _entries.Add(new Entry(id, priority, handler)); _needsSort = true; return; }
+-                int index = _entries.Count;
+-                while (index &gt; 0 &amp;&amp; _entries[index - 1].Priority &gt; priority) index--;
+-                _entries.Insert(index, new Entry(id, priority, handler));
+-            }
+-            public bool Remove(int id) {
+-                for (int i = 0; i &lt; _entries.Count; i++) if (_entries[i].Id == id &amp;&amp; _entries[i].Active) {
+-                    Entry entry = _entries[i]; entry.Active = false; _entries[i] = entry;
+-                    if (_publishing == 0) _entries.RemoveAt(i); else _dirty = true;
+-                    return true;
+-                }
+-                return false;
+-            }
+-            internal void Publish(in T message, EventExceptionPolicy policy) {
+-                List&lt;Exception&gt;? errors = null;
+-                _publishing++;
+-                int boundary = _entries.Count;
+-                try {
+-                    for (int i = 0; i &lt; boundary; i++) {
+-                        Entry entry = _entries[i]; if (!entry.Active) continue;
+-                        try { entry.Handler(in message); }
+-                        catch (Exception ex) { if (policy == EventExceptionPolicy.StopImmediately) throw; (errors ??= new List&lt;Exception&gt;()).Add(ex); }
+-                    }
+-                } finally { _publishing--; FinishPublish(); }
+-                if (errors != null) throw new AggregateException(errors);
+-            }
+-            private void FinishPublish() { if (_publishing != 0) return; if (_dirty) { _entries.RemoveAll(static e =&gt; !e.Active); _dirty = false; } if (_needsSort) { _entries.Sort(static (a,b) =&gt; { int priority=a.Priority.CompareTo(b.Priority); return priority!=0?priority:a.Id.CompareTo(b.Id); }); _needsSort=false; } }
+-            public void Clear() { _entries.Clear(); _dirty = false; _needsSort=false; }
+-            private struct Entry { public Entry(int id, int priority, EventHandler&lt;T&gt; handler) { Id=id; Priority=priority; Handler=handler; Active=true; } public int Id; public int Priority; public EventHandler&lt;T&gt; Handler; public bool Active; }
+-        }
+-
+-        private sealed class AsyncChannel&lt;T&gt; : IChannel where T : struct {
+-            private readonly List&lt;Entry&gt; _entries = new();
+-            private int _publishing;
+-            private bool _dirty;
+-            private bool _needsSort;
+-            internal void Add(int id, int priority, AsyncEventHandler&lt;T&gt; handler) {
+-                if (_publishing &gt; 0) { _entries.Add(new Entry(id,priority,handler)); _needsSort=true; return; }
+-                int index = _entries.Count; while (index &gt; 0 &amp;&amp; _entries[index - 1].Priority &gt; priority) index--;
+-                _entries.Insert(index, new Entry(id, priority, handler));
+-            }
+-            public bool Remove(int id) {
+-                for (int i = 0; i &lt; _entries.Count; i++) if (_entries[i].Id == id &amp;&amp; _entries[i].Active) {
+-                    Entry entry = _entries[i]; entry.Active=false; _entries[i]=entry;
+-                    if (_publishing == 0) _entries.RemoveAt(i); else _dirty=true;
+-                    return true;
+-                }
+-                return false;
+-            }
+-            internal async UniTask Publish(T message, EventExceptionPolicy policy, CancellationToken cancellationToken) {
+-                List&lt;Exception&gt;? errors = null; _publishing++; int boundary = _entries.Count;
+-                try {
+-                    for (int i = 0; i &lt; boundary; i++) {
+-                        cancellationToken.ThrowIfCancellationRequested();
+-                        Entry entry = _entries[i]; if (!entry.Active) continue;
+-                        try { await entry.Handler(message, cancellationToken); }
+-                        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested) { throw; }
+-                        catch (Exception ex) { if (policy == EventExceptionPolicy.StopImmediately) throw; (errors ??= new List&lt;Exception&gt;()).Add(ex); }
+-                    }
+-                } finally { _publishing--; FinishPublish(); }
+-                if (errors != null) throw new AggregateException(errors);
+-            }
+-            private void FinishPublish() { if (_publishing != 0) return; if (_dirty) { _entries.RemoveAll(static e=&gt;!e.Active); _dirty=false; } if(_needsSort){_entries.Sort(static(a,b)=&gt;{int priority=a.Priority.CompareTo(b.Priority);return priority!=0?priority:a.Id.CompareTo(b.Id);});_needsSort=false;} }
+-            public void Clear() { _entries.Clear(); _dirty=false; _needsSort=false; }
+-            private struct Entry { public Entry(int id,int priority,AsyncEventHandler&lt;T&gt; handler){Id=id;Priority=priority;Handler=handler;Active=true;} public int Id; public int Priority; public AsyncEventHandler&lt;T&gt; Handler; public bool Active; }
+-        }
+-    }
+-}
+diff --git a/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/EventScope.cs.meta b/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/EventScope.cs.meta
+deleted file mode 100644
+index 61c7e6e..0000000
+--- a/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/EventScope.cs.meta
++++ /dev/null
+@@ -1,2 +0,0 @@
+-fileFormatVersion: 2
+-guid: 0db81b859bf54d94880f188c75bc410a
+\ No newline at end of file
+diff --git a/Packages/com.operationgamestudio.ascl/package.json b/Packages/com.operationgamestudio.ascl/package.json
+index 6c9ff3a..d786088 100644
+--- a/Packages/com.operationgamestudio.ascl/package.json
++++ b/Packages/com.operationgamestudio.ascl/package.json
+@@ -1,6 +1,6 @@
+ {
+   &quot;name&quot;: &quot;com.operationgamestudio.ascl&quot;,
+-  &quot;version&quot;: &quot;0.2.0&quot;,
++  &quot;version&quot;: &quot;0.3.0&quot;,
+   &quot;displayName&quot;: &quot;ASCL Game Framework&quot;,
+   &quot;description&quot;: &quot;Unity-first pure C# framework for single-player games.&quot;,
+   &quot;unity&quot;: &quot;6000.0&quot;,
+diff --git a/DevProject/Assets/ASCLDemo/Tests/Editor/OEventPlaySessionTests.cs b/DevProject/Assets/ASCLDemo/Tests/Editor/OEventPlaySessionTests.cs
+new file mode 100644
+index 0000000..01b8b8e
+--- /dev/null
++++ b/DevProject/Assets/ASCLDemo/Tests/Editor/OEventPlaySessionTests.cs
+@@ -0,0 +1,56 @@
++using System.Collections;
++using NUnit.Framework;
++using OEvent.Module;
++using UnityEditor;
++using UnityEditor.SceneManagement;
++using UnityEngine;
++using UnityEngine.TestTools;
++
++namespace ASCL.DevProject.Tests {
++    public sealed class OEventPlaySessionTests {
++        private bool _optionsEnabled;
++        private EnterPlayModeOptions _options;
++        private SceneSetup[] _sceneSetup;
++
++        [SetUp]
++        public void SaveSettings() {
++            _optionsEnabled = EditorSettings.enterPlayModeOptionsEnabled;
++            _options = EditorSettings.enterPlayModeOptions;
++            _sceneSetup = EditorSceneManager.GetSceneManagerSetup();
++        }
++
++        [UnityTearDown]
++        public IEnumerator RestoreSettings() {
++            if (Application.isPlaying) yield return new ExitPlayMode();
++            EditorSettings.enterPlayModeOptionsEnabled = _optionsEnabled;
++            EditorSettings.enterPlayModeOptions = _options;
++            if (_sceneSetup != null &amp;&amp; _sceneSetup.Length &gt; 0) EditorSceneManager.RestoreSceneManagerSetup(_sceneSetup);
++        }
++
++        [UnityTest]
++        public IEnumerator RepeatedPlayWithoutDomainReloadRebuildsOneGlobalRegistration() {
++            EditorSettings.enterPlayModeOptionsEnabled = true;
++            EditorSettings.enterPlayModeOptions = EnterPlayModeOptions.DisableDomainReload;
++            EditorSceneManager.OpenScene(&quot;Assets/Scenes/ASCL_URP3D.unity&quot;);
++            int handlerCount = -1;
++            for (int session = 0; session &lt; 2; session++) {
++                yield return new EnterPlayMode();
++                yield return null;
++                Assert.That(OEventManager.Instance.IsInitialized, Is.True);
++                var demo = Object.FindFirstObjectByType&lt;Urp3DDemo&gt;();
++                Assert.That(demo, Is.Not.Null);
++                Assert.That(demo.Power, Is.EqualTo(10));
++                Assert.That(demo.EventRefreshCount, Is.EqualTo(1));
++                if (handlerCount &lt; 0) handlerCount = OEventManager.Instance.RegisteredHandlerCount;
++                Assert.That(OEventManager.Instance.RegisteredHandlerCount, Is.EqualTo(handlerCount));
++                demo.Boost();
++                yield return null;
++                Assert.That(demo.Power, Is.EqualTo(12));
++                Assert.That(demo.EventRefreshCount, Is.EqualTo(2));
++                yield return new ExitPlayMode();
++                Assert.That(OEventManager.Instance.IsInitialized, Is.False);
++                Assert.That(OEventManager.Instance.RegisteredHandlerCount, Is.Zero);
++            }
++        }
++    }
++}
+diff --git a/DevProject/Assets/ASCLDemo/Tests/Editor/OEventPlaySessionTests.cs.meta b/DevProject/Assets/ASCLDemo/Tests/Editor/OEventPlaySessionTests.cs.meta
+new file mode 100644
+index 0000000..df73f42
+--- /dev/null
++++ b/DevProject/Assets/ASCLDemo/Tests/Editor/OEventPlaySessionTests.cs.meta
+@@ -0,0 +1,2 @@
++fileFormatVersion: 2
++guid: f3bae7816d114171b9ffa01eba797a7c
+diff --git a/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventDispatchState.cs b/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventDispatchState.cs
+new file mode 100644
+index 0000000..3307edb
+--- /dev/null
++++ b/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventDispatchState.cs
+@@ -0,0 +1,42 @@
++using System;
++
++namespace OEvent.Module {
++    internal enum EventKind : byte { Sync, Async, SyncResult, AsyncResult }
++
++    internal sealed class EventEntry {
++        internal readonly IEventRegister Handler;
++        internal readonly uint Priority;
++        internal readonly (Type, Type, EventKind) Key;
++        internal bool Active = true;
++        internal EventEntry(IEventRegister handler, uint priority, (Type, Type, EventKind) key) {
++            Handler = handler;
++            Priority = priority;
++            Key = key;
++        }
++    }
++
++    // Copy on subscription changes, not on broadcast. A running dispatch owns its
++    // immutable candidate array; Active also makes removals visible to nested/awaiting dispatches.
++    internal sealed class EventChannel {
++        internal EventEntry[] Entries { get; private set; } = Array.Empty&lt;EventEntry&gt;();
++        internal void Add(EventEntry entry) {
++            EventEntry[] old = Entries;
++            int index = 0;
++            while (index &lt; old.Length &amp;&amp; old[index].Priority &lt;= entry.Priority) index++;
++            var next = new EventEntry[old.Length + 1];
++            Array.Copy(old, 0, next, 0, index);
++            next[index] = entry;
++            Array.Copy(old, index, next, index + 1, old.Length - index);
++            Entries = next;
++        }
++        internal void Remove(EventEntry entry) {
++            entry.Active = false;
++            int index = Array.IndexOf(Entries, entry);
++            if (index &lt; 0) return;
++            var next = new EventEntry[Entries.Length - 1];
++            Array.Copy(Entries, 0, next, 0, index);
++            Array.Copy(Entries, index + 1, next, index, next.Length - index);
++            Entries = next;
++        }
++    }
++}
+diff --git a/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventDispatchState.cs.meta b/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventDispatchState.cs.meta
+new file mode 100644
+index 0000000..c96814c
+--- /dev/null
++++ b/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventDispatchState.cs.meta
+@@ -0,0 +1,2 @@
++fileFormatVersion: 2
++guid: 5fec82fdbfa245d8b2592a3958781629
+diff --git a/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventManager.cs b/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventManager.cs
+new file mode 100644
+index 0000000..d1a371e
+--- /dev/null
++++ b/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventManager.cs
+@@ -0,0 +1,168 @@
++#nullable enable
++using System;
++using System.Collections.Generic;
++using System.Linq;
++using ASCL.Diagnostics;
++using Cysharp.Threading.Tasks;
++
++namespace OEvent.Module {
++    /// &lt;summary&gt;Application-global, single logical thread dispatcher. Handlers must not retain scene/world state.&lt;/summary&gt;
++    public sealed class OEventManager : IDisposable {
++        public static OEventManager Instance { get; } = new();
++        private readonly Dictionary&lt;(Type, Type, EventKind), EventChannel&gt; _channels = new();
++        private readonly Dictionary&lt;Type, EventEntry&gt; _registrations = new();
++        private readonly List&lt;IEventRegister&gt; _automatic = new();
++        private ILogSink _log = NullLogSink.Instance;
++        private bool _initializing;
++        private bool _disposing;
++        private long _generation;
++        private OEventManager() { }
++        public bool IsInitialized { get; private set; }
++        public int RegisteredHandlerCount =&gt; _registrations.Count;
++
++        public void Init() {
++            if (IsInitialized) return;
++            Init(OEventReflectionHelper.GetAllTypesWithAttribute&lt;OEventAttribute&gt;());
++        }
++
++        public void Init(IEnumerable&lt;Type&gt; handlerTypes, ILogSink? log = null) {
++            if (handlerTypes == null) throw new ArgumentNullException(nameof(handlerTypes));
++            if (_initializing || _disposing) throw new InvalidOperationException(&quot;OEvent lifecycle cannot be entered recursively.&quot;);
++            if (IsInitialized) return;
++            _log = log ?? NullLogSink.Instance;
++            _initializing = true;
++            long generation = ++_generation;
++            Type? current = null;
++            try {
++                foreach (Type type in handlerTypes.Distinct().OrderBy(t =&gt; t?.Assembly.FullName, StringComparer.Ordinal)
++                    .ThenBy(t =&gt; t?.FullName, StringComparer.Ordinal)) {
++                    current = type;
++                    if (type == null || !type.IsClass || type.IsAbstract || type.ContainsGenericParameters ||
++                        !typeof(IEventRegister).IsAssignableFrom(type) || type.GetConstructor(Type.EmptyTypes) == null)
++                        throw new ArgumentException(&quot;A handler must be a closed concrete IEventRegister class with a public parameterless constructor.&quot;);
++                    var attribute = (OEventAttribute?)Attribute.GetCustomAttribute(type, typeof(OEventAttribute), true);
++                    if (attribute == null) throw new ArgumentException(&quot;The handler has no OEvent attribute.&quot;);
++                    var instance = (IEventRegister)Activator.CreateInstance(type)!;
++                    _automatic.Add(instance);
++                    instance.Register(attribute.Priority);
++                    if (_generation != generation || !_initializing) throw new InvalidOperationException(&quot;Initialization was interrupted.&quot;);
++                }
++                IsInitialized = true;
++            } catch (Exception ex) {
++                Dispose();
++                throw new InvalidOperationException($&quot;OEvent initialization failed at &#x27;{current?.FullName ?? &quot;type discovery&quot;}&#x27;. All registrations were cleared.&quot;, ex);
++            } finally { _initializing = false; }
++        }
++
++        public void Update() { }
++
++        public void Dispose() {
++            if (_disposing) return;
++            _disposing = true;
++            try {
++                IsInitialized = false;
++                _initializing = false;
++                ++_generation;
++                foreach (EventEntry entry in _registrations.Values) entry.Active = false;
++                _registrations.Clear();
++                _channels.Clear();
++                for (int i = _automatic.Count - 1; i &gt;= 0; i--) {
++                    try { _automatic[i].Unregister(); }
++                    catch (Exception ex) { LogFailure(&quot;OEvent handler cleanup failed.&quot;, ex); }
++                }
++                _automatic.Clear();
++                _log = NullLogSink.Instance;
++            } finally { _disposing = false; }
++        }
++
++        internal void Register(IEventRegister handler, Type argument, Type result, EventKind kind, uint priority) {
++            if (_disposing || (!IsInitialized &amp;&amp; !_initializing)) throw new InvalidOperationException(&quot;Initialize OEvent before registering handlers.&quot;);
++            // OEvent has one registered object per concrete handler type.
++            if (_registrations.ContainsKey(handler.GetType())) return;
++            var key = (argument, result, kind);
++            if (!_channels.TryGetValue(key, out EventChannel? channel)) {
++                channel = new EventChannel();
++                _channels.Add(key, channel);
++            }
++            var entry = new EventEntry(handler, priority, key);
++            channel.Add(entry);
++            _registrations.Add(handler.GetType(), entry);
++        }
++
++        internal void Unregister(IEventRegister handler) {
++            if (!_registrations.TryGetValue(handler.GetType(), out EventEntry? entry) || !ReferenceEquals(entry.Handler, handler)) return;
++            _channels[entry.Key].Remove(entry);
++            if (_channels[entry.Key].Entries.Length == 0) _channels.Remove(entry.Key);
++            _registrations.Remove(handler.GetType());
++        }
++
++        public void BroadcastEvent&lt;TEventType&gt;(TEventType eventData) where TEventType : struct {
++            EventEntry[] entries = Snapshot(typeof(TEventType), typeof(void), EventKind.Sync);
++            long generation = _generation;
++            foreach (EventEntry entry in entries) {
++                CheckGeneration(generation);
++                if (!entry.Active) continue;
++                ((OEventNoReturnMethodObject&lt;TEventType&gt;)entry.Handler).Run(eventData);
++                CheckGeneration(generation);
++            }
++        }
++
++        public async UniTask BroadcastEventAsync&lt;TEventType&gt;(TEventType eventData) where TEventType : struct {
++            EventEntry[] entries = Snapshot(typeof(TEventType), typeof(void), EventKind.Async);
++            long generation = _generation;
++            foreach (EventEntry entry in entries) {
++                CheckGeneration(generation);
++                if (!entry.Active) continue;
++                try { await ((OEventNoReturnAsyncMethodObject&lt;TEventType&gt;)entry.Handler).Run(eventData); }
++                catch { CheckGeneration(generation); throw; }
++                CheckGeneration(generation);
++            }
++        }
++
++        public TResult BroadcastEventWithReturn&lt;TEventType, TResult&gt;(TEventType eventData)
++            where TEventType : struct where TResult : class, new() {
++            EventEntry[] entries = Snapshot(typeof(TEventType), typeof(TResult), EventKind.SyncResult);
++            long generation = _generation;
++            foreach (EventEntry entry in entries) {
++                CheckGeneration(generation);
++                if (!entry.Active) continue;
++                try {
++                    TResult result = ((OEventWithReturnMethodObject&lt;TEventType, TResult&gt;)entry.Handler).Run(eventData);
++                    CheckGeneration(generation);
++                    return result;
++                } catch (OperationCanceledException) { throw; }
++                catch (Exception ex) { CheckGeneration(generation); LogFailure($&quot;OEvent handler &#x27;{entry.Handler.GetType().FullName}&#x27; failed; trying the next result handler.&quot;, ex); CheckGeneration(generation); }
++            }
++            return default!;
++        }
++
++        public async UniTask&lt;TResult&gt; BroadcastEventAsyncWithReturn&lt;TEventType, TResult&gt;(TEventType eventData)
++            where TEventType : struct where TResult : class, new() {
++            EventEntry[] entries = Snapshot(typeof(TEventType), typeof(TResult), EventKind.AsyncResult);
++            long generation = _generation;
++            foreach (EventEntry entry in entries) {
++                CheckGeneration(generation);
++                if (!entry.Active) continue;
++                try {
++                    TResult result = await ((OEventAsyncWithReturnMethodObject&lt;TEventType, TResult&gt;)entry.Handler).Run(eventData);
++                    CheckGeneration(generation);
++                    return result;
++                } catch (OperationCanceledException) { throw; }
++                catch (Exception ex) { CheckGeneration(generation); LogFailure($&quot;OEvent async handler &#x27;{entry.Handler.GetType().FullName}&#x27; failed; trying the next result handler.&quot;, ex); CheckGeneration(generation); }
++            }
++            return default!;
++        }
++
++        private EventEntry[] Snapshot(Type argument, Type result, EventKind kind) {
++            if (!IsInitialized) throw new InvalidOperationException(&quot;Initialize OEvent before broadcasting.&quot;);
++            return _channels.TryGetValue((argument, result, kind), out EventChannel? channel) ? channel.Entries : Array.Empty&lt;EventEntry&gt;();
++        }
++        private void CheckGeneration(long generation) {
++            if (!IsInitialized || _generation != generation) throw new OperationCanceledException(&quot;OEvent was disposed or reinitialized during this broadcast.&quot;);
++        }
++        private void LogFailure(string message, Exception exception) {
++            try { _log.Write(LogLevel.Error, message, exception); }
++            catch { /* A diagnostic sink must not change event fallback/cleanup semantics. */ }
++        }
++    }
++}
+diff --git a/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventManager.cs.meta b/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventManager.cs.meta
+new file mode 100644
+index 0000000..2de1b5a
+--- /dev/null
++++ b/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventManager.cs.meta
+@@ -0,0 +1,2 @@
++fileFormatVersion: 2
++guid: 07cc4fc1e66b4597a1f569a04de3582f
+diff --git a/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventMethodObject.cs b/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventMethodObject.cs
+new file mode 100644
+index 0000000..9e3a99b
+--- /dev/null
++++ b/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventMethodObject.cs
+@@ -0,0 +1,50 @@
++using System;
++using Cysharp.Threading.Tasks;
++using OEvent.Module;
++
++namespace OEvent {
++    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
++    public abstract class OBaseAttribute : Attribute { }
++
++    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
++    public class OEventAttribute : OBaseAttribute {
++        public readonly uint Priority;
++        public OEventAttribute(uint priority = 10000) =&gt; Priority = priority;
++    }
++
++    public interface IEventRegister {
++        void Register(uint priority);
++        void Unregister();
++    }
++
++    [OEvent]
++    public abstract class OEventNoReturnMethodObject&lt;TEventArg&gt; : IEventRegister where TEventArg : struct {
++        public void Register(uint priority) =&gt; OEventManager.Instance.Register(this, typeof(TEventArg), typeof(void), EventKind.Sync, priority);
++        public void Unregister() =&gt; OEventManager.Instance.Unregister(this);
++        public abstract void Run(TEventArg eventArgs);
++    }
++
++    [OEvent]
++    public abstract class OEventNoReturnAsyncMethodObject&lt;TEventArg&gt; : IEventRegister where TEventArg : struct {
++        public void Register(uint priority) =&gt; OEventManager.Instance.Register(this, typeof(TEventArg), typeof(void), EventKind.Async, priority);
++        public void Unregister() =&gt; OEventManager.Instance.Unregister(this);
++        public abstract UniTask Run(TEventArg eventArg);
++    }
++
++    [OEvent]
++    public abstract class OEventWithReturnMethodObject&lt;TEventArg, TResult&gt; : IEventRegister
++        where TEventArg : struct where TResult : class, new() {
++        public void Register(uint priority) =&gt; OEventManager.Instance.Register(this, typeof(TEventArg), typeof(TResult), EventKind.SyncResult, priority);
++        public void Unregister() =&gt; OEventManager.Instance.Unregister(this);
++        // The original contract permits null as a successful result.
++        public abstract TResult Run(TEventArg eventArg);
++    }
++
++    [OEvent]
++    public abstract class OEventAsyncWithReturnMethodObject&lt;TEventArg, TResult&gt; : IEventRegister
++        where TEventArg : struct where TResult : class, new() {
++        public void Register(uint priority) =&gt; OEventManager.Instance.Register(this, typeof(TEventArg), typeof(TResult), EventKind.AsyncResult, priority);
++        public void Unregister() =&gt; OEventManager.Instance.Unregister(this);
++        public abstract UniTask&lt;TResult&gt; Run(TEventArg eventArg);
++    }
++}
+diff --git a/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventMethodObject.cs.meta b/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventMethodObject.cs.meta
+new file mode 100644
+index 0000000..2a7c3ea
+--- /dev/null
++++ b/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventMethodObject.cs.meta
+@@ -0,0 +1,2 @@
++fileFormatVersion: 2
++guid: b3256baa6a2d45bd8a3f4151f390e7ab
+diff --git a/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventReflectionHelper.cs b/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventReflectionHelper.cs
+new file mode 100644
+index 0000000..7282382
+--- /dev/null
++++ b/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventReflectionHelper.cs
+@@ -0,0 +1,46 @@
++using System;
++using System.Collections.Generic;
++using System.Linq;
++using System.Reflection;
++
++namespace OEvent.Module {
++    public static class OEventReflectionHelper {
++        public static IEnumerable&lt;Type&gt; GetAllSubclasses(Type baseType) =&gt; AllTypes(baseType.Assembly).Where(t =&gt; t.BaseType == baseType);
++        public static IEnumerable&lt;Type&gt; GetAllInterfaceSubclasses(Type inter) =&gt; AllTypes(inter.Assembly).Where(t =&gt; t.GetInterfaces().Contains(inter));
++        public static List&lt;Type&gt; GetAllTypesWithAttribute&lt;TAttribute&gt;() where TAttribute : Attribute =&gt;
++            AllTypes(typeof(TAttribute).Assembly).Where(IsConstructibleClass).Where(t =&gt; t.IsDefined(typeof(TAttribute), true)).ToList();
++
++        public static List&lt;Type&gt; GetTypesWithAttributeFromAssembly&lt;TAttribute&gt;(Assembly assembly) where TAttribute : Attribute {
++            if (assembly == null) throw new ArgumentNullException(nameof(assembly));
++            return ReadTypes(assembly).Where(IsConstructibleClass).Where(t =&gt; t.IsDefined(typeof(TAttribute), true)).ToList();
++        }
++
++        private static bool IsConstructibleClass(Type type) =&gt; type.IsClass &amp;&amp; !type.IsAbstract &amp;&amp; !type.ContainsGenericParameters;
++        private static IEnumerable&lt;Type&gt; AllTypes(Assembly definingAssembly) {
++            Assembly[] loaded = AppDomain.CurrentDomain.GetAssemblies().Where(a =&gt; !a.IsDynamic).ToArray();
++            // Compiler/editor tooling can be loaded without its build-time dependencies.
++            // It cannot declare an OEvent handler unless its reference graph reaches Core.
++            // Expand backwards through loaded references, including indirect base assemblies.
++            var reachable = new HashSet&lt;string&gt;(StringComparer.Ordinal) { definingAssembly.GetName().Name! };
++            bool changed;
++            do {
++                changed = false;
++                foreach (Assembly assembly in loaded) {
++                    string name = assembly.GetName().Name!;
++                    if (!reachable.Contains(name) &amp;&amp; assembly.GetReferencedAssemblies().Any(r =&gt; reachable.Contains(r.Name!)))
++                        changed |= reachable.Add(name);
++                }
++            } while (changed);
++            return loaded.Where(a =&gt; reachable.Contains(a.GetName().Name!))
++                .OrderBy(a =&gt; a.FullName, StringComparer.Ordinal).SelectMany(ReadTypes);
++        }
++
++        private static Type[] ReadTypes(Assembly assembly) {
++            try { return assembly.GetTypes(); }
++            catch (ReflectionTypeLoadException ex) {
++                string details = string.Join(&quot;; &quot;, ex.LoaderExceptions.Where(e =&gt; e != null).Select(e =&gt; e!.Message));
++                throw new InvalidOperationException($&quot;OEvent could not completely inspect assembly &#x27;{assembly.FullName}&#x27;: {details}&quot;, ex);
++            }
++        }
++    }
++}
+diff --git a/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventReflectionHelper.cs.meta b/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventReflectionHelper.cs.meta
+new file mode 100644
+index 0000000..a266663
+--- /dev/null
++++ b/Packages/com.operationgamestudio.ascl/Runtime/Core/Events/OEventReflectionHelper.cs.meta
+@@ -0,0 +1,2 @@
++fileFormatVersion: 2
++guid: 5c701c3e450d47a489a908c1cf8154a5
+diff --git a/Packages/com.operationgamestudio.ascl/Runtime/Unity/OEventRuntimeBootstrap.cs b/Packages/com.operationgamestudio.ascl/Runtime/Unity/OEventRuntimeBootstrap.cs
+new file mode 100644
+index 0000000..8ee0c1d
+--- /dev/null
++++ b/Packages/com.operationgamestudio.ascl/Runtime/Unity/OEventRuntimeBootstrap.cs
+@@ -0,0 +1,23 @@
++using OEvent.Module;
++using UnityEngine;
++
++namespace ASCL.Unity {
++    /// &lt;summary&gt;One event registry per application, independent of individual worlds/scenes.&lt;/summary&gt;
++    public static class OEventRuntimeBootstrap {
++        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
++        private static void Reset() {
++            Application.quitting -= Shutdown;
++            OEventManager.Instance.Dispose();
++        }
++
++        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
++        private static void Initialize() {
++            OEventManager.Instance.Init(
++                OEventReflectionHelper.GetAllTypesWithAttribute&lt;global::OEvent.OEventAttribute&gt;(), new UnityLogSink());
++            Application.quitting -= Shutdown;
++            Application.quitting += Shutdown;
++        }
++
++        private static void Shutdown() =&gt; OEventManager.Instance.Dispose();
++    }
++}
+diff --git a/Packages/com.operationgamestudio.ascl/Runtime/Unity/OEventRuntimeBootstrap.cs.meta b/Packages/com.operationgamestudio.ascl/Runtime/Unity/OEventRuntimeBootstrap.cs.meta
+new file mode 100644
+index 0000000..04ae38e
+--- /dev/null
++++ b/Packages/com.operationgamestudio.ascl/Runtime/Unity/OEventRuntimeBootstrap.cs.meta
+@@ -0,0 +1,2 @@
++fileFormatVersion: 2
++guid: bbaa61b538fa41ef8f55e02fa7084ac6
+diff --git a/Packages/com.operationgamestudio.ascl/Tests/Runtime/OEventTests.cs b/Packages/com.operationgamestudio.ascl/Tests/Runtime/OEventTests.cs
+new file mode 100644
+index 0000000..7736977
+--- /dev/null
++++ b/Packages/com.operationgamestudio.ascl/Tests/Runtime/OEventTests.cs
+@@ -0,0 +1,300 @@
++#nullable enable
++using System;
++using System.Collections.Generic;
++using System.Threading.Tasks;
++using ASCL.Diagnostics;
++using Cysharp.Threading.Tasks;
++using NUnit.Framework;
++using OEvent;
++using OEvent.Module;
++
++namespace ASCL.Tests {
++#if !UNITY_5_3_OR_NEWER
++    // Unity&#x27;s NUnit fork does not expose this attribute and runs these fixtures serially.
++    [NonParallelizable]
++#endif
++    public sealed class OEventTests {
++        private static OEventManager Manager =&gt; OEventManager.Instance;
++        public sealed class A { }
++        public sealed class B { }
++        public sealed class C { }
++        public sealed class Reply { }
++        public sealed class OtherReply { }
++        public sealed class Context {
++            public readonly List&lt;string&gt; Calls = new();
++            public Action&lt;Type&gt;? Sync;
++            public Func&lt;Type, UniTask&gt;? Async;
++            public Func&lt;Type, object?&gt;? Result;
++            public Func&lt;Type, UniTask&lt;object?&gt;&gt;? AsyncResult;
++        }
++        public readonly struct Message {
++            public readonly Context Context;
++            public Message(Context context) =&gt; Context = context;
++        }
++        // Open generic definitions are deliberately not auto-discovered. Explicit
++        // closed types keep negative fixtures out of application startup discovery.
++        public sealed class Sync&lt;T&gt; : OEventNoReturnMethodObject&lt;Message&gt; {
++            public override void Run(Message message) {
++                message.Context.Calls.Add(typeof(T).Name);
++                message.Context.Sync?.Invoke(typeof(T));
++            }
++        }
++        public sealed class Async&lt;T&gt; : OEventNoReturnAsyncMethodObject&lt;Message&gt; {
++            public override async UniTask Run(Message message) {
++                message.Context.Calls.Add(typeof(T).Name);
++                if (message.Context.Async != null) await message.Context.Async(typeof(T));
++            }
++        }
++        public sealed class Result&lt;T, R&gt; : OEventWithReturnMethodObject&lt;Message, R&gt; where R : class, new() {
++            public override R Run(Message message) {
++                message.Context.Calls.Add(typeof(T).Name);
++                return (R)message.Context.Result!(typeof(T))!;
++            }
++        }
++        public sealed class AsyncResult&lt;T, R&gt; : OEventAsyncWithReturnMethodObject&lt;Message, R&gt; where R : class, new() {
++            public override async UniTask&lt;R&gt; Run(Message message) {
++                message.Context.Calls.Add(typeof(T).Name);
++                return (R)(await message.Context.AsyncResult!(typeof(T)))!;
++            }
++        }
++        [OEvent]
++        public sealed class FailingRegister&lt;T&gt; : IEventRegister {
++            private readonly Sync&lt;T&gt; _handler = new();
++            public void Register(uint priority) { _handler.Register(priority); throw new InvalidOperationException(&quot;registration fixture&quot;); }
++            public void Unregister() =&gt; _handler.Unregister();
++        }
++        public sealed class FailingConstructor&lt;T&gt; : OEventNoReturnMethodObject&lt;Message&gt; {
++            public FailingConstructor() =&gt; throw new InvalidOperationException(&quot;constructor fixture&quot;);
++            public override void Run(Message message) { }
++        }
++        public sealed class NoDefaultConstructor&lt;T&gt; : OEventNoReturnMethodObject&lt;Message&gt; {
++            public NoDefaultConstructor(int _) { }
++            public override void Run(Message message) { }
++        }
++        private sealed class Log : ILogSink {
++            public readonly List&lt;string&gt; Messages = new();
++            public void Write(LogLevel level, string message, Exception? exception = null) =&gt; Messages.Add(message);
++        }
++
++        [SetUp] public void SetUp() { Manager.Dispose(); Manager.Init(Array.Empty&lt;Type&gt;()); }
++        [TearDown] public void TearDown() =&gt; Manager.Dispose();
++
++        [Test] public void AutomaticDiscoveryIncludesInheritedAttributeAndStableTypeOrder() {
++            Manager.Dispose();
++            Manager.Init();
++            int count = Manager.RegisteredHandlerCount;
++            Manager.Init();
++            var calls = new List&lt;string&gt;();
++            Manager.BroadcastEvent(new AutoProbe(calls));
++            Assert.That(calls, Is.EqualTo(new[] { &quot;A&quot;, &quot;B&quot; }));
++            Assert.That(Manager.RegisteredHandlerCount, Is.EqualTo(count));
++            Assert.That(OEventReflectionHelper.GetTypesWithAttributeFromAssembly&lt;OEventAttribute&gt;(typeof(AutoA).Assembly), Does.Contain(typeof(AutoA)));
++        }
++
++        [Test] public void ExplicitInitializationSortsTypesAndDeduplicatesInput() {
++            Manager.Dispose();
++            Manager.Init(new[] { typeof(Sync&lt;B&gt;), typeof(Sync&lt;A&gt;), typeof(Sync&lt;A&gt;) });
++            var c = new Context();
++            Manager.BroadcastEvent(new Message(c));
++            Assert.That(c.Calls, Is.EqualTo(new[] { &quot;A&quot;, &quot;B&quot; }));
++            Assert.That(Manager.RegisteredHandlerCount, Is.EqualTo(2));
++        }
++
++        [Test] public void PriorityStableTiesAndSelfRemoval() {
++            var a = new Sync&lt;A&gt;(); var b = new Sync&lt;B&gt;(); var cHandler = new Sync&lt;C&gt;();
++            b.Register(20); a.Register(10); cHandler.Register(20);
++            var c = new Context { Sync = t =&gt; { if (t == typeof(B)) b.Unregister(); } };
++            Manager.BroadcastEvent(new Message(c)); Manager.BroadcastEvent(new Message(c));
++            Assert.That(c.Calls, Is.EqualTo(new[] { &quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;A&quot;, &quot;C&quot; }));
++        }
++
++        [Test] public void AddedHandlersWaitForNextBroadcastAndRemovalIsImmediate() {
++            var a = new Sync&lt;A&gt;(); var b = new Sync&lt;B&gt;(); var next = new Sync&lt;C&gt;();
++            a.Register(10); b.Register(20);
++            var c = new Context { Sync = t =&gt; { if (t == typeof(A)) { next.Register(0); b.Unregister(); } } };
++            Manager.BroadcastEvent(new Message(c)); Manager.BroadcastEvent(new Message(c));
++            Assert.That(c.Calls, Is.EqualTo(new[] { &quot;A&quot;, &quot;C&quot;, &quot;A&quot; }));
++        }
++
++        [Test] public void NestedBroadcastGetsItsOwnStableCandidates() {
++            var a = new Sync&lt;A&gt;(); var b = new Sync&lt;B&gt;(); var next = new Sync&lt;C&gt;();
++            a.Register(10); b.Register(20);
++            var c = new Context(); bool nested = false;
++            c.Sync = t =&gt; { if (t == typeof(A) &amp;&amp; !nested) { nested = true; next.Register(0); Manager.BroadcastEvent(new Message(c)); b.Unregister(); } };
++            Manager.BroadcastEvent(new Message(c));
++            Assert.That(c.Calls, Is.EqualTo(new[] { &quot;A&quot;, &quot;C&quot;, &quot;A&quot;, &quot;B&quot; }));
++        }
++
++        [Test] public void DuplicateRegistrationAndWrongInstanceRemovalAreHarmless() {
++            var original = new Sync&lt;A&gt;(); var other = new Sync&lt;A&gt;(); var log = new Log();
++            Manager.Dispose(); Manager.Init(Array.Empty&lt;Type&gt;(), log);
++            original.Register(10); original.Register(0); other.Register(0); other.Unregister();
++            var c = new Context(); Manager.BroadcastEvent(new Message(c));
++            Assert.That(c.Calls, Is.EqualTo(new[] { &quot;A&quot; }));
++            original.Unregister(); original.Unregister();
++            Assert.That(Manager.RegisteredHandlerCount, Is.Zero);
++            Assert.That(log.Messages, Is.Empty);
++        }
++
++        [Test] public async Task AsyncHandlersAreAwaitedAndSeeRemovalWhileSuspended() {
++            var gate = new UniTaskCompletionSource();
++            var a = new Async&lt;A&gt;(); var b = new Async&lt;B&gt;(); var next = new Async&lt;C&gt;();
++            b.Register(20); a.Register(10);
++            var c = new Context { Async = t =&gt; t == typeof(A) ? gate.Task : UniTask.CompletedTask };
++            Task pending = Manager.BroadcastEventAsync(new Message(c)).AsTask();
++            try {
++                Assert.That(pending.IsCompleted, Is.False);
++                Assert.That(c.Calls, Is.EqualTo(new[] { &quot;A&quot; }));
++                b.Unregister(); next.Register(0);
++            } finally { gate.TrySetResult(); }
++            await pending;
++            c.Async = null;
++            await Manager.BroadcastEventAsync(new Message(c));
++            Assert.That(c.Calls, Is.EqualTo(new[] { &quot;A&quot;, &quot;C&quot;, &quot;A&quot; }));
++        }
++
++        [Test] public void NoReturnFailureStopsLaterHandlers() {
++            new Sync&lt;A&gt;().Register(0); new Sync&lt;B&gt;().Register(1);
++            var c = new Context { Sync = _ =&gt; throw new InvalidOperationException(&quot;expected&quot;) };
++            Assert.Throws&lt;InvalidOperationException&gt;(() =&gt; Manager.BroadcastEvent(new Message(c)));
++            Assert.That(c.Calls, Is.EqualTo(new[] { &quot;A&quot; }));
++        }
++
++        [Test] public void AsyncNoReturnFailureStopsLaterHandlers() {
++            new Async&lt;A&gt;().Register(0); new Async&lt;B&gt;().Register(1);
++            var c = new Context { Async = _ =&gt; UniTask.FromException(new InvalidOperationException(&quot;expected&quot;)) };
++            Assert.ThrowsAsync&lt;InvalidOperationException&gt;(async () =&gt; await Manager.BroadcastEventAsync(new Message(c)));
++            Assert.That(c.Calls, Is.EqualTo(new[] { &quot;A&quot; }));
++        }
++
++        [Test] public void ResultFallsBackOnFailureButNullIsSuccessful() {
++            Manager.Dispose(); var log = new Log(); Manager.Init(Array.Empty&lt;Type&gt;(), log);
++            new Result&lt;A, Reply&gt;().Register(0); new Result&lt;B, Reply&gt;().Register(1); new Result&lt;C, Reply&gt;().Register(2);
++            var c = new Context { Result = t =&gt; t == typeof(A) ? throw new InvalidOperationException(&quot;expected&quot;) : null };
++            Assert.That(Manager.BroadcastEventWithReturn&lt;Message, Reply&gt;(new Message(c)), Is.Null);
++            Assert.That(c.Calls, Is.EqualTo(new[] { &quot;A&quot;, &quot;B&quot; }));
++            Assert.That(log.Messages.Count, Is.EqualTo(1));
++        }
++
++        [Test] public async Task AsyncResultFallsBackAndReturnsFirstValue() {
++            var log = new Log(); Manager.Dispose(); Manager.Init(Array.Empty&lt;Type&gt;(), log);
++            new AsyncResult&lt;A, Reply&gt;().Register(0); new AsyncResult&lt;B, Reply&gt;().Register(1); new AsyncResult&lt;C, Reply&gt;().Register(2);
++            var expected = new Reply();
++            var c = new Context { AsyncResult = t =&gt; t == typeof(A) ? UniTask.FromException&lt;object?&gt;(new InvalidOperationException(&quot;expected&quot;)) : UniTask.FromResult&lt;object?&gt;(expected) };
++            Assert.That(await Manager.BroadcastEventAsyncWithReturn&lt;Message, Reply&gt;(new Message(c)), Is.SameAs(expected));
++            Assert.That(c.Calls, Is.EqualTo(new[] { &quot;A&quot;, &quot;B&quot; }));
++            Assert.That(log.Messages.Count, Is.EqualTo(1));
++        }
++
++        [Test] public async Task AsyncNullResultStopsFallback() {
++            new AsyncResult&lt;A, Reply&gt;().Register(0); new AsyncResult&lt;B, Reply&gt;().Register(1);
++            var c = new Context { AsyncResult = _ =&gt; UniTask.FromResult&lt;object?&gt;(null) };
++            Assert.That(await Manager.BroadcastEventAsyncWithReturn&lt;Message, Reply&gt;(new Message(c)), Is.Null);
++            Assert.That(c.Calls, Is.EqualTo(new[] { &quot;A&quot; }));
++        }
++
++        [Test] public async Task ResultChannelsIncludeResultTypeAndMode() {
++            new Result&lt;A, Reply&gt;().Register(0); new Result&lt;B, OtherReply&gt;().Register(0);
++            new AsyncResult&lt;A, Reply&gt;().Register(0); new AsyncResult&lt;B, OtherReply&gt;().Register(0);
++            var r = new Reply(); var other = new OtherReply();
++            var c = new Context { Result = t =&gt; t == typeof(A) ? r : other,
++                AsyncResult = t =&gt; UniTask.FromResult&lt;object?&gt;(t == typeof(A) ? r : other) };
++            Assert.That(Manager.BroadcastEventWithReturn&lt;Message, Reply&gt;(new Message(c)), Is.SameAs(r));
++            Assert.That(Manager.BroadcastEventWithReturn&lt;Message, OtherReply&gt;(new Message(c)), Is.SameAs(other));
++            Assert.That(await Manager.BroadcastEventAsyncWithReturn&lt;Message, Reply&gt;(new Message(c)), Is.SameAs(r));
++            Assert.That(await Manager.BroadcastEventAsyncWithReturn&lt;Message, OtherReply&gt;(new Message(c)), Is.SameAs(other));
++        }
++
++        [Test] public void CancellationNeverFallsBackToAnotherResultHandler() {
++            new Result&lt;A, Reply&gt;().Register(0); new Result&lt;B, Reply&gt;().Register(1);
++            new AsyncResult&lt;A, Reply&gt;().Register(0); new AsyncResult&lt;B, Reply&gt;().Register(1);
++            var c = new Context { Result = _ =&gt; throw new OperationCanceledException(),
++                AsyncResult = _ =&gt; UniTask.FromException&lt;object?&gt;(new OperationCanceledException()) };
++            Assert.Throws&lt;OperationCanceledException&gt;(() =&gt; Manager.BroadcastEventWithReturn&lt;Message, Reply&gt;(new Message(c)));
++            Assert.ThrowsAsync(Is.InstanceOf&lt;OperationCanceledException&gt;(), async () =&gt; await Manager.BroadcastEventAsyncWithReturn&lt;Message, Reply&gt;(new Message(c)));
++            Assert.That(c.Calls, Is.EqualTo(new[] { &quot;A&quot;, &quot;A&quot; }));
++        }
++
++        [Test] public async Task EmptyChannelsHaveOriginalNoOpAndDefaultResultBehavior() {
++            var c = new Context();
++            Manager.BroadcastEvent(new Message(c)); await Manager.BroadcastEventAsync(new Message(c));
++            Assert.That(Manager.BroadcastEventWithReturn&lt;Message, Reply&gt;(new Message(c)), Is.Null);
++            Assert.That(await Manager.BroadcastEventAsyncWithReturn&lt;Message, Reply&gt;(new Message(c)), Is.Null);
++        }
++
++        [TestCase(false)] [TestCase(true)]
++        public async Task ResultFallbackUsesOriginalCandidatesAndImmediateRemoval(bool asynchronous) {
++            var c = new Context();
++            IEventRegister a = asynchronous ? new AsyncResult&lt;A, Reply&gt;() : new Result&lt;A, Reply&gt;();
++            IEventRegister b = asynchronous ? new AsyncResult&lt;B, Reply&gt;() : new Result&lt;B, Reply&gt;();
++            IEventRegister added = asynchronous ? new AsyncResult&lt;C, Reply&gt;() : new Result&lt;C, Reply&gt;();
++            a.Register(0); b.Register(1);
++            var expected = new Reply();
++            c.Result = t =&gt; {
++                if (t == typeof(A)) { a.Unregister(); b.Unregister(); added.Register(0); throw new InvalidOperationException(&quot;expected&quot;); }
++                return expected;
++            };
++            c.AsyncResult = t =&gt; UniTask.FromResult(c.Result(t));
++            Reply first = asynchronous ? await Manager.BroadcastEventAsyncWithReturn&lt;Message, Reply&gt;(new Message(c)) : Manager.BroadcastEventWithReturn&lt;Message, Reply&gt;(new Message(c));
++            Assert.That(first, Is.Null);
++            Reply second = asynchronous ? await Manager.BroadcastEventAsyncWithReturn&lt;Message, Reply&gt;(new Message(c)) : Manager.BroadcastEventWithReturn&lt;Message, Reply&gt;(new Message(c));
++            Assert.That(second, Is.SameAs(expected));
++            Assert.That(c.Calls, Is.EqualTo(new[] { &quot;A&quot;, &quot;C&quot; }));
++        }
++
++        [TestCase(typeof(FailingRegister&lt;A&gt;))]
++        [TestCase(typeof(FailingConstructor&lt;A&gt;))]
++        [TestCase(typeof(NoDefaultConstructor&lt;A&gt;))]
++        [TestCase(typeof(Sync&lt;&gt;))]
++        [TestCase(typeof(string))]
++        public void FailedInitializationClearsPartialRegistrationAndCanRecover(Type invalid) {
++            Manager.Dispose();
++            var ex = Assert.Throws&lt;InvalidOperationException&gt;(() =&gt; Manager.Init(new[] { typeof(AutoA), invalid }));
++            Assert.That(ex!.Message, Does.Contain(invalid.FullName));
++            Assert.That(Manager.IsInitialized, Is.False);
++            Assert.That(Manager.RegisteredHandlerCount, Is.Zero);
++            Manager.Init(new[] { typeof(Sync&lt;A&gt;) });
++            var c = new Context(); Manager.BroadcastEvent(new Message(c));
++            Assert.That(c.Calls, Is.EqualTo(new[] { &quot;A&quot; }));
++        }
++
++        [Test] public void CleanupIsIdempotentAndOldObjectsCannotRemoveNewRegistration() {
++            var old = new Sync&lt;A&gt;(); old.Register(0);
++            Manager.Dispose(); Manager.Dispose();
++            Assert.Throws&lt;InvalidOperationException&gt;(() =&gt; Manager.BroadcastEvent(new Message(new Context())));
++            Manager.Init(new[] { typeof(Sync&lt;A&gt;) }); old.Unregister();
++            var c = new Context(); Manager.BroadcastEvent(new Message(c));
++            Assert.That(c.Calls, Is.EqualTo(new[] { &quot;A&quot; }));
++        }
++
++        [TestCase(false)] [TestCase(true)]
++        public async Task SuspendedOldGenerationIsCancelledAfterCurrentHandlerFinishes(bool withReturn) {
++            var gate = new UniTaskCompletionSource(); var c = new Context();
++            c.Async = async _ =&gt; await gate.Task;
++            c.AsyncResult = async _ =&gt; { await gate.Task; return new Reply(); };
++            if (withReturn) { new AsyncResult&lt;A, Reply&gt;().Register(0); new AsyncResult&lt;B, Reply&gt;().Register(1); }
++            else { new Async&lt;A&gt;().Register(0); new Async&lt;B&gt;().Register(1); }
++            Task pending = withReturn ? Manager.BroadcastEventAsyncWithReturn&lt;Message, Reply&gt;(new Message(c)).AsTask() : Manager.BroadcastEventAsync(new Message(c)).AsTask();
++            try {
++                Manager.Dispose(); Manager.Init(new[] { typeof(Sync&lt;C&gt;) });
++                Assert.That(pending.IsCompleted, Is.False, &quot;Dispose must not pretend to force-stop an entered Run.&quot;);
++            } finally { gate.TrySetResult(); }
++            try { await pending; Assert.Fail(&quot;Old dispatch must cancel.&quot;); } catch (OperationCanceledException) { }
++            Assert.That(c.Calls, Is.EqualTo(new[] { &quot;A&quot; }));
++            Manager.BroadcastEvent(new Message(c));
++            Assert.That(c.Calls, Is.EqualTo(new[] { &quot;A&quot;, &quot;C&quot; }));
++        }
++
++        public readonly struct AutoProbe {
++            public readonly List&lt;string&gt; Calls;
++            public AutoProbe(List&lt;string&gt; calls) =&gt; Calls = calls;
++        }
++        // Real discoverable fixtures are stateless and operate on supplied data only.
++        public sealed class AutoA : OEventNoReturnMethodObject&lt;AutoProbe&gt; {
++            public override void Run(AutoProbe message) =&gt; message.Calls.Add(&quot;A&quot;);
++        }
++        public sealed class AutoB : OEventNoReturnMethodObject&lt;AutoProbe&gt; {
++            public override void Run(AutoProbe message) =&gt; message.Calls.Add(&quot;B&quot;);
++        }
++    }
++}
+diff --git a/Packages/com.operationgamestudio.ascl/Tests/Runtime/OEventTests.cs.meta b/Packages/com.operationgamestudio.ascl/Tests/Runtime/OEventTests.cs.meta
+new file mode 100644
+index 0000000..10afda5
+--- /dev/null
++++ b/Packages/com.operationgamestudio.ascl/Tests/Runtime/OEventTests.cs.meta
+@@ -0,0 +1,2 @@
++fileFormatVersion: 2
++guid: 43d8d793b94a478ab2f2ed52015e4943
+</pre></details>
+<div class="criteria"><label class="criterion"><span>原 OEvent 类写法与四种广播入口得到保留？</span><select aria-label="02-1"><option>未判断</option><option>是</option><option>否</option></select></label><label class="criterion"><span>排序、返回 null、异常和取消语义符合约定？</span><select aria-label="02-2"><option>未判断</option><option>是</option><option>否</option></select></label><label class="criterion"><span>重复注册、错误退订、重入和订阅变化有测试覆盖？</span><select aria-label="02-3"><option>未判断</option><option>是</option><option>否</option></select></label><label class="criterion"><span>0.3.0 对 EventScope 调用方的迁移影响已说明？</span><select aria-label="02-4"><option>未判断</option><option>是</option><option>否</option></select></label></div>
+<div class="feedback"><label>本项结论 <select class="decision" aria-label="02 结论"><option>未提交</option><option>通过</option><option>修改意见</option></select></label><label>意见 <textarea class="comment" aria-label="02 意见" placeholder="请标明接口或分发场景。"></textarea></label></div>
+</section>
+
+<section class="review-item" data-item="03" data-title="应用生命周期与 Boost Demo"><h2><span class="number">03</span>应用生命周期与 Boost Demo</h2>
+<p><code>SubsystemRegistration 重置 → BeforeSceneLoad 初始化 → Application.quitting 清理</code>。全局注册不随场景/World 销毁而清空。Dispose 后已进入的异步 Run 仍会运行至结束，随后旧广播取消。</p>
+<p><strong>实际调用链：</strong>技能完成 → <code>DemoPowerChanged</code> → <code>[OEvent] DemoPowerChangedHandler</code> → 立方体和文字刷新。处理器不存储场景引用，仅使用事件携带的目标；按钮回调、场景和外观资源保持原样。</p>
+<div class="table-wrap"><table><thead><tr><th>操作</th><th>初始</th><th>Boost 1</th><th>Boost 2</th><th>Boost 3</th><th>Boost 4</th></tr></thead><tbody><tr><th>Power</th><td>10</td><td>12</td><td>14</td><td>16</td><td>16</td></tr><tr><th>Buff 层数</th><td>0</td><td>1</td><td>2</td><td>3</td><td>3</td></tr><tr><th>OEvent 刷新累计次数</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr></tbody></table></div>
+<p class="muted">数值链由真实 PlayMode 测试断言验证。两个运行会话关闭 Domain Reload；场景重载保持注册数不变，向已销毁目标广播不刷新新场景。</p>
+<div class="images"><figure><img src="urp3d-PC.png" width="640" height="360" alt="Windows Editor PC 质量档实际渲染，青色立方体与地面"><figcaption>PC 质量档 · 实际相机 RenderTexture</figcaption></figure><figure><img src="urp3d-Mobile.png" width="640" height="360" alt="Windows Editor Mobile 质量档实际渲染，青色立方体与地面"><figcaption>Mobile 质量档 · Windows Editor 渲染，非手机实机</figcaption></figure></div>
+<p class="note">截图显示初始几何渲染，未包含 Overlay UI，也不证明事件调用次数。文字/最终立方体尺寸与刷新次数见 <a href="unity-playmode.xml">PlayMode XML</a> 及 <a href="../../../DevProject/Assets/ASCLDemo/Tests/PlayMode/Urp3DPlayModeTests.cs">对应断言</a>。</p>
+<div class="criteria"><label class="criterion"><span>重复进入 Play Mode、退出和场景重载均覆盖？</span><select aria-label="03-1"><option>未判断</option><option>是</option><option>否</option></select></label><label class="criterion"><span>旧异步广播的取消边界清楚，未承诺强停 Run？</span><select aria-label="03-2"><option>未判断</option><option>是</option><option>否</option></select></label><label class="criterion"><span>Boost 经 OEvent 更新，Power 与三层 Buff 上限保持？</span><select aria-label="03-3"><option>未判断</option><option>是</option><option>否</option></select></label><label class="criterion"><span>目标由载荷传递，Demo 处理器没有残留场景字段？</span><select aria-label="03-4"><option>未判断</option><option>是</option><option>否</option></select></label></div>
+<div class="feedback"><label>本项结论 <select class="decision" aria-label="03 结论"><option>未提交</option><option>通过</option><option>修改意见</option></select></label><label>意见 <textarea class="comment" aria-label="03 意见" placeholder="请标明运行步骤和期望行为。"></textarea></label></div>
+</section>
+
+<section class="review-item" data-item="04" data-title="验证证据与支持边界"><h2><span class="number">04</span>验证证据与支持边界</h2>
+<p>环境：Windows 11 x64 / .NET SDK 8.0.301 / Unity 6000.3.23f1 / URP 17.3.0。核心编译目标为 netstandard2.1、net8.0。验证只代表列出的环境与范围。</p>
+<div class="links"><a href="dotnet.trx">.NET 56/56</a><a href="unity-editmode.xml">EditMode 51/51</a><a href="unity-playmode.xml">PlayMode 5/5</a><a href="roadmap-validation.txt">路线图校验</a><a href="browser-check.json">审查页检查</a><a href="evidence-hashes.json">证据文件哈希</a></div>
+<p>失败过程保留：<a href="unity-first-attempt.txt">首次 Unity 编译诊断</a>、<a href="unity-second-attempt.xml">第二次 EditMode 失败 XML</a>。已修复 NUnit 分支差异、无关编译程序集反射扫描及取消异常类型断言，最后全部通过。旧代码仍存在 CS8632 警告。</p>
+<ul><li>全局 OEvent 不提供多世界独立事件域；业务需传递和核验世界归属。</li><li>单个逻辑执行线程，未增加并发线程安全；尚无整体零分配或性能认证。</li><li>IL2CPP/AOT、移动端 Player 和外部消费项目迁移留待对应任务验证。</li><li>只实施 ASCL-S0-005；其他阶段目标未被本次自动启动。</li></ul>
+<div class="criteria"><label class="criterion"><span>测试计数、原始证据和失败修复记录一致？</span><select aria-label="04-1"><option>未判断</option><option>是</option><option>否</option></select></label><label class="criterion"><span>未验证平台、线程和多世界限制明确？</span><select aria-label="04-2"><option>未判断</option><option>是</option><option>否</option></select></label><label class="criterion"><span>新增目标、能力条目及 S0 退出依赖可追踪？</span><select aria-label="04-3"><option>未判断</option><option>是</option><option>否</option></select></label></div>
+<div class="feedback"><label>本项结论 <select class="decision" aria-label="04 结论"><option>未提交</option><option>通过</option><option>修改意见</option></select></label><label>意见 <textarea class="comment" aria-label="04 意见" placeholder="请标明需要补充的证据或范围。"></textarea></label></div>
+</section>
+
+<section><h2>导出审查结论</h2><p>文本仅包含本页选择与意见，不自动上传。未填写的判断保留原状。</p><div class="export"><button id="export" type="button">导出结论文本</button><span id="export-status" role="status" class="status"></span></div><label for="export-preview" class="muted">导出内容预览（也可直接复制）</label><textarea id="export-preview" readonly aria-label="导出内容预览"></textarea></section>
+<footer>证据目录：Docs/WorkLogs/OEvent-0.3.0 · 权威实施状态：Docs/Goals/ASCL-S0-005.md · 人工反馈以原任务中的实际回复为准。</footer>
+</main>
+<script>
+'use strict';
+document.getElementById('export').addEventListener('click', () => {
+  const lines = ['ASCL 0.3.0 · OEvent 审查反馈', '目标：ASCL-S0-005', '导出时间：' + new Date().toISOString(), ''];
+  document.querySelectorAll('.review-item').forEach(item => {
+    lines.push(item.dataset.item + ' ' + item.dataset.title + '：' + item.querySelector('.decision').value);
+    item.querySelectorAll('.criterion').forEach((row, index) => lines.push('  ' + (index + 1) + '. ' + row.querySelector('span').textContent + ' ' + row.querySelector('select').value));
+    lines.push('  意见：' + (item.querySelector('.comment').value.trim() || '未填写'), '');
+  });
+  lines.push('本文件由审查人选择生成；未判断不视为通过。请回复原任务后生效。');
+  const text = lines.join('\n');
+  document.getElementById('export-preview').value = text;
+  const url = URL.createObjectURL(new Blob(['\ufeff', text], {type:'text/plain;charset=utf-8'}));
+  const link = document.createElement('a'); link.href = url; link.download = 'ASCL-0.3.0-OEvent-review.txt';
+  document.body.appendChild(link); link.click(); link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  document.getElementById('export-status').textContent = '已生成本地文本；请将结论回复原任务。';
+});
+</script>
+</body>
+</html>

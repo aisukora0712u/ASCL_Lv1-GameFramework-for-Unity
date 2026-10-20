@@ -38,12 +38,15 @@ Unity 包位于 `Packages/com.operationgamestudio.ascl`；`DotNet` 工程复用�
 
 ### 3.2 Event
 
-事件域借鉴项目中的 OEventSystem，选择“作用域实例”而非全局静态总线：World、Scene、UI 或测试可以各有自己的 `EventScope`。
+0.3.0 按用户决定正式接入 OEvent，替换原 EventScope；旧版完整保留于 `codex/legacy-pre-oevent-20261021`。
 
-- 支持同步广播、按优先级稳定排序、异步串行广播和唯一查询。
-- 发布中退订立即生效；发布中新增订阅从下一次发布开始生效。
-- 订阅返回 `IDisposable`，可交给 Entity 托管。
-- 热路径不使用反射扫描；异步统一使用 UniTask。
+- 使用 `[OEvent]` 和四种 MethodObject，通过 `OEventManager.Instance` 全局分发；核心不依赖 Unity。
+- 启动时自动反射注册，或显式指定处理器类型；热路径不扫描程序集，异步使用 UniTask 串行等待。
+- 优先级稳定排序；新增不加入当前广播，退订立即生效；返回值沿用“首个正常返回，包括 null”的语义。
+- 应用级清理与代次检查阻止旧异步广播继续分发；不提供原作用域隔离、委托订阅 token 或唯一查询保证。
+- 实际 URP Demo 经 OEvent 刷新数值呈现。接口差异与限制见 [0.3.0 迁移说明](Packages/com.operationgamestudio.ascl/MIGRATION-0.3.0.md)。
+
+本文其他历史验证数字属于其原交付版本；本次证据独立记录于 `Docs/Validation/ASCL-0.3.0.md`。
 
 ### 3.3 Numeric
 

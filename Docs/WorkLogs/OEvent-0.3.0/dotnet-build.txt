@@ -1,0 +1,8 @@
+  ASCL.Runtime -> D:\Workspace_K\_Operation-Game-Studio\GameFramework\Unity_Oriented\_2_DistillationInto\ASCL_GameFramework_Lv1\DotNet\ASCL.Runtime\bin\Release\netstandard2.1\ASCL.Runtime.dll
+  ASCL.Runtime -> D:\Workspace_K\_Operation-Game-Studio\GameFramework\Unity_Oriented\_2_DistillationInto\ASCL_GameFramework_Lv1\DotNet\ASCL.Runtime\bin\Release\net8.0\ASCL.Runtime.dll
+
+ビルドに成功しました。
+    0 個の警告
+    0 エラー
+
+経過時間 00:00:00.75

@@ -18,6 +18,8 @@
 场景包含透视相机、方向光、地面、URP Lit 材质、Global Volume、uGUI 和
 `UnityWorldDriver`。示例通过现有的 `SkillRunner -> ApplyBuffEffect -> NumericTable`
 驱动呈现，退出场景时释放 Entity。该演示的 Buff 永久存在于本次运行中，重启后重置。
+0.3.0 中技能执行后发布 `DemoPowerChanged`，由自动注册的 OEvent 处理器刷新数值文字和立方体。
+OEvent 由应用启动器管理，场景重载保持一份全局注册；处理器不保存场景引用。
 存档示例仍位于框架包的 `Samples~/VerticalSlice`。
 
 ### Windows 长路径
@@ -68,6 +70,7 @@ URP 依赖只加入此宿主项目；ASCL 的纯 C# 内核与可安装包保持�
 
 - EditMode：现有框架测试，以及 Linear / 3D / URP 配置、各质量档的 Renderer、
   构建场景、序列化引用和材质检查。
+- OEvent 新增共享测试及关闭 Domain Reload 后两次真实进入/退出 Play Mode 的清理检查。
 - PlayMode：真实场景启动、World 帧驱动、uGUI 按钮、技能和 Buff 数值上限、
   Entity 清理，以及 PC/Mobile 两档实际渲染和错误材质检查。
 - PlayMode 使用 Windows D3D11，必须具有可用 GPU；不要附加 `-nographics`。

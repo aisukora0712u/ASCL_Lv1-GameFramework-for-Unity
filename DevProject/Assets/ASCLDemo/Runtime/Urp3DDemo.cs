@@ -6,6 +6,8 @@ using ASCL.Gameplay.Numeric;
 using ASCL.Gameplay.Skills;
 using ASCL.Unity;
 using Cysharp.Threading.Tasks;
+using OEvent;
+using OEvent.Module;
 using UnityEngine;
 using UIText = UnityEngine.UI.Text;
 
@@ -23,6 +25,7 @@ namespace ASCL.DevProject {
         private SkillDefinition _boost;
 
         public bool IsReady => _target != null;
+        public int EventRefreshCount { get; private set; }
         public float Power => IsReady ? (float)_target.Numeric.GetValue(_powerKey) : 0;
         public int BuffStacks => IsReady && _target.Buffs.Active.Count > 0
             ? _target.Buffs.Active[0].Stacks : 0;
@@ -44,7 +47,7 @@ namespace ASCL.DevProject {
             _boost = new SkillDefinition("urp-demo.boost", 1,
                 new IActionEffect[] { new ApplyBuffEffect(buff) });
             _skills = new SkillRunner(new ActionPipeline());
-            RefreshView();
+            PublishPowerChanged();
         }
 
         private void Update() {
@@ -57,8 +60,15 @@ namespace ASCL.DevProject {
             if (!IsReady) throw new InvalidOperationException("The demo has not started yet.");
             ActionResult result = await _skills.CastAsync(_boost, _source, _target,
                 this.GetCancellationTokenOnDestroy());
-            RefreshView();
+            PublishPowerChanged();
             return result;
+        }
+
+        private void PublishPowerChanged() => OEventManager.Instance.BroadcastEvent(new DemoPowerChanged(this));
+
+        internal void RefreshFromEvent() {
+            EventRefreshCount++;
+            RefreshView();
         }
 
         private void RefreshView() {
@@ -71,6 +81,19 @@ namespace ASCL.DevProject {
         private void OnDestroy() {
             _sourceEntity?.Dispose();
             _targetEntity?.Dispose();
+        }
+    }
+
+    public readonly struct DemoPowerChanged {
+        public readonly Urp3DDemo Target;
+        public DemoPowerChanged(Urp3DDemo target) => Target = target;
+    }
+
+    [OEvent]
+    public sealed class DemoPowerChangedHandler : OEventNoReturnMethodObject<DemoPowerChanged> {
+        // No stored scene references: the destination belongs to this broadcast only.
+        public override void Run(DemoPowerChanged message) {
+            if (message.Target != null && message.Target.IsReady) message.Target.RefreshFromEvent();
         }
     }
 }

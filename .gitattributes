@@ -1,3 +1,4 @@
 
 # Validation manifests identify exact bytes across checkout and restore.
 Docs/Validation/** -text
+Docs/WorkLogs/OEvent-0.3.0/** -text
